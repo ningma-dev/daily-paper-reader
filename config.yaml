@@ -25,3 +25,49 @@ subscriptions:
     stage: A
     diff_threshold_pct: 15
   keyword_recall_mode: or
+  intent_profiles:
+    - tag: wam
+      description: 查找世界动作模型相关论文
+      enabled: true
+      paper_sources:
+        - arxiv
+      keywords:
+        - keyword: action-conditioned world model
+          keyword_cn: 动作为条件的世界模型
+          query: a
+        - keyword: Vision Language Action Model
+          keyword_cn: 视觉语言动作模型
+          query: V
+        - keyword: world action model
+          keyword_cn: 世界动作模型
+          query: world action model for autonomous agents
+        - keyword: embodied action model
+          keyword_cn: ''
+          query: embodied action model in robotics
+      intent_queries:
+        - query: world action models for robotics
+          query_cn: 机器人学的世界动作模型
+          enabled: true
+          source: manual
+          note: ''
+        - query: predicting actions using world models
+          query_cn: 使用世界模型预测动作
+          enabled: true
+          source: manual
+          note: ''
+      updated_at: '2026-05-30T06:01:53.480Z'
+source_backends:
+  arxiv:
+    papers_table: arxiv_papers
+    use_vector_rpc: true
+    vector_rpc: match_arxiv_papers
+    vector_rpc_exact: match_arxiv_papers_exact
+    use_bm25_rpc: true
+    bm25_rpc: match_arxiv_papers_bm25
+    sync_table: arxiv_sync_status
+    sync_success_value: success
+    schema: public
+    kind: supabase
+    enabled: true
+    url: https://lyucdwgefyfbmaiopjbk.supabase.co
+    anon_key: sb_publishable_lX-oi64Uxyd7SIVv3_w2Uw_MTOojeKq
