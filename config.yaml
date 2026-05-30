@@ -25,7 +25,139 @@ subscriptions:
     stage: A
     diff_threshold_pct: 15
   keyword_recall_mode: or
-  intent_profiles: []
+  intent_profiles:
+    - tag: vla-policy
+      description: 专门寻找 VLA / Vision-Language-Action models 和 generalist robot policies 方向的高质量论文。
+      enabled: true
+      paper_sources:
+        - arxiv
+      keywords:
+        - keyword: vision-language-action model
+          keyword_cn: 视觉-语言-行动模型
+          query: vision-language-action model for robot control
+        - keyword: generalist robot policy
+          keyword_cn: 通用机器人策略
+          query: generalist robot policy learning
+        - keyword: language-conditioned manipulation
+          keyword_cn: 语言条件操控
+          query: language-conditioned robotic manipulation
+        - keyword: cross-task generalization
+          keyword_cn: 跨任务泛化
+          query: cross-task generalization in robot learning
+        - keyword: robot foundation model
+          keyword_cn: 机器人基础模型
+          query: robot foundation model for manipulation
+      intent_queries:
+        - query: How to transfer vision language models to real robot control
+          query_cn: 如何将视觉语言模型迁移到真实机器人控制
+          enabled: true
+          source: manual
+          note: ''
+        - query: What are the state of the art approaches for vision language action models in robotics
+          query_cn: 机器人领域视觉 语言 行动模型的最新方法是什么
+          enabled: true
+          source: manual
+          note: ''
+        - query: How do generalist robot policies achieve cross task generalization
+          query_cn: 通用机器人策略如何实现跨任务泛化
+          enabled: true
+          source: manual
+          note: ''
+        - query: 'From large multimodal models to robot policy: methods and challenges'
+          query_cn: 从大型多模态模型到机器人策略：方法与挑战
+          enabled: true
+          source: manual
+          note: ''
+      updated_at: '2026-05-30T06:47:33.478Z'
+    - tag: world-models
+      description: 机器人世界模型、World Action Models、潜在动作表征方向的高质量论文检索。
+      enabled: true
+      paper_sources:
+        - arxiv
+      keywords:
+        - keyword: world action models
+          keyword_cn: 世界动作模型
+          query: World Action Models for robot control
+        - keyword: latent action models
+          keyword_cn: 潜在动作模型
+          query: latent action models in robotics
+        - keyword: action representation learning
+          keyword_cn: 动作表征学习
+          query: learning action representations for robots
+        - keyword: video prediction robot control
+          keyword_cn: 视频预测机器人控制
+          query: video prediction for robot control
+        - keyword: controllable generation manipulation
+          keyword_cn: 可控生成操作
+          query: controllable generation for robotic manipulation
+        - keyword: future state action modeling
+          keyword_cn: 未来状态动作联合建模
+          query: joint modeling of future state and action
+      intent_queries:
+        - query: How do world models integrate with policy and action representations in robotics?
+          query_cn: 机器人世界模型如何与策略和动作表征结合？
+          enabled: true
+          source: manual
+          note: ''
+        - query: Papers on joint modeling of future states and actions for robot policy learning
+          query_cn: 未来状态和动作联合建模用于机器人策略学习的论文
+          enabled: true
+          source: manual
+          note: ''
+        - query: Search for latent action representations in robotics
+          query_cn: 搜索机器人学中的潜在动作表征
+          enabled: true
+          source: manual
+          note: ''
+        - query: Retrieve research on world action models for manipulation
+          query_cn: 检索用于操作的世界动作模型研究
+          enabled: true
+          source: manual
+          note: ''
+      updated_at: '2026-05-30T06:49:48.363Z'
+    - tag: robot-rl
+      description: 寻找 robot reinforcement learning 和 RL-for-VLA / generalist robot policy improvement 方向的高质量论文
+      enabled: true
+      paper_sources:
+        - arxiv
+      keywords:
+        - keyword: real robot reinforcement learning
+          keyword_cn: 真实机器人强化学习
+          query: real robot reinforcement learning
+        - keyword: reinforcement learning for robot manipulation
+          keyword_cn: 机器人操作强化学习
+          query: reinforcement learning for robot manipulation
+        - keyword: generalist robot policy fine-tuning
+          keyword_cn: 通用机器人策略微调
+          query: generalist robot policy fine-tuning using reinforcement learning
+        - keyword: human-in-the-loop robot learning
+          keyword_cn: 人在环机器人学习
+          query: human-in-the-loop reinforcement learning for robots
+        - keyword: scalable robotic reinforcement learning
+          keyword_cn: 可扩展机器人强化学习
+          query: scalable reinforcement learning for robotics
+      intent_queries:
+        - query: how is reinforcement learning used to improve vision language action policies for robotic manipulation
+          query_cn: 强化学习如何用于改进机器人操作的视觉 语言 动作策略
+          enabled: true
+          source: manual
+          note: ''
+        - query: what are effective strategies for fine tuning generalist robot policies with reinforcement learning
+          query_cn: 使用强化学习微调通用机器人策略的有效策略是什么
+          enabled: true
+          source: manual
+          note: ''
+        - query: how does human in the loop reinforcement learning contribute to robot policy improvement
+          query_cn: 人在环强化学习如何促进机器人策略改进
+          enabled: true
+          source: manual
+          note: ''
+        - query: scaling robot reinforcement learning with diverse data
+          query_cn: 利用多样化数据扩展机器人强化学习
+          enabled: true
+          source: manual
+          note: ''
+      updated_at: '2026-05-30T06:53:43.963Z'
 source_backends:
   arxiv:
     papers_table: arxiv_papers
