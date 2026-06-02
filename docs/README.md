@@ -6,91 +6,85 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-01
-- 运行时间：2026-06-01 22:50:49 UTC
+- 最新运行日期：2026-05-24 ~ 2026-06-02
+- 运行时间：2026-06-02 09:00:38 UTC
 - 运行状态：成功
-- 本次总论文数：23
-- 精读区：10
+- 本次总论文数：21
+- 精读区：8
 - 速读区：13
 
 ### 今日简报（AI）
-1）今日日报重点解析两篇满分世界模型研究，并覆盖机器人语言指令与隐藏状态操控等前沿具身智能方向。  
-2）最值得关注的方向：联合视觉-行动因果预测的世界模型，以及通过扩散策略优化扩展世界模型强化学习。  
-3）普通读者可优先阅读X-Foresight与Scaling World-Model RL两篇精读，并关注语言标注如何低成本提升机器人泛化能力。
-- 详情：[/202606/01/README](/202606/01/README)
+这份日报收录21篇机器人领域论文，Qwen-VLA以满分表现成为本周最强方向，GE-Sim 2.0则引领世界模拟器新路线。
+最值得关注两个方向：一是跨任务、跨环境、跨体现的统一视觉-语言-动作建模（Qwen-VLA）；二是面向机器人操作的闭环视频世界模拟器（GE-Sim 2.0）。
+建议后续优先精读Qwen-VLA的整体设计思路，并关注GE-Sim 2.0在闭环仿真中的具体实现细节，这对理解具身智能最新范式至关重要。
+- 详情：[/20260524-20260602/README](/20260524-20260602/README)
 
 ### 精读区论文标签
-1. [X-Foresight: A Joint Vision-Action Causal Forecasting Network via Predictive World Modeling](/202606/01/2605.24892v1-x-foresight-a-joint-vision-action-causal-forecasting-network-via-predictive-world-modeling)  
+1. [Qwen-VLA: Unifying Vision-Language-Action Modeling across Tasks, Environments, and Robot Embodiments](/20260524-20260602/2605.30280v2-qwen-vla-unifying-vision-language-action-modeling-across-tasks-environments-and-robot-embodiments)  
+   标签：评分：10.0/10、query:vla-policy
+   evidence：跨任务、环境和机器人的统一VLA基础模型
+2. [GE-Sim 2.0: A Roadmap Towards Comprehensive Closed-loop Video World Simulators for Robotic Manipulation](/20260524-20260602/2605.27491v1-ge-sim-20-a-roadmap-towards-comprehensive-closed-loop-video-world-simulators-for-robotic-manipulation)  
    标签：评分：9.0/10、query:world-models
-   evidence：通过预测性世界建模联合建模视觉-动作因果预测
-2. [Scaling World-Model Reinforcement Learning Through Diffusion Policy Optimization](/202606/01/2605.26282v1-scaling-world-model-reinforcement-learning-through-diffusion-policy-optimization)  
-   标签：评分：9.0/10、query:world-models
-   evidence：基于扩散策略优化的世界模型强化学习，解决搜索与价值学习的不一致
-3. [What Frozen VLAs Already Know About Success: A Probing Study of Value-Like Structure in Foundation Robot Policies](/202606/01/2605.28527v1-what-frozen-vlas-already-know-about-success-a-probing-study-of-value-like-structure-in-foundation-robot-policies)  
+   evidence：面向机器人操作的闭环视频世界模拟器
+3. [GSAM: A Generalizable and Safe Robotic Framework for Articulated Object Manipulation](/20260524-20260602/2605.30740v1-gsam-a-generalizable-and-safe-robotic-framework-for-articulated-object-manipulation)  
    标签：评分：9.0/10、query:vla-policy
-   evidence：VLA策略中价值结构的探测研究
-4. [GEM: Generative Supervision Helps Embodied Intelligence](/202606/01/2605.28548v1-gem-generative-supervision-helps-embodied-intelligence)  
+   evidence：基于VLM的微调器用于铰接物体操作，提升泛化性与安全性
+4. [Wall-OSS-0.5 Technical Report](/20260524-20260602/2605.30877v2-wall-oss-05-technical-report)  
    标签：评分：9.0/10、query:vla-policy
-   evidence：通过深度图生成预训练改进视觉语言模型用于视觉-语言-动作模型
-5. [ELAN4D: Embodiment-Centric 4D Supervision for Vision-Language-Action Models via Plug-and-Play Adaptation](/202606/01/2605.30484v1-elan4d-embodiment-centric-4d-supervision-for-vision-language-action-models-via-plug-and-play-adaptation)  
+   evidence：开源VLA模型，跨多种体素预训练，探究预训练有效性
+5. [RDGen: Demonstration Generation for High-Quality Robot Learning via Reinforcement Learning](/20260524-20260602/2605.30957v1-rdgen-demonstration-generation-for-high-quality-robot-learning-via-reinforcement-learning)  
+   标签：评分：9.0/10、query:robot-rl
+   evidence：基于强化学习的演示生成用于VLA模型训练
+6. [PaCo-VLA: Passivity-Shielded Compliance Prior for Contact-Rich Vision-Language-Action Manipulation](/20260524-20260602/2606.00515v1-paco-vla-passivity-shielded-compliance-prior-for-contact-rich-vision-language-action-manipulation)  
    标签：评分：9.0/10、query:vla-policy
-   evidence：4D未来关键点轨迹用于VLA策略泛化
-6. [Feat2Go: Visual Feature-Grounded Value Estimation for Embodied Reinforcement Learning](/202606/01/2605.30795v1-feat2go-visual-feature-grounded-value-estimation-for-embodied-reinforcement-learning)  
-   标签：评分：9.0/10、query:vla-policy
-   evidence：用强化学习改进视觉-语言-动作模型
-7. [Wall-OSS-0.5 Technical Report](/202606/01/2605.30877v1-wall-oss-05-technical-report)  
-   标签：评分：9.0/10、query:vla-policy
-   evidence：VLA预训练分析和开源模型
-8. [HARP-VLA: Human-Robot Aligned Representation Learning for Vision-Language-Action Model](/202606/01/2605.31234v1-harp-vla-human-robot-aligned-representation-learning-for-vision-language-action-model)  
-   标签：评分：9.0/10、query:vla-policy
-   evidence：面向VLA预训练的人机对齐表征学习
-9. [DriveMA: Driving Vision-Language-Action Models with verifiable Meta-Actions](/202606/01/2605.31271v1-drivema-driving-vision-language-action-models-with-verifiable-meta-actions)  
-   标签：评分：9.0/10、query:vla-policy
-   evidence：基于可验证元动作的驾驶VLA
-10. [DeMaVLA: A Vision-Language-Action Foundation Model for Generalizable Deformable Manipulation](/202606/01/2605.31286v1-demavla-a-vision-language-action-foundation-model-for-generalizable-deformable-manipulation)  
-   标签：评分：9.0/10、query:vla-policy
-   evidence：用于可泛化可变形操作的VLA基础模型
+   evidence：无源性保护的VLA用于接触丰富操作
+7. [Beyond Pixels: Learning Invariant Rewards for Real-World Robotics From a Few Demonstrations](/20260524-20260602/2605.22123v1-beyond-pixels-learning-invariant-rewards-for-real-world-robotics-from-a-few-demonstrations)  
+   标签：评分：8.0/10、query:robot-rl
+   evidence：从少量演示学习不变符号奖励用于真实世界强化学习
+8. [Teacher-Student Representational Alignment for Reinforcement Learning-Driven Imitation Learning](/20260524-20260602/2605.28372v1-teacher-student-representational-alignment-for-reinforcement-learning-driven-imitation-learning)  
+   标签：评分：8.0/10、query:robot-rl
+   evidence：表征对齐减少RL驱动模仿学习中对RL微调的需求
 
 ### 速读区论文标签
-1. [How to Instruct Your Robot: Dense Language Annotations Power Robot Policy Learning](/202606/01/2605.17077v1-how-to-instruct-your-robot-dense-language-annotations-power-robot-policy-learning)  
+1. [Demo-JEPA: Joint-Embedding Predictive Architecture for One-shot Cross-Embodiment Imitation](/20260524-20260602/2605.20811v1-demo-jepa-joint-embedding-predictive-architecture-for-one-shot-cross-embodiment-imitation)  
+   标签：评分：8.0/10、query:world-models
+   evidence：基于JEPA世界模型的跨本体模仿学习
+2. [DISC: Decoupling Instruction from State-Conditioned Control via Policy Generation](/20260524-20260602/2605.20856v1-disc-decoupling-instruction-from-state-conditioned-control-via-policy-generation)  
    标签：评分：8.0/10、query:vla-policy
-   evidence：密集语言注释支持语言条件机器人操作
-2. [Contrastive Conceptor Activation Steering (COAST): Unlocking Vision-Language-Action Models through Hidden States](/202606/01/2605.17144v1-contrastive-conceptor-activation-steering-coast-unlocking-vision-language-action-models-through-hidden-states)  
+   evidence：通过超网络生成策略解耦语言与状态条件控制
+3. [Back to Parsimonious Latents: Learning Task-Centric World Models from Visual Foundations](/20260524-20260602/2605.25620v1-back-to-parsimonious-latents-learning-task-centric-world-models-from-visual-foundations)  
+   标签：评分：8.0/10、query:world-models
+   evidence：任务中心世界模型用于机器人控制
+4. [Capability and Robustness Cannot Both Be Free: An Information-Theoretic Bound for Vision-Language-Action Models](/20260524-20260602/2605.25889v3-capability-and-robustness-cannot-both-be-free-an-information-theoretic-bound-for-vision-language-action-models)  
    标签：评分：8.0/10、query:vla-policy
-   evidence：使用概念器将VLA隐状态引导至成功子空间
-3. [Key-Gram: Extensible World Knowledge for Embodied Manipulation](/202606/01/2605.18556v1-key-gram-extensible-world-knowledge-for-embodied-manipulation)  
+   evidence：VLA策略能力和鲁棒性的信息论边界
+5. [VLA-Hijack: A Transferable Patch Attack against Vision-Language-Action Models via Visual Proprioception Hijacking](/20260524-20260602/2605.28083v1-vla-hijack-a-transferable-patch-attack-against-vision-language-action-models-via-visual-proprioception-hijacking)  
    标签：评分：8.0/10、query:vla-policy
-   evidence：解决VLA和WAM中语言与视觉耦合问题，提出Key-Gram框架
-4. [Beyond Action Residuals: Real-World Robot Policy Steering via Bottleneck Latent Reinforcement Learning](/202606/01/2605.19919v1-beyond-action-residuals-real-world-robot-policy-steering-via-bottleneck-latent-reinforcement-learning)  
-   标签：评分：8.0/10、query:robot-rl
-   evidence：通过瓶颈潜在强化学习引导预训练模仿策略
-5. [RoHIL: Robust Human-in-the-Loop Robotic Reinforcement Learning Against Illumination Variations](/202606/01/2605.19924v1-rohil-robust-human-in-the-loop-robotic-reinforcement-learning-against-illumination-variations)  
-   标签：评分：8.0/10、query:robot-rl
-   evidence：人类在环强化学习结合世界模型进行跨域适应
-6. [Learning High-Frequency Continuous Action Chunks in Latent Space](/202606/01/2605.24931v1-learning-high-frequency-continuous-action-chunks-in-latent-space)  
-   标签：评分：7.0/10、query:world-models
-   evidence：使用VAE在潜在空间学习高频动作块
-7. [ParkourFormer: Integrating Predictive Supervision and Sequence Modeling into Parkour Locomotion](/202606/01/2605.25782v1-parkourformer-integrating-predictive-supervision-and-sequence-modeling-into-parkour-locomotion)  
-   标签：评分：7.0/10、query:world-models
-   evidence：运动中的未来状态预测建模
-8. [Robust Koopman Control Barrier Filters for Safe Actor-Critic Reinforcement Learning](/202606/01/2605.26452v1-robust-koopman-control-barrier-filters-for-safe-actor-critic-reinforcement-learning)  
-   标签：评分：7.0/10、query:robot-rl
-   evidence：提出基于Koopman控制障碍函数的安全强化学习框架用于机器人
-9. [HyperSim: A Holistic Sim-To-Real Framework For Robust Robotic Manipulation](/202606/01/2605.26638v1-hypersim-a-holistic-sim-to-real-framework-for-robust-robotic-manipulation)  
+   evidence：视觉-语言-动作（VLA）模型的对抗脆弱性分析
+6. [DynaFLIP: Rethinking Robotics Perception via Tri-Modal-Dynamics Guided Representation](/20260524-20260602/2605.30350v1-dynaflip-rethinking-robotics-perception-via-tri-modal-dynamics-guided-representation)  
    标签：评分：7.0/10、query:vla-policy
-   evidence：面向通用策略的仿真到现实框架
-10. [RepSAM: Bridging Foundation Models to Robotic Vision via Representation-Guided Adaptation](/202606/01/2605.25495v1-repsam-bridging-foundation-models-to-robotic-vision-via-representation-guided-adaptation)  
-   标签：评分：6.0/10、query:vla-policy
-   evidence：将基础模型适配到机器人视觉以支持真实世界控制
-11. [Personalizing Embodied Multimodal Large Language Model Agents over Long-term User Interactions](/202606/01/2605.26256v1-personalizing-embodied-multimodal-large-language-model-agents-over-long-term-user-interactions)  
-   标签：评分：6.0/10、query:vla-policy
-   evidence：基于多模态记忆的个性化具身多模态大模型智能体
-12. [Exploiting Local Dynamics Regularity for Reusable Skills in Offline Hierarchical RL](/202606/01/2605.26371v1-exploiting-local-dynamics-regularity-for-reusable-skills-in-offline-hierarchical-rl)  
+   evidence：用于机器人操作感知的动态感知多模态预训练
+7. [Hide-and-Seek in Trajectories: Discovering Failure Signals for VLA Runtime Monitoring](/20260524-20260602/2605.30834v1-hide-and-seek-in-trajectories-discovering-failure-signals-for-vla-runtime-monitoring)  
+   标签：评分：7.0/10、query:vla-policy
+   evidence：VLA策略运行时失败检测
+8. [Enhancing Human-Likeness in Reinforcement Learning Agents via Hierarchical Macro Action Quantization](/20260524-20260602/2605.30928v1-enhancing-human-likeness-in-reinforcement-learning-agents-via-hierarchical-macro-action-quantization)  
+   标签：评分：7.0/10、query:world-models
+   evidence：分层宏动作量化用于学习动作表征
+9. [Building Generalization Into Behavior Generation Via Adaptive Compositions of Regularities](/20260524-20260602/2605.31110v1-building-generalization-into-behavior-generation-via-adaptive-compositions-of-regularities)  
+   标签：评分：7.0/10、query:vla-policy
+   evidence：通过适应性组合规律实现机器人行为生成的泛化
+10. [Dynamic Neural Koopman Distillation for Real-Time Robot Control Using Diffusion Models](/20260524-20260602/2605.24924v1-dynamic-neural-koopman-distillation-for-real-time-robot-control-using-diffusion-models)  
+   标签：评分：6.0/10、query:world-models
+   evidence：蒸馏扩散模型轨迹生成用于实时机器人控制
+11. [How to Mitigate the Distribution Shift Problem in Robotics Control: A Robust and Adaptive Approach Based on Offline to Online Imitation Learning](/20260524-20260602/2605.25414v1-how-to-mitigate-the-distribution-shift-problem-in-robotics-control-a-robust-and-adaptive-approach-based-on-offline-to-online-imitation-learning)  
    标签：评分：6.0/10、query:robot-rl
-   evidence：基于局部动力学规律的分层强化学习技能发现与复用
-13. [Transferable Reinforcement Learning via Probabilistic Latent Embeddings and Dynamic Policy Adaptation for Sim-to-Real Deployment](/202606/01/2605.27659v1-transferable-reinforcement-learning-via-probabilistic-latent-embeddings-and-dynamic-policy-adaptation-for-sim-to-real-deployment)  
+   evidence：离线到在线模仿学习用于机器人控制
+12. [VR-DAgger: Immersive VR for Dexterous Data Collection and Uncertainty-Guided On-Policy Correction](/20260524-20260602/2605.27114v2-vr-dagger-immersive-vr-for-dexterous-data-collection-and-uncertainty-guided-on-policy-correction)  
    标签：评分：6.0/10、query:robot-rl
-   evidence：通过潜在嵌入和动态策略适应实现可迁移的sim-to-real强化学习
+   evidence：人类在环框架，利用VR进行机器人操作的数据收集和策略校正；与人类在环强化学习改善机器人策略相关
+13. [Riding the Shifting Potential: When Reactive Control Suffices for Multi-Goal Behavior](/20260524-20260602/2605.27314v1-riding-the-shifting-potential-when-reactive-control-suffices-for-multi-goal-behavior)  
+   标签：评分：6.0/10、query:world-models
+   evidence：基于图的 world model 结合零空间投影用于多目标控制
 
 
 <div class="dpr-home-promo-card">
