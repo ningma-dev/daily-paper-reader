@@ -1,37 +1,43 @@
 {
-  "generated_at": "2026-06-04T22:14:49.314881+00:00",
-  "updated_date": "20260604",
+  "generated_at": "2026-06-05T08:29:46.716898+00:00",
+  "updated_date": "20260527-20260605",
   "carryover_days": 9,
   "tag_states": {
     "vla-policy": {
-      "updated_date": "20260604",
+      "updated_date": "20260527-20260605",
       "carryover_days": 9,
       "items": []
     },
     "world-models": {
-      "updated_date": "20260604",
+      "updated_date": "20260527-20260605",
       "carryover_days": 9,
       "items": [
         {
-          "id": "2606.01851v2",
+          "id": "2606.02388v1",
           "source": "arxiv",
-          "title": "PHASOR: Phase-Anchored Universal Action Representations for Humanoid Embodiments",
-          "abstract": "Learning a good action embedding space is fundamental to scalable robot policy learning, yet existing methods treat action latents as task-specific intermediates rather than first-class representations. The resulting latents are unstructured, embodiment-specific, and weakly tied to motion semantics, limiting interpretability, controllability, and transferability across robots. We position the action embedding space itself as a first-class design target, with downstream policy quality emerging from representation quality. Exploiting motion's intrinsic periodicity, we factorize it into a phase manifold that captures cyclic structure via FFT-parametric coefficients, together with a pose branch that conditions the manifold on non-periodic configuration detail. Combined with motion-semantic distillation, this factorized structure yields a cross-embodiment motion manifold that is interpretable and embodiment-agnostic by design. Anchoring multiple humanoid robots to a shared human-pretrained manifold then produces a unified action embedding space across diverse platforms, achieving strong cross-embodiment retrieval and consistent gains on downstream robot tasks.",
+          "title": "Policy and World Modeling Co-Training for Language Agents",
+          "abstract": "Reinforcement learning (RL) improves large language model (LLM) agents by teaching them which actions lead to high rewards, but provides little supervision on what those actions do to the environment. World modeling (WM) can fill this gap, yet existing approaches often require separate simulators, extra training stages, or additional inference-time computation. We observe that on-policy RL rollouts already contain the needed signal: each transition pairs an action with its resulting next observation. Based on this observation, we propose PaW, a Policy and World modeling co-training framework that adds auxiliary WM supervision to the same policy during RL, without changing the inference paradigm. To make auxiliary WM supervision informative and stable, PaW introduces three components: action-entropy-based WM data selection, noise-tolerant WM loss, and reward-adaptive loss balancing. Experiments on three agentic task benchmarks show consistent improvements over strong RL baselines across models and RL algorithms. These results suggest that standard RL rollouts are a practical source of WM supervision for language-agent training.",
           "authors": [
-            "Kihyun Kim",
-            "Chaeyun Kim",
-            "Jongho Shin",
-            "Taeyoun Kwon",
-            "Junghyun Kim",
-            "Mijin Koo",
-            "Haon Park"
+            "Ning Lu",
+            "Baijiong Lin",
+            "Shengcai Liu",
+            "Jiahao Wu",
+            "Haoze Lv",
+            "Yanbin Wei",
+            "Lingting Zhu",
+            "Shengju Qian",
+            "Xin Wang",
+            "Ying-Cong Chen",
+            "Qi Wang",
+            "Ke Tang"
           ],
-          "primary_category": "cs.RO",
+          "primary_category": "cs.LG",
           "categories": [
-            "cs.RO"
+            "cs.LG",
+            "cs.AI"
           ],
-          "published": "2026-06-01T08:02:24+00:00",
-          "link": "https://arxiv.org/pdf/2606.01851v2",
+          "published": "2026-06-01T15:35:40+00:00",
+          "link": "https://arxiv.org/pdf/2606.02388v1",
           "tags": [
             "keyword:robot-rl",
             "keyword:vla-policy",
@@ -41,50 +47,47 @@
             "query:world-models"
           ],
           "llm_score": 8.0,
-          "llm_evidence_en": "Universal action representations for robot learning",
-          "llm_evidence_cn": "面向机器人学习的通用动作表征",
-          "llm_evidence": "面向机器人学习的通用动作表征",
-          "canonical_evidence": "面向机器人学习的通用动作表征",
-          "llm_tldr_en": "PHASOR proposes phase-anchored action representations leveraging motion periodicity for scalable robot policy learning.",
-          "llm_tldr_cn": "本文针对现有动作潜在表征结构化不足、难以跨本体迁移的问题，提出PHASOR，利用运动的固有周期性将动作空间分解为相位流形和姿态分支，通过FFT参数化系数捕捉循环结构，从而学习通用且可解释的动作嵌入。该方法在多个机器人平台上的政策学习任务中展现了更好的迁移性和控制质量。",
-          "llm_tldr": "本文针对现有动作潜在表征结构化不足、难以跨本体迁移的问题，提出PHASOR，利用运动的固有周期性将动作空间分解为相位流形和姿态分支，通过FFT参数化系数捕捉循环结构，从而学习通用且可解释的动作嵌入。该方法在多个机器人平台上的政策学习任务中展现了更好的迁移性和控制质量。",
+          "llm_evidence_en": "policy and world model co-training for agents",
+          "llm_evidence_cn": "策略与世界模型协同训练用于智能体",
+          "llm_evidence": "策略与世界模型协同训练用于智能体",
+          "canonical_evidence": "策略与世界模型协同训练用于智能体",
+          "llm_tldr_en": "Proposes PaW framework that adds auxiliary world modeling supervision to on-policy RL rollouts, without extra simulators or inference cost, improving agent understanding of action effects.",
+          "llm_tldr_cn": "该论文提出PaW（策略与世界模型协同训练）框架，利用强化学习在线策略回滚中天然的动作-下一观测对，在不额外引入仿真器或增加推理计算的前提下，为策略添加辅助世界模型监督。该方法使语言智能体不仅学习何种动作带来高奖励，还理解动作对环境的影响，从而在交互任务中表现更鲁棒，为机器人世界模型与策略联合学习提供了新范式。",
+          "llm_tldr": "该论文提出PaW（策略与世界模型协同训练）框架，利用强化学习在线策略回滚中天然的动作-下一观测对，在不额外引入仿真器或增加推理计算的前提下，为策略添加辅助世界模型监督。该方法使语言智能体不仅学习何种动作带来高奖励，还理解动作对环境的影响，从而在交互任务中表现更鲁棒，为机器人世界模型与策略联合学习提供了新范式。",
           "llm_tags": [
             "query:world-models"
           ],
           "matched_query_tag": "query:world-models",
-          "matched_query_text": "learning action representations for robots",
-          "matched_requirement_id": "req-12",
+          "matched_query_text": "World Action Models for robot control",
+          "matched_requirement_id": "req-10",
           "selection_source": "carryover_cache",
-          "paper_id": "2606.01851v2",
+          "paper_id": "2606.02388v1",
           "carry_days": 1
         }
       ]
     },
     "robot-rl": {
-      "updated_date": "20260604",
+      "updated_date": "20260527-20260605",
       "carryover_days": 9,
       "items": [
         {
-          "id": "2606.03335v1",
+          "id": "2606.04749v1",
           "source": "arxiv",
-          "title": "GPU-Parallel Multi-Task Reinforcement Learning with Demonstration Guided Policy Optimization",
-          "abstract": "Large scale GPU-parallel reinforcement learning has changed what can be trained in robot simulation, yet most systems still optimize one specialist policy per task. We propose a construction methodology for turning structured manipulation task families into GPU-parallel multi-task RL benchmarks, and instantiate it as MT-Libero using LIBERO assets and task predicates in Isaac Lab. The resulting benchmark supports simultaneous reinforcement learning over heterogeneous task suites with parallel rendering, physics randomization, and state-input or visual-input policies. To make such training practical under sparse success signals and limited prior data, we further propose DGPO, an on-policy demonstration guided method that combines importance weighted PPO with adaptive behavior cloning on matched demonstration actions. DGPO enables a tunable preference toward demonstrated task distributions, outperforming both prior-free RL and existing demonstration-based methods while preserving the stability and online improvement benefits of on-policy PPO.",
+          "title": "COP-Q: Safety-First Reinforcement Learning for Robot Control via Cholesky-Ordered Projection",
+          "abstract": "Safe robot control requires maximizing return while satisfying safety constraints. In off-policy safe reinforcement learning, reward and safety Q-values are commonly learned by separate critic ensembles, with uncertainty handled independently for each objective. This objective-wise treatment neglects inter-objective correlation and can lead to overly conservative value estimates, thereby reducing sample efficiency. To address this issue, we propose Cholesky-Ordered Projection Q-learning (COP-Q), a safety-first method that incorporates inter-objective covariance into vector-valued Q-value estimation. COP-Q constructs a generalized confidence bound in the joint Q-value space and uses Cholesky factorization to encode objective priority in a sequential form. This preserves conservatism on safety while adaptively reducing excessive conservatism on the reward objective. The resulting estimate is used in both temporal-difference target computation and actor optimization. COP-Q incurs minimal computational overhead and is readily compatible with most existing deep Q-learning frameworks. Experiments on robot locomotion in Brax and safe navigation in Safety-Gymnasium, covering both hard- and soft-safety settings, demonstrate that COP-Q achieves strong safety performance together with competitive or improved sample efficiency relative to representative baselines.",
           "authors": [
-            "Rui Zhang",
-            "Qiwei Wu",
-            "Zhengyu Zhang",
-            "Tao Li",
-            "Yunrong Guo",
-            "Junjie Lai",
-            "Renjing Xu",
-            "Weihua Zhang"
+            "Guopeng Li",
+            "Moritz A. Zanger",
+            "Matthijs T. J. Spaan",
+            "Julian F. P. Kooij"
           ],
           "primary_category": "cs.RO",
           "categories": [
-            "cs.RO"
+            "cs.RO",
+            "cs.LG"
           ],
-          "published": "2026-06-02T08:43:42+00:00",
-          "link": "https://arxiv.org/pdf/2606.03335v1",
+          "published": "2026-06-03T11:30:10+00:00",
+          "link": "https://arxiv.org/pdf/2606.04749v1",
           "tags": [
             "keyword:robot-rl",
             "keyword:vla-policy",
@@ -94,13 +97,13 @@
             "query:world-models"
           ],
           "llm_score": 8.0,
-          "llm_evidence_en": "Multi-task reinforcement learning for robot manipulation with GPU parallelism",
-          "llm_evidence_cn": "基于GPU并行性的机器人操作多任务强化学习",
-          "llm_evidence": "基于GPU并行性的机器人操作多任务强化学习",
-          "canonical_evidence": "基于GPU并行性的机器人操作多任务强化学习",
-          "llm_tldr_en": "MT-Libero benchmark and DGPO algorithm enable GPU-parallel multi-task RL for manipulation with demonstration guidance.",
-          "llm_tldr_cn": "该论文提出构建GPU并行多任务强化学习基准的方法，并实例化为MT-Libero，使用LIBERO资产和Isaac Lab。同时提出DGPO，一种结合演示引导的策略优化方法，在稀疏奖励下利用有限先验数据高效训练。实验表明多任务RL可扩展到异构操作任务族，使训练更加实用。",
-          "llm_tldr": "该论文提出构建GPU并行多任务强化学习基准的方法，并实例化为MT-Libero，使用LIBERO资产和Isaac Lab。同时提出DGPO，一种结合演示引导的策略优化方法，在稀疏奖励下利用有限先验数据高效训练。实验表明多任务RL可扩展到异构操作任务族，使训练更加实用。",
+          "llm_evidence_en": "safe RL method for robot control with improved sample efficiency",
+          "llm_evidence_cn": "面向机器人控制的安全强化学习方法，提高样本效率",
+          "llm_evidence": "面向机器人控制的安全强化学习方法，提高样本效率",
+          "canonical_evidence": "面向机器人控制的安全强化学习方法，提高样本效率",
+          "llm_tldr_en": "COP-Q introduces inter-objective covariance into vector-valued Q-learning for safe robot control, reducing conservativeness and improving sample efficiency.",
+          "llm_tldr_cn": "安全强化学习中，目标和约束的Q值独立估计忽视相关性，导致估计过于保守、样本效率低。本文提出COP-Q，通过Cholesky分解在联合Q值空间中构建广义置信界，纳入目标间协方差。该方法在机器人控制任务中降低了保守性，提高了样本效率。",
+          "llm_tldr": "安全强化学习中，目标和约束的Q值独立估计忽视相关性，导致估计过于保守、样本效率低。本文提出COP-Q，通过Cholesky分解在联合Q值空间中构建广义置信界，纳入目标间协方差。该方法在机器人控制任务中降低了保守性，提高了样本效率。",
           "llm_tags": [
             "query:robot-rl"
           ],
@@ -108,7 +111,7 @@
           "matched_query_text": "reinforcement learning for robot manipulation",
           "matched_requirement_id": "req-21",
           "selection_source": "carryover_cache",
-          "paper_id": "2606.03335v1",
+          "paper_id": "2606.04749v1",
           "carry_days": 1
         }
       ]
