@@ -6,83 +6,83 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-05-27 ~ 2026-06-05
-- 运行时间：2026-06-05 08:39:04 UTC
+- 最新运行日期：2026-06-05
+- 运行时间：2026-06-05 22:23:25 UTC
 - 运行状态：成功
 - 本次总论文数：21
 - 精读区：8
 - 速读区：13
 
 ### 今日简报（AI）
-世界模型在机器人操作领域迎来爆发，综述与基准测试双双发布，精读论文评分高达9.0/10。 值得重点关注的方向是：视频世界模型可信度基准（RoboTrustBench）和稀疏关键帧插值范式（SKIP），它们分别解决了模型评估与效率两大痛点。 建议从《World Models for Robotic Manipulation: A Survey》入手了解全局，再切入RoboTrustBench检验模型可靠性。
-- 详情：[/20260527-20260605/README](/20260527-20260605/README)
+今天21篇论文中，精读聚焦视觉-语言-动作模型，满分论文提出统一世界-语言-动作模型，另一篇关注失败感知的VLA测试生成。最值得看两个方向：World-Language-Action Model实现世界建模与动作合成一体化，以及FATE-VLA为VLA模型提供故障感知测试框架。建议普通读者从此类模型的鲁棒性测试和系统化合成入手，把握VLA从任务成功到安全可靠的关键演变。
+- 详情：[/202606/05/README](/202606/05/README)
 
 ### 精读区论文标签
-1. [World Models for Robotic Manipulation: A Survey](/20260527-20260605/2606.00113v1-world-models-for-robotic-manipulation-a-survey)  
-   标签：评分：9.0/10、query:world-models
-   evidence：关于机器人操作世界模型的综述
-2. [RoboTrustBench: Benchmarking the Trustworthiness of Video World Models for Robotic Manipulation](/20260527-20260605/2606.01600v1-robotrustbench-benchmarking-the-trustworthiness-of-video-world-models-for-robotic-manipulation)  
-   标签：评分：9.0/10、query:world-models
-   evidence：机器人操作视频世界模型的可信度基准
-3. [PHASOR: Phase-Anchored Universal Action Representations for Humanoid Embodiments](/20260527-20260605/2606.01851v2-phasor-phase-anchored-universal-action-representations-for-humanoid-embodiments)  
-   标签：评分：9.0/10、query:world-models
-   evidence：通过相位锚定嵌入空间学习通用动作表征，以支持可扩展策略学习
-4. [Intercepting the Future: Latent-Space Predictive World Model for Dynamic VLA Manipulation](/20260527-20260605/2606.02486v1-intercepting-the-future-latent-space-predictive-world-model-for-dynamic-vla-manipulation)  
-   标签：评分：9.0/10、query:world-models
-   evidence：动态VLA操作的潜在世界模型
-5. [SeeTraceAct: Visibility-Aware Latent Planning from Cross-Embodiment Demonstration Videos](/20260527-20260605/2606.02745v1-seetraceact-visibility-aware-latent-planning-from-cross-embodiment-demonstration-videos)  
+1. [World-Language-Action Model for Unified World Modeling, Language Reasoning, and Action Synthesis](/202606/05/2606.05979v1-world-language-action-model-for-unified-world-modeling-language-reasoning-and-action-synthesis)  
+   标签：评分：10.0/10、query:world-models
+   evidence：世界-语言-动作模型统一世界建模与VLA
+2. [FATE-VLA:Failue-aware test generation for vision-language-action models](/202606/05/2606.02307v1-fate-vlafailue-aware-test-generation-for-vision-language-action-models)  
    标签：评分：9.0/10、query:vla-policy
-   evidence：直接提出基于演示的VLA用于机器人控制
-6. [TTT-VLA: Test-Time Latent Prompt Optimization for Vision-Language-Action Models](/20260527-20260605/2606.03127v1-ttt-vla-test-time-latent-prompt-optimization-for-vision-language-action-models)  
+   evidence：关注VLA模型评估和失败发现
+3. [GPU-Parallel Multi-Task Reinforcement Learning with Demonstration Guided Policy Optimization](/202606/05/2606.03335v1-gpu-parallel-multi-task-reinforcement-learning-with-demonstration-guided-policy-optimization)  
+   标签：评分：9.0/10、query:robot-rl
+   evidence：GPU并行多任务强化学习用于操作任务，含演示引导
+4. [OSCAR: Omni-Embodiment Action-Conditioned World Model for Robotics](/202606/05/2606.04463v2-oscar-omni-embodiment-action-conditioned-world-model-for-robotics)  
+   标签：评分：9.0/10、query:world-models
+   evidence：跨实体动作条件世界模型
+5. [FlowPRO: Reward-Free Reinforced Fine-Tuning of Flow-Matching VLAs via Proximalized Preference Optimization](/202606/05/2606.05468v1-flowpro-reward-free-reinforced-fine-tuning-of-flow-matching-vlas-via-proximalized-preference-optimization)  
+   标签：评分：9.0/10、query:robot-rl
+   evidence：使用偏好优化的无奖励强化学习微调流匹配VLA
+6. [Discrete-WAM: Unified Discrete Vision-Action Token Editing for World-Policy Learning](/202606/05/2606.05645v1-discrete-wam-unified-discrete-vision-action-token-editing-for-world-policy-learning)  
+   标签：评分：9.0/10、query:world-models
+   evidence：提出统一的离散视觉-动作世界策略，联合建模未来状态和动作
+7. [AffordanceVLA: A Vision-Language-Action Model Empowering Action Generation through Affordance-Aware Understanding](/202606/05/2606.06155v1-affordancevla-a-vision-language-action-model-empowering-action-generation-through-affordance-aware-understanding)  
    标签：评分：9.0/10、query:vla-policy
-   evidence：VLA模型测试时提示优化
-7. [GeoSem-WAM: Geometry- and Semantic-Aware World Action Models](/20260527-20260605/2606.03188v1-geosem-wam-geometry--and-semantic-aware-world-action-models)  
-   标签：评分：9.0/10、query:world-models
-   evidence：几何与语义感知的世界动作模型
-8. [Unified Video-Action Joint Denoising for Dexterous Action and Data Generation](/20260527-20260605/2606.03868v1-unified-video-action-joint-denoising-for-dexterous-action-and-data-generation)  
-   标签：评分：9.0/10、query:world-models
-   evidence：对灵巧手操作的视频和动作联合去噪
+   evidence：基于可操作区域定位的视觉-语言-动作模型
+8. [TempoVLA: Learning Speed-Controllable Vision-Language-Action Policies](/202606/05/2606.06491v1-tempovla-learning-speed-controllable-vision-language-action-policies)  
+   标签：评分：9.0/10、query:vla-policy
+   evidence：速度可控的视觉-语言-动作策略
 
 ### 速读区论文标签
-1. [SKIP: Sparse Keyframe Interpolation Paradigm for Efficient Embodied World Models](/20260527-20260605/2606.00664v1-skip-sparse-keyframe-interpolation-paradigm-for-efficient-embodied-world-models)  
+1. [Beyond Task Success: Behavioral and Representational Diagnostics for WAM and VLA](/202606/05/2606.01095v1-beyond-task-success-behavioral-and-representational-diagnostics-for-wam-and-vla)  
    标签：评分：8.0/10、query:world-models
-   evidence：通过关键帧插值实现高效的具身世界模型视频预测
-2. [Behavior-Invariant Task Representation Learning with Transformer-based World Models for Offline Meta-Reinforcement Learning](/20260527-20260605/2606.00780v1-behavior-invariant-task-representation-learning-with-transformer-based-world-models-for-offline-meta-reinforcement-learning)  
+   evidence：WAM和VLA的行为与表示诊断
+2. [RoboDream: Compositional World Models for Scalable Robot Data Synthesis](/202606/05/2606.02577v1-robodream-compositional-world-models-for-scalable-robot-data-synthesis)  
    标签：评分：8.0/10、query:world-models
-   evidence：世界模型用于元强化学习任务表示
-3. [Beyond Task Success: Behavioral and Representational Diagnostics for WAM and VLA](/20260527-20260605/2606.01095v1-beyond-task-success-behavioral-and-representational-diagnostics-for-wam-and-vla)  
-   标签：评分：8.0/10、query:vla-policy
-   evidence：针对VLA与WAM的行为与表征诊断
-4. [Coherent Off-Policy Improvement of Large Behavior Models with Learned Rewards](/20260527-20260605/2606.02194v1-coherent-off-policy-improvement-of-large-behavior-models-with-learned-rewards)  
+   evidence：可扩展数据合成的世界模型
+3. [COP-Q: Safety-First Reinforcement Learning for Robot Control via Cholesky-Ordered Projection](/202606/05/2606.04749v1-cop-q-safety-first-reinforcement-learning-for-robot-control-via-cholesky-ordered-projection)  
    标签：评分：8.0/10、query:robot-rl
-   evidence：针对使用强化学习微调通用机器人策略，通过学习奖励提高样本效率
-5. [FATE-VLA:Failue-aware test generation for vision-language-action models](/20260527-20260605/2606.02307v1-fate-vlafailue-aware-test-generation-for-vision-language-action-models)  
+   evidence：考虑目标间协方差的安全强化学习方法用于机器人控制
+4. [Let It Be Simple: One-Step Action Generation for Vision-Language-Action Models](/202606/05/2606.05737v1-let-it-be-simple-one-step-action-generation-for-vision-language-action-models)  
    标签：评分：8.0/10、query:vla-policy
-   evidence：面向VLA模型的故障感知测试生成
-6. [Lagrangian Perturbation Diffusion Steering: Latent Reinforcement Learning for Generative Policies](/20260527-20260605/2606.01151v1-lagrangian-perturbation-diffusion-steering-latent-reinforcement-learning-for-generative-policies)  
-   标签：评分：7.0/10、query:robot-rl
-   evidence：对冻结的生成式策略进行强化学习微调，用于机器人操作
-7. [Set-Supervised Diffusion Policy: Learning Action-Chunking Diffusion through Corrections](/20260527-20260605/2606.01865v1-set-supervised-diffusion-policy-learning-action-chunking-diffusion-through-corrections)  
-   标签：评分：7.0/10、query:robot-rl
-   evidence：利用人类在环干预中的修正信号改进扩散策略
-8. [World-Task Factorization for Robot Learning](/20260527-20260605/2606.02027v1-world-task-factorization-for-robot-learning)  
+   evidence：面向VLA模型的一步动作生成
+5. [PiL-World: A Chunk-Wise World Model for VLA Policy-in-the-Loop Evaluation](/202606/05/2606.05773v1-pil-world-a-chunk-wise-world-model-for-vla-policy-in-the-loop-evaluation)  
+   标签：评分：8.0/10、query:world-models
+   evidence：用于闭环VLA评估的世界模型
+6. [Expanding Spatial and Temporal Context for Robotic Imitation Learning With Scene Graphs](/202606/05/2606.01072v1-expanding-spatial-and-temporal-context-for-robotic-imitation-learning-with-scene-graphs)  
    标签：评分：7.0/10、query:vla-policy
-   evidence：世界-任务分解用于可泛化机器人学习
-9. [ConTrack: Constrained Hand Motion Tracking with Adaptive Trade-off Control](/20260527-20260605/2606.03177v1-contrack-constrained-hand-motion-tracking-with-adaptive-trade-off-control)  
-   标签：评分：7.0/10、query:robot-rl
-   evidence：用于灵巧操作跟踪的强化学习框架
-10. [Learning-Based Navigation for Indoor Mobile Robots](/20260527-20260605/2605.30468v1-learning-based-navigation-for-indoor-mobile-robots)  
+   evidence：场景图用于模仿学习上下文，提升泛化能力
+7. [RoboTrustBench: Benchmarking the Trustworthiness of Video World Models for Robotic Manipulation](/202606/05/2606.01600v1-robotrustbench-benchmarking-the-trustworthiness-of-video-world-models-for-robotic-manipulation)  
+   标签：评分：7.0/10、query:world-models
+   evidence：用于机器人操作的视频世界模型可信度基准
+8. [Dynamics Are Learned, Not Told: Semi-Supervised Discovery of Latent Dynamics Geometries For Zero-Shot Policy Adaptation](/202606/05/2606.02280v1-dynamics-are-learned-not-told-semi-supervised-discovery-of-latent-dynamics-geometries-for-zero-shot-policy-adaptation)  
+   标签：评分：7.0/10、query:world-models
+   evidence：联合建模潜在动力学与策略适应用于强化学习
+9. [Denoising Tells When to Replan: Denoising-Variance Adaptive Chunking for Flow-Based Robot Policies](/202606/05/2606.03847v1-denoising-tells-when-to-replan-denoising-variance-adaptive-chunking-for-flow-based-robot-policies)  
+   标签：评分：7.0/10、query:vla-policy
+   evidence：基于流的机器人策略的自适应块规划
+10. [Position: Good Embodied Reward Models Need Bad Behavior Data](/202606/05/2606.01036v1-position-good-embodied-reward-models-need-bad-behavior-data)  
    标签：评分：6.0/10、query:robot-rl
-   evidence：真实机器人强化学习导航，使用PPO
-11. [Before Parc Fermé: RL-Time Pruning for Efficient Embodied LLMs in Autonomous Driving](/20260527-20260605/2605.31256v1-before-parc-ferm-rl-time-pruning-for-efficient-embodied-llms-in-autonomous-driving)  
+   evidence：人在回路强化学习需要不良行为数据以构建好的奖励模型
+11. [Towards Interactive Video World Modeling: Frontiers, Challenges, Benchmarks, and Future Trends](/202606/05/2606.01164v1-towards-interactive-video-world-modeling-frontiers-challenges-benchmarks-and-future-trends)  
+   标签：评分：6.0/10、query:world-models
+   evidence：关于交互式视频世界建模的综述，涵盖动作条件生成
+12. [S2M-Trek: From Single to Multi-Sphere Transport via Per-Frame Deep Sets on a Wheel-Legged Robot](/202606/05/2606.01332v1-s2m-trek-from-single-to-multi-sphere-transport-via-per-frame-deep-sets-on-a-wheel-legged-robot)  
    标签：评分：6.0/10、query:robot-rl
-   evidence：强化学习期间剪枝用于机器人的嵌入式大语言模型
-12. [AFUN: Towards an Affordance Foundation Model for Functionality Understanding](/20260527-20260605/2606.02551v1-afun-towards-an-affordance-foundation-model-for-functionality-understanding)  
+   evidence：轮腿机器人多球体运输的强化学习方法
+13. [GN0: Toward a Unified Paradigm for Generation, Evaluation, and Policy Learning in Visual-Language Navigation](/202606/05/2606.03682v1-gn0-toward-a-unified-paradigm-for-generation-evaluation-and-policy-learning-in-visual-language-navigation)  
    标签：评分：6.0/10、query:vla-policy
-   evidence：提出面向机器人操作的可供性基础模型，理解功能
-13. [GN0: Toward a Unified Paradigm for Generation, Evaluation, and Policy Learning in Visual-Language Navigation](/20260527-20260605/2606.03682v1-gn0-toward-a-unified-paradigm-for-generation-evaluation-and-policy-learning-in-visual-language-navigation)  
-   标签：评分：6.0/10、query:vla-policy
-   evidence：视觉语言导航策略学习与基准
+   evidence：视觉语言导航中生成、评估与策略学习的统一框架
 
 
 <div class="dpr-home-promo-card">

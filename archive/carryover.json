@@ -1,93 +1,30 @@
 {
-  "generated_at": "2026-06-05T08:29:46.716898+00:00",
-  "updated_date": "20260527-20260605",
+  "generated_at": "2026-06-05T22:11:59.296620+00:00",
+  "updated_date": "20260605",
   "carryover_days": 9,
   "tag_states": {
     "vla-policy": {
-      "updated_date": "20260527-20260605",
-      "carryover_days": 9,
-      "items": []
-    },
-    "world-models": {
-      "updated_date": "20260527-20260605",
+      "updated_date": "20260605",
       "carryover_days": 9,
       "items": [
         {
-          "id": "2606.02388v1",
+          "id": "2606.06461v1",
           "source": "arxiv",
-          "title": "Policy and World Modeling Co-Training for Language Agents",
-          "abstract": "Reinforcement learning (RL) improves large language model (LLM) agents by teaching them which actions lead to high rewards, but provides little supervision on what those actions do to the environment. World modeling (WM) can fill this gap, yet existing approaches often require separate simulators, extra training stages, or additional inference-time computation. We observe that on-policy RL rollouts already contain the needed signal: each transition pairs an action with its resulting next observation. Based on this observation, we propose PaW, a Policy and World modeling co-training framework that adds auxiliary WM supervision to the same policy during RL, without changing the inference paradigm. To make auxiliary WM supervision informative and stable, PaW introduces three components: action-entropy-based WM data selection, noise-tolerant WM loss, and reward-adaptive loss balancing. Experiments on three agentic task benchmarks show consistent improvements over strong RL baselines across models and RL algorithms. These results suggest that standard RL rollouts are a practical source of WM supervision for language-agent training.",
+          "title": "Flow-based Policy Adaptation without Policy Updates",
+          "abstract": "Leveraging prior knowledge from pretrained policies, foundation models, or human operators offers an efficient alternative to learning robot skills from scratch. However, these agents often provide actions that are suboptimal, noisy, or misaligned with task-specific expert behavior. We propose GLOVES, a family of flow-based adaptation methods that correct non-expert actions by transporting them toward an expert action distribution. Rather than replacing agentic control with full autonomy, GLOVES performs selective action-level adaptation, improving task success while preserving agent intent. The learned flow also provides a natural in-distribution scoring mechanism through reverse flow evaluation. We use this signal as an intervention gate: actions that appear consistent with the expert distribution are passed through unchanged, while anomalous or out-of-distribution (OOD) actions are corrected. In this way, assistance is only provided when necessary. GLOVES requires only limited expert supervision, using a small number of demonstrations or reusable successful skill segments. By learning local expert action patterns and stitching them during execution, GLOVES provides a lightweight shared-control module for robust action adaptation across tasks and environments. Code and demos are available at ripl.github.io/GLOVES_web.",
           "authors": [
-            "Ning Lu",
-            "Baijiong Lin",
-            "Shengcai Liu",
-            "Jiahao Wu",
-            "Haoze Lv",
-            "Yanbin Wei",
-            "Lingting Zhu",
-            "Shengju Qian",
-            "Xin Wang",
-            "Ying-Cong Chen",
-            "Qi Wang",
-            "Ke Tang"
-          ],
-          "primary_category": "cs.LG",
-          "categories": [
-            "cs.LG",
-            "cs.AI"
-          ],
-          "published": "2026-06-01T15:35:40+00:00",
-          "link": "https://arxiv.org/pdf/2606.02388v1",
-          "tags": [
-            "keyword:robot-rl",
-            "keyword:vla-policy",
-            "keyword:world-models",
-            "query:robot-rl",
-            "query:vla-policy",
-            "query:world-models"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "policy and world model co-training for agents",
-          "llm_evidence_cn": "策略与世界模型协同训练用于智能体",
-          "llm_evidence": "策略与世界模型协同训练用于智能体",
-          "canonical_evidence": "策略与世界模型协同训练用于智能体",
-          "llm_tldr_en": "Proposes PaW framework that adds auxiliary world modeling supervision to on-policy RL rollouts, without extra simulators or inference cost, improving agent understanding of action effects.",
-          "llm_tldr_cn": "该论文提出PaW（策略与世界模型协同训练）框架，利用强化学习在线策略回滚中天然的动作-下一观测对，在不额外引入仿真器或增加推理计算的前提下，为策略添加辅助世界模型监督。该方法使语言智能体不仅学习何种动作带来高奖励，还理解动作对环境的影响，从而在交互任务中表现更鲁棒，为机器人世界模型与策略联合学习提供了新范式。",
-          "llm_tldr": "该论文提出PaW（策略与世界模型协同训练）框架，利用强化学习在线策略回滚中天然的动作-下一观测对，在不额外引入仿真器或增加推理计算的前提下，为策略添加辅助世界模型监督。该方法使语言智能体不仅学习何种动作带来高奖励，还理解动作对环境的影响，从而在交互任务中表现更鲁棒，为机器人世界模型与策略联合学习提供了新范式。",
-          "llm_tags": [
-            "query:world-models"
-          ],
-          "matched_query_tag": "query:world-models",
-          "matched_query_text": "World Action Models for robot control",
-          "matched_requirement_id": "req-10",
-          "selection_source": "carryover_cache",
-          "paper_id": "2606.02388v1",
-          "carry_days": 1
-        }
-      ]
-    },
-    "robot-rl": {
-      "updated_date": "20260527-20260605",
-      "carryover_days": 9,
-      "items": [
-        {
-          "id": "2606.04749v1",
-          "source": "arxiv",
-          "title": "COP-Q: Safety-First Reinforcement Learning for Robot Control via Cholesky-Ordered Projection",
-          "abstract": "Safe robot control requires maximizing return while satisfying safety constraints. In off-policy safe reinforcement learning, reward and safety Q-values are commonly learned by separate critic ensembles, with uncertainty handled independently for each objective. This objective-wise treatment neglects inter-objective correlation and can lead to overly conservative value estimates, thereby reducing sample efficiency. To address this issue, we propose Cholesky-Ordered Projection Q-learning (COP-Q), a safety-first method that incorporates inter-objective covariance into vector-valued Q-value estimation. COP-Q constructs a generalized confidence bound in the joint Q-value space and uses Cholesky factorization to encode objective priority in a sequential form. This preserves conservatism on safety while adaptively reducing excessive conservatism on the reward objective. The resulting estimate is used in both temporal-difference target computation and actor optimization. COP-Q incurs minimal computational overhead and is readily compatible with most existing deep Q-learning frameworks. Experiments on robot locomotion in Brax and safe navigation in Safety-Gymnasium, covering both hard- and soft-safety settings, demonstrate that COP-Q achieves strong safety performance together with competitive or improved sample efficiency relative to representative baselines.",
-          "authors": [
-            "Guopeng Li",
-            "Moritz A. Zanger",
-            "Matthijs T. J. Spaan",
-            "Julian F. P. Kooij"
+            "Luzhe Sun",
+            "Jingtian Ji",
+            "Haoran Chen",
+            "Jiawei Zhou",
+            "Matthew R. Walter"
           ],
           "primary_category": "cs.RO",
           "categories": [
-            "cs.RO",
-            "cs.LG"
+            "cs.RO"
           ],
-          "published": "2026-06-03T11:30:10+00:00",
-          "link": "https://arxiv.org/pdf/2606.04749v1",
+          "published": "2026-06-04T17:51:12+00:00",
+          "link": "https://arxiv.org/pdf/2606.06461v1",
           "tags": [
             "keyword:robot-rl",
             "keyword:vla-policy",
@@ -97,24 +34,34 @@
             "query:world-models"
           ],
           "llm_score": 8.0,
-          "llm_evidence_en": "safe RL method for robot control with improved sample efficiency",
-          "llm_evidence_cn": "面向机器人控制的安全强化学习方法，提高样本效率",
-          "llm_evidence": "面向机器人控制的安全强化学习方法，提高样本效率",
-          "canonical_evidence": "面向机器人控制的安全强化学习方法，提高样本效率",
-          "llm_tldr_en": "COP-Q introduces inter-objective covariance into vector-valued Q-learning for safe robot control, reducing conservativeness and improving sample efficiency.",
-          "llm_tldr_cn": "安全强化学习中，目标和约束的Q值独立估计忽视相关性，导致估计过于保守、样本效率低。本文提出COP-Q，通过Cholesky分解在联合Q值空间中构建广义置信界，纳入目标间协方差。该方法在机器人控制任务中降低了保守性，提高了样本效率。",
-          "llm_tldr": "安全强化学习中，目标和约束的Q值独立估计忽视相关性，导致估计过于保守、样本效率低。本文提出COP-Q，通过Cholesky分解在联合Q值空间中构建广义置信界，纳入目标间协方差。该方法在机器人控制任务中降低了保守性，提高了样本效率。",
+          "llm_evidence_en": "corrects non-expert actions using flow, enabling policy adaptation without retraining, applicable to robot control",
+          "llm_evidence_cn": "使用流修正非专家动作，无需重训练，适用于机器人控制",
+          "llm_evidence": "使用流修正非专家动作，无需重训练，适用于机器人控制",
+          "canonical_evidence": "使用流修正非专家动作，无需重训练，适用于机器人控制",
+          "llm_tldr_en": "Proposes GLOVES, a flow-based method to adapt actions from non-expert sources towards expert distribution, improving task success without policy updates.",
+          "llm_tldr_cn": "面对预训练策略、基础模型或人类操作员提供的动作次优、有噪声等问题，本文提出GLOVES系列流式适应方法，通过将非专家动作输送到专家动作分布来修正动作，无需更新原始策略。该方法保持智能体意图的同时提升任务成功率，并通过反向流评估提供天然分布内评分作为干预门控。这对于集成VLA模型等预训练策略的机器人具有重要应用价值。",
+          "llm_tldr": "面对预训练策略、基础模型或人类操作员提供的动作次优、有噪声等问题，本文提出GLOVES系列流式适应方法，通过将非专家动作输送到专家动作分布来修正动作，无需更新原始策略。该方法保持智能体意图的同时提升任务成功率，并通过反向流评估提供天然分布内评分作为干预门控。这对于集成VLA模型等预训练策略的机器人具有重要应用价值。",
           "llm_tags": [
-            "query:robot-rl"
+            "query:vla-policy"
           ],
-          "matched_query_tag": "query:robot-rl",
-          "matched_query_text": "reinforcement learning for robot manipulation",
-          "matched_requirement_id": "req-21",
+          "matched_query_tag": "query:vla-policy",
+          "matched_query_text": "How to transfer vision language models to real robot control",
+          "matched_requirement_id": "req-6",
           "selection_source": "carryover_cache",
-          "paper_id": "2606.04749v1",
+          "paper_id": "2606.06461v1",
           "carry_days": 1
         }
       ]
+    },
+    "world-models": {
+      "updated_date": "20260605",
+      "carryover_days": 9,
+      "items": []
+    },
+    "robot-rl": {
+      "updated_date": "20260605",
+      "carryover_days": 9,
+      "items": []
     }
   }
 }
