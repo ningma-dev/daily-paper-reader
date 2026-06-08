@@ -6,47 +6,83 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-07
-- 运行时间：2026-06-07 21:20:28 UTC
+- 最新运行日期：2026-06-08
+- 运行时间：2026-06-08 21:14:39 UTC
 - 运行状态：成功
-- 本次总论文数：9
-- 精读区：4
-- 速读区：5
+- 本次总论文数：21
+- 精读区：8
+- 速读区：13
 
 ### 今日简报（AI）
-今日聚焦两篇高分精读：Latent-Space预测世界模型与全具身行动条件世界模型，探讨动态VLA操控与机器人世界模型的前沿方法。值得重点关注《Intercepting the Future》和《OSCAR》两篇9分工作，它们代表了世界模型在机器人操控中的最新进展。后续可进一步探究这些模型在真实机器人环境中的泛化能力与落地潜力。
-- 详情：[/202606/07/README](/202606/07/README)
+今日共收录21篇论文，精读8篇，速读13篇，重点关注两篇高分世界模型研究。最值得细读《GeoSem-WAM: Geometry- and Semantic-Aware World Action Models》与《OSCAR: Omni-Embodiment Action-Conditioned World Model for Robotics》，均获9.0/10分。建议普通读者优先阅读精读列表中的高分论文，深入理解具身智能中世界模型的最新进展。
+- 详情：[/202606/08/README](/202606/08/README)
 
 ### 精读区论文标签
-1. [Intercepting the Future: Latent-Space Predictive World Model for Dynamic VLA Manipulation](/202606/07/2606.02486v1-intercepting-the-future-latent-space-predictive-world-model-for-dynamic-vla-manipulation)  
+1. [GeoSem-WAM: Geometry- and Semantic-Aware World Action Models](/202606/08/2606.03188v1-geosem-wam-geometry--and-semantic-aware-world-action-models)  
    标签：评分：9.0/10、query:world-models
-   evidence：用于动态VLA操作的潜在空间预测世界模型
-2. [OSCAR: Omni-Embodiment Action-Conditioned World Model for Robotics](/202606/07/2606.04463v2-oscar-omni-embodiment-action-conditioned-world-model-for-robotics)  
+   evidence：几何与语义感知的世界动作模型
+2. [OSCAR: Omni-Embodiment Action-Conditioned World Model for Robotics](/202606/08/2606.04463v2-oscar-omni-embodiment-action-conditioned-world-model-for-robotics)  
    标签：评分：9.0/10、query:world-models
-   evidence：跨本体的动作条件视频世界模型，用于机器人策略评估
-3. [Flash-WAM: Modality-Aware Distillation for World Action Models](/202606/07/2606.05254v1-flash-wam-modality-aware-distillation-for-world-action-models)  
+   evidence：跨本体的动作条件视频世界模型
+3. [MPCoT: Reward-Guided Multi-Path Latent Reasoning for Test-Time Scalable Vision-Language-Action](/202606/08/2606.06245v1-mpcot-reward-guided-multi-path-latent-reasoning-for-test-time-scalable-vision-language-action)  
+   标签：评分：9.0/10、query:vla-policy
+   evidence：奖励引导的多路径潜在推理用于VLA策略
+4. [ActionMap: Robot Policy Learning via Voxel Action Heatmap](/202606/08/2606.06904v1-actionmap-robot-policy-learning-via-voxel-action-heatmap)  
+   标签：评分：9.0/10、query:vla-policy
+   evidence：体素热图动作头改进了VLA动作解码
+5. [LARA: Latent Action Representation Alignment for Vision-Language-Action Models](/202606/08/2606.07100v1-lara-latent-action-representation-alignment-for-vision-language-action-models)  
    标签：评分：9.0/10、query:world-models
-   evidence：面向世界行动模型的模态感知蒸馏加速方法
-4. [RoboDream: Compositional World Models for Scalable Robot Data Synthesis](/202606/07/2606.02577v1-robodream-compositional-world-models-for-scalable-robot-data-synthesis)  
-   标签：评分：8.0/10、query:world-models
-   evidence：可控世界模型用于生成包含新物体和新场景的机器人操作演示
+   evidence：潜在动作模型与VLA模型的表示对齐
+6. [Coarse-to-Control: Action-Token Planning for Vision-Language-Action Models](/202606/08/2606.07107v1-coarse-to-control-action-token-planning-for-vision-language-action-models)  
+   标签：评分：9.0/10、query:vla-policy
+   evidence：在动作词元空间中引入规划的VLA模型
+7. [Robotic Policy Adaptation via Weight-Space Meta-Learning](/202606/08/2606.07217v1-robotic-policy-adaptation-via-weight-space-meta-learning)  
+   标签：评分：9.0/10、query:vla-policy
+   evidence：无需微调的VLA策略元学习适应
+8. [RhinoVLA Technical Report](/202606/08/2606.07383v1-rhinovla-technical-report)  
+   标签：评分：9.0/10、query:vla-policy
+   evidence：边缘端VLA机器人控制模型
 
 ### 速读区论文标签
-1. [All Models are Wrong, Knowing Where is Useful: On Model Uncertainty in Reinforcement Learning](/202606/07/2606.01363v1-all-models-are-wrong-knowing-where-is-useful-on-model-uncertainty-in-reinforcement-learning)  
-   标签：评分：7.0/10、query:robot-rl
-   evidence：基于模型强化学习中处理模型不确定性的方法，支持机器人安全学习
-2. [SplitAdapter: Load-Aware Humanoid Loco-Manipulation via Factorized Adaptation](/202606/07/2606.03297v1-splitadapter-load-aware-humanoid-loco-manipulation-via-factorized-adaptation)  
+1. [All Models are Wrong, Knowing Where is Useful: On Model Uncertainty in Reinforcement Learning](/202606/08/2606.01363v1-all-models-are-wrong-knowing-where-is-useful-on-model-uncertainty-in-reinforcement-learning)  
+   标签：评分：8.0/10、query:robot-rl
+   evidence：解决机器人基于模型RL中的不确定性
+2. [AxisGuide: Grounding Robot Action Coordinate System in RGB Observations for Robust Visuomotor Manipulation](/202606/08/2606.06761v1-axisguide-grounding-robot-action-coordinate-system-in-rgb-observations-for-robust-visuomotor-manipulation)  
+   标签：评分：8.0/10、query:vla-policy
+   evidence：为视觉运动策略建立动作坐标系
+3. [GenPO++: Generative Policy Optimization with Jacobian-free Likelihood Ratios](/202606/08/2606.06967v1-genpo-generative-policy-optimization-with-jacobian-free-likelihood-ratios)  
+   标签：评分：8.0/10、query:robot-rl
+   evidence：基于流策略的生成策略优化，使用无雅可比似然比进行RL
+4. [Task Editing for Generalizable 3D Visuomotor Policy Learning](/202606/08/2606.07012v1-task-editing-for-generalizable-3d-visuomotor-policy-learning)  
+   标签：评分：8.0/10、query:vla-policy
+   evidence：任务编辑实现可泛化的3D视觉运动策略，与机器人基础模型相关
+5. [Dreaming when Necessary: Advancing World Action Models with Adaptive Multi-Modal Reasoning](/202606/08/2606.07089v1-dreaming-when-necessary-advancing-world-action-models-with-adaptive-multi-modal-reasoning)  
+   标签：评分：8.0/10、query:world-models
+   evidence：具有自适应多模态推理的世界动作模型用于长时任务
+6. [CAPE: Contrastive Action-conditioned Parallel Encoding for Embodied Planning](/202606/08/2606.07304v1-cape-contrastive-action-conditioned-parallel-encoding-for-embodied-planning)  
+   标签：评分：8.0/10、query:world-models
+   evidence：基于对比学习的动作条件动力学模型用于规划
+7. [STRIPS-WM: Learning Grounded Propositional STRIPS-style World Models from Images](/202606/08/2606.06832v1-strips-wm-learning-grounded-propositional-strips-style-world-models-from-images)  
    标签：评分：7.0/10、query:world-models
-   evidence：使用世界模型目标训练人形机器人定位操作中的上下文编码器
-3. [HORIZON: Recoverability-Governed Curriculum for Physical-Domain Scaling](/202606/07/2606.05143v1-horizon-recoverability-governed-curriculum-for-physical-domain-scaling)  
+   evidence：从图像转换中学习符号化世界模型用于任务规划
+8. [Spline Policy: A Structured Representation for Robot Policies](/202606/08/2606.07386v1-spline-policy-a-structured-representation-for-robot-policies)  
+   标签：评分：7.0/10、query:world-models
+   evidence：用结构化样条表示替代动作块的机器人策略
+9. [Affordance-Based Hierarchical Reinforcement Learning for Quadruped Pedipulation](/202606/08/2606.07506v1-affordance-based-hierarchical-reinforcement-learning-for-quadruped-pedipulation)  
    标签：评分：7.0/10、query:robot-rl
-   evidence：提出基于可恢复性的课程学习，扩展机器人强化学习政策的物理域
-4. [Worth Remembering: Surprise-Gated Robot Episodic Memory](/202606/07/2606.03787v2-worth-remembering-surprise-gated-robot-episodic-memory)  
+   evidence：基于可供性的层次强化学习用于四足机器人操作
+10. [ReSkill: Reconciling Skill Creation with Policy Optimization in Agentic RL](/202606/08/2606.01619v1-reskill-reconciling-skill-creation-with-policy-optimization-in-agentic-rl)  
+   标签：评分：6.0/10、query:robot-rl
+   evidence：循环技能创建与策略优化的RL框架用于通用策略微调
+11. [Goal2Pixel: Grounding Goals to Pixels for Vision-Language Navigation](/202606/08/2606.01621v1-goal2pixel-grounding-goals-to-pixels-for-vision-language-navigation)  
    标签：评分：6.0/10、query:vla-policy
-   evidence：用于通用机器人的情景记忆，将指令与历史经验关联
-5. [VOLT: Vision and Language Trajectory Segmentation for Faster-than-Demonstration Policies](/202606/07/2606.06323v1-volt-vision-and-language-trajectory-segmentation-for-faster-than-demonstration-policies)  
+   evidence：基于像素的VLM接地用于机器人导航
+12. [ConTraIRL: Factorized Contrastive Abstractions for Transferable IRL](/202606/08/2606.03017v1-contrairl-factorized-contrastive-abstractions-for-transferable-irl)  
    标签：评分：6.0/10、query:vla-policy
-   evidence：视觉-语言轨迹分割以实现加速策略
+   evidence：学习解耦潜在表示实现奖励迁移，支持跨任务泛化
+13. [Let the Dynamics Flow: Stable Flow Matching Dynamical Systems](/202606/08/2606.03834v1-let-the-dynamics-flow-stable-flow-matching-dynamical-systems)  
+   标签：评分：6.0/10、query:world-models
+   evidence：稳定流匹配动力系统，实现安全可泛化的机器人运动策略
 
 
 <div class="dpr-home-promo-card">
