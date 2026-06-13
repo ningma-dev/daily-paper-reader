@@ -1,22 +1,487 @@
 {
-  "generated_at": "2026-06-08T21:03:32.132546+00:00",
-  "updated_date": "20260608",
+  "generated_at": "2026-06-13T21:22:00.645571+00:00",
+  "updated_date": "20260613",
   "carryover_days": 9,
   "tag_states": {
     "vla-policy": {
-      "updated_date": "20260608",
+      "updated_date": "20260613",
       "carryover_days": 9,
-      "items": []
+      "items": [
+        {
+          "id": "2606.10025v1",
+          "source": "arxiv",
+          "title": "GHOST: Hierarchical Sub-Goal Policies for Generalizing Robot Manipulation",
+          "abstract": "We present GHOST, a framework for learning visuomotor manipulation policies that generalize beyond the training distribution. GHOST factorizes control into (i) a high-level policy that predicts the next sub-goal as a distribution over 3D end-effector poses from multi-view RGB-D observations, and (ii) a low-level goal-conditioned controller that executes embodiment-specific actions. To condition image-based policies on 3D goals, we introduce a simple spatial interface that projects predicted goals into the image plane and represents them as end-effector heatmaps. Across a suite of manipulation tasks, this hierarchical factorization consistently improves performance and robustness compared to a flat Diffusion Policy.   Further, we show that this hierarchical interface also makes it easy to incorporate human demonstrations without relying on (noisy) action retargeting. As sub-goals are largely embodiment-agnostic, we train the high-level policy on human video to specify how learned skills should be applied and composed, while keeping the low-level policy trained purely on robot data. This hierarchy enables adaptation to novel objects and task variations using a small number of human demonstrations.",
+          "authors": [
+            "Sriram Krishna",
+            "Ben Eisner",
+            "Haotian Zhan",
+            "Ying Yuan",
+            "Haoyu Zhen",
+            "Chuang Gan",
+            "Shubham Tulsiani",
+            "David Held"
+          ],
+          "primary_category": "cs.RO",
+          "categories": [
+            "cs.RO",
+            "cs.CV",
+            "cs.LG"
+          ],
+          "published": "2026-06-08T18:08:01+00:00",
+          "link": "https://arxiv.org/pdf/2606.10025v1",
+          "tags": [
+            "keyword:robot-rl",
+            "keyword:vla-policy",
+            "keyword:world-models",
+            "query:robot-rl",
+            "query:vla-policy",
+            "query:world-models"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "Hierarchical sub-goal policies for cross-task generalization in manipulation",
+          "llm_evidence_cn": "用于跨任务泛化操作的层次化子目标策略",
+          "llm_evidence": "用于跨任务泛化操作的层次化子目标策略",
+          "canonical_evidence": "用于跨任务泛化操作的层次化子目标策略",
+          "llm_tldr_en": "GHOST factorizes manipulation policy into high-level sub-goal prediction and low-level control, achieving generalization beyond training distribution via hierarchical structure and 3D goal heatmaps.",
+          "llm_tldr_cn": "GHOST将操控策略分解为高层子目标预测和低层控制器，通过层次化结构和3D目标热图实现训练分布外的泛化，在多种任务上优于平面扩散策略。",
+          "llm_tldr": "GHOST将操控策略分解为高层子目标预测和低层控制器，通过层次化结构和3D目标热图实现训练分布外的泛化，在多种任务上优于平面扩散策略。",
+          "llm_tags": [
+            "query:vla-policy"
+          ],
+          "matched_query_tag": "query:vla-policy",
+          "matched_query_text": "cross-task generalization in robot learning",
+          "matched_requirement_id": "req-4",
+          "selection_source": "carryover_cache",
+          "paper_id": "2606.10025v1",
+          "carry_days": 1
+        },
+        {
+          "id": "2606.10568v1",
+          "source": "arxiv",
+          "title": "VeriSpace: Spatially Grounded Action Verification for Vision-Language-Action Models",
+          "abstract": "Vision-language-action (VLA) models have shown strong promise for robotic manipulation, but their reliability at test time remains limited by one-shot action prediction, where even small action errors can cause grasp failure, collision, or incorrect task progression. A natural alternative is to equip VLA systems with test-time verification, allowing multiple candidate actions to be proposed and evaluated before execution. However, reliable action verification is challenging because it requires not only distinguishing subtle geometric differences between candidate actions, but also assessing whether an action makes meaningful progress toward the task goal. We present VeriSpace, a 3D-aware action verifier for test-time action selection in VLA systems. VeriSpace evaluates candidate actions through two key components: Dual-Path 3D-Injected Scene Encoding, which constructs a scene representation that jointly preserves visual semantics and explicit 3D geometry, and Spatially-Grounded Action Reasoning, which evaluates each action by reasoning over task-relevant spatial relations, geometric validity, and expected goal progress. Together, these components enable more reliable discrimination between subtle yet outcome-critical action candidates while remaining fully compatible with existing VLA policies. Experiments on public benchmarks and real-world robotic manipulation tasks show that VeriSpace consistently improves decision reliability over both underlying VLA policies and prior verification-based methods, yielding substantial gains in both in-distribution and out-of-distribution settings.",
+          "authors": [
+            "Guiyu Zhao",
+            "Longteng Guo",
+            "Junyou Zhu",
+            "Jun Fu",
+            "Yanghong Mei",
+            "Bin Cao",
+            "Jie Jiang",
+            "Xingjian He",
+            "Jing Liu"
+          ],
+          "primary_category": "cs.RO",
+          "categories": [
+            "cs.RO"
+          ],
+          "published": "2026-06-09T08:31:59+00:00",
+          "link": "https://arxiv.org/pdf/2606.10568v1",
+          "tags": [
+            "keyword:robot-rl",
+            "keyword:vla-policy",
+            "keyword:world-models",
+            "query:robot-rl",
+            "query:vla-policy",
+            "query:world-models"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "Test-time action verification framework for VLA models to improve reliability via 3D-aware verification",
+          "llm_evidence_cn": "为VLA模型提供测试时动作验证框架，通过三维感知验证提升可靠性",
+          "llm_evidence": "为VLA模型提供测试时动作验证框架，通过三维感知验证提升可靠性",
+          "canonical_evidence": "为VLA模型提供测试时动作验证框架，通过三维感知验证提升可靠性",
+          "llm_tldr_en": "VeriSpace introduces a 3D-aware action verifier for test-time selection among multiple candidate actions in VLA systems, improving manipulation reliability without retraining.",
+          "llm_tldr_cn": "VeriSpace提出一种三维感知的动作验证器，用于VLA系统的测试时多候选动作选择，在不重新训练的情况下提升操作可靠性和任务成功率。",
+          "llm_tldr": "VeriSpace提出一种三维感知的动作验证器，用于VLA系统的测试时多候选动作选择，在不重新训练的情况下提升操作可靠性和任务成功率。",
+          "llm_tags": [
+            "query:vla-policy"
+          ],
+          "matched_query_tag": "query:vla-policy",
+          "matched_query_text": "vision-language-action model for robot control",
+          "matched_requirement_id": "req-1",
+          "selection_source": "carryover_cache",
+          "paper_id": "2606.10568v1",
+          "carry_days": 1
+        },
+        {
+          "id": "2606.09572v1",
+          "source": "arxiv",
+          "title": "CT-VAM: A Cerebello-Thalamic-Inspired Vision-Action Model for Efficient Visuomotor Control",
+          "abstract": "Vision-language-action models have shown strong promise for robot manipulation, yet raw language is primarily needed to specify task intent rather than to be repeatedly processed during high-frequency low-level execution. Motivated by this separation, we propose a cerebello-thalamic-inspired vision-action model (CT-VAM) for efficient task-conditioned visuomotor control. CT-VAM acts as a compact local execution policy that predicts action chunks from dualview visual observations, proprioception, and a lightweight task condition, potentially enabling a practical cloud-edge paradigm in which high-level semantic reasoning can be handled by large models while fast closed-loop control runs on local hardware. To fuse heterogeneous inputs effectively, CT-VAM introduces TARS (Thalamic Action Routing Stream), a stream-separated conditional attention decoder that independently routes action, visual and task streams, preventing dense sensory tokens from overwhelming compact task-relevant conditions. With only 68M parameters, CT-VAM achieves LIBERO success rates competitive with substantially larger VLA models, while reducing inference latency. Together with flow-consistent inpainting for asynchronous chunk execution, CT-VAM supports high-frequency control and demonstrates robust realworld deployment on resource-constrained robotic platforms.",
+          "authors": [
+            "Jiacheng Li",
+            "Yize Guo",
+            "Jiabin Guo",
+            "Qingchen Liu",
+            "Jiahu Qin"
+          ],
+          "primary_category": "cs.RO",
+          "categories": [
+            "cs.RO",
+            "cs.AI"
+          ],
+          "published": "2026-06-08T14:46:43+00:00",
+          "link": "https://arxiv.org/pdf/2606.09572v1",
+          "tags": [
+            "keyword:robot-rl",
+            "keyword:vla-policy",
+            "keyword:world-models",
+            "query:robot-rl",
+            "query:vla-policy",
+            "query:world-models"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "Proposes a cerebello-thalamic-inspired vision-action model for efficient visuomotor control, relevant to VLA.",
+          "llm_evidence_cn": "提出类小脑-丘脑启发的视觉-动作模型，用于高效视觉运动控制，与VLA相关。",
+          "llm_evidence": "提出类小脑-丘脑启发的视觉-动作模型，用于高效视觉运动控制，与VLA相关。",
+          "canonical_evidence": "提出类小脑-丘脑启发的视觉-动作模型，用于高效视觉运动控制，与VLA相关。",
+          "llm_tldr_en": "CT-VAM is a compact vision-action model inspired by the cerebellum-thalamus circuit, enabling efficient local execution from visual observations and task conditions, suitable for cloud-edge deployment.",
+          "llm_tldr_cn": "CT-VAM针对VLA模型中语言处理频繁导致低层执行效率低的问题，受小脑-丘脑环路启发，提出一种紧致的视觉-动作模型作为本地执行策略。该模型从双视角视觉和本体感知以及轻量任务条件中预测动作块，无需重复处理语言，支持云端语义推理与本地快速闭环控制的云边协同。实验表明在多种操控任务上实现了高成功率与低延迟。",
+          "llm_tldr": "CT-VAM针对VLA模型中语言处理频繁导致低层执行效率低的问题，受小脑-丘脑环路启发，提出一种紧致的视觉-动作模型作为本地执行策略。该模型从双视角视觉和本体感知以及轻量任务条件中预测动作块，无需重复处理语言，支持云端语义推理与本地快速闭环控制的云边协同。实验表明在多种操控任务上实现了高成功率与低延迟。",
+          "llm_tags": [
+            "query:vla-policy"
+          ],
+          "matched_query_tag": "query:vla-policy",
+          "matched_query_text": "vision-language-action model for robot control",
+          "matched_requirement_id": "req-1",
+          "selection_source": "carryover_cache",
+          "paper_id": "2606.09572v1",
+          "carry_days": 1
+        },
+        {
+          "id": "2606.11408v1",
+          "source": "arxiv",
+          "title": "Dynamic Execution Horizon Prediction for Chunk-based Robot Policies",
+          "abstract": "Action chunking has become a standard design in modern robot policies, from diffusion/flow policies to vision-language-action models, where the policy predicts a sequence of actions and executes a fixed number of them instead of acting one step at a time. However, this paradigm relies on a key assumption: a fixed execution horizon. During chunk execution, the policy operates open-loop, which is particularly problematic for fine-grained manipulation tasks that require frequent replanning. In practice, the execution horizon is typically chosen through empirical tuning and is highly task-dependent. To this end, we propose Dynamic Execution Horizon Prediction (DEHP), an effective method that trains a lightweight execution-horizon prediction branch using online reinforcement learning while keeping the pretrained chunk policy completely frozen. This makes the method compatible with black-box chunk policies and isolates the effect of adapting the execution horizon from changes to the underlying action generator. Across our evaluations, DEHP improves the success rate of different high-precision and long-horizon manipulation tasks by a large margin. Our qualitative analysis further shows that DEHP predicts shorter execution horizons during fine-grained stages of the task and longer horizons during free-space motion. In this way, DEHP balances the efficiency of open-loop chunk execution with the reactivity of closed-loop single-step control. Project page: https://dehp-chunking.github.io/",
+          "authors": [
+            "Yuchi Zhao",
+            "Miroslav Bogdanovic",
+            "Arjun Sohal",
+            "Liyu Tao",
+            "Kourosh Darvish",
+            "Alán Aspuru-Guzik",
+            "Florian Shkurti",
+            "Animesh Garg"
+          ],
+          "primary_category": "cs.RO",
+          "categories": [
+            "cs.RO"
+          ],
+          "published": "2026-06-09T19:58:31+00:00",
+          "link": "https://arxiv.org/pdf/2606.11408v1",
+          "tags": [
+            "keyword:robot-rl",
+            "keyword:vla-policy",
+            "keyword:world-models",
+            "query:robot-rl",
+            "query:vla-policy",
+            "query:world-models"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "Dynamic execution horizon prediction for chunk-based policies, including VLA models.",
+          "llm_evidence_cn": "针对包括VLA在内的基于块策略的动态执行视界预测。",
+          "llm_evidence": "针对包括VLA在内的基于块策略的动态执行视界预测。",
+          "canonical_evidence": "针对包括VLA在内的基于块策略的动态执行视界预测。",
+          "llm_tldr_en": "DEHP trains a lightweight branch to predict per-step execution horizon for chunk-based policies, improving fine-grained manipulation performance.",
+          "llm_tldr_cn": "DEHP针对现代机器人策略（如扩散/流策略和VLA）中固定执行视界的局限，提出动态执行视界预测方法。它训练一个轻量级分支，利用在线环路数据预测每个步骤应该执行的动作块长度，使策略能够在细粒度操控任务中频繁重规划。实验证明该方法显著提升了任务成功率，同时保持了动作块的效率优势。",
+          "llm_tldr": "DEHP针对现代机器人策略（如扩散/流策略和VLA）中固定执行视界的局限，提出动态执行视界预测方法。它训练一个轻量级分支，利用在线环路数据预测每个步骤应该执行的动作块长度，使策略能够在细粒度操控任务中频繁重规划。实验证明该方法显著提升了任务成功率，同时保持了动作块的效率优势。",
+          "llm_tags": [
+            "query:vla-policy"
+          ],
+          "matched_query_tag": "query:vla-policy",
+          "matched_query_text": "vision-language-action model for robot control",
+          "matched_requirement_id": "req-1",
+          "selection_source": "carryover_cache",
+          "paper_id": "2606.11408v1",
+          "carry_days": 1
+        }
+      ]
     },
     "world-models": {
-      "updated_date": "20260608",
+      "updated_date": "20260613",
       "carryover_days": 9,
-      "items": []
+      "items": [
+        {
+          "id": "2606.12072v1",
+          "source": "arxiv",
+          "title": "World Model Self-Distillation: Training World Models to Solve General Tasks",
+          "abstract": "Pretrained video generators are promising visual world models that exhibit emergent task-solving abilities; however, their reliance on detailed textual descriptions limits their direct use for planning and decision-making. Existing approaches either outsource this reasoning to language or vision-language models, or rely on supervised fine-tuning with paired task-execution videos, which are costly to collect and difficult to scale. We propose a scalable framework that elicits task-solving ability in such models by combining self-distillation with reinforcement learning. Given an unlabeled scene image, a vision-language model generates a candidate task and a detailed step-by-step solution. The solution conditions a pretrained video diffusion model, the Demonstrator; we distill its behavior into an Executor conditioned only on the image and a short task prompt. This transfers execution knowledge from caption-guided generation to instruction-conditioned task solving without curated task-video supervision. We further improve the Executor with reinforcement learning from VLM feedback, exploiting the asymmetry between judging whether a sampled video satisfies a task and generating the solution. Experiments on our proposed WorldTasks-Benchmark and the DreamGen robotics benchmark show that the Executor surpasses the Demonstrator under our VLM-based evaluation protocol and transfers competitively to robotic tasks.",
+          "authors": [
+            "Sebastian Stapf",
+            "Pablo Acuaviva Huertos",
+            "Aram Davtyan",
+            "Paolo Favaro"
+          ],
+          "primary_category": "cs.CV",
+          "categories": [
+            "cs.CV"
+          ],
+          "published": "2026-06-10T13:40:19+00:00",
+          "link": "https://arxiv.org/pdf/2606.12072v1",
+          "tags": [
+            "keyword:robot-rl",
+            "keyword:vla-policy",
+            "keyword:world-models",
+            "query:robot-rl",
+            "query:vla-policy",
+            "query:world-models"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "self-distillation and RL for world model task solving",
+          "llm_evidence_cn": "自蒸馏与强化学习结合的世界模型任务求解",
+          "llm_evidence": "自蒸馏与强化学习结合的世界模型任务求解",
+          "canonical_evidence": "自蒸馏与强化学习结合的世界模型任务求解",
+          "llm_tldr_en": "Combines self-distillation with RL to train world models from unlabeled images, where VLM generates tasks and solutions, and video diffusion model is finetuned via RL for planning.",
+          "llm_tldr_cn": "预训练视频生成器作为世界模型具备任务求解潜力，但依赖详细文本描述。本文提出通过自蒸馏与强化学习结合，从无标签场景图出发：VLM生成任务和逐步解，然后使用强化学习微调视频扩散模型以生成达成目标的状态序列。在多个机器人任务上展示了无需人工标注即可获得可规划的世界模型。",
+          "llm_tldr": "预训练视频生成器作为世界模型具备任务求解潜力，但依赖详细文本描述。本文提出通过自蒸馏与强化学习结合，从无标签场景图出发：VLM生成任务和逐步解，然后使用强化学习微调视频扩散模型以生成达成目标的状态序列。在多个机器人任务上展示了无需人工标注即可获得可规划的世界模型。",
+          "llm_tags": [
+            "query:world-models"
+          ],
+          "matched_query_tag": "query:world-models",
+          "matched_query_text": "joint modeling of future state and action",
+          "matched_requirement_id": "req-15",
+          "selection_source": "carryover_cache",
+          "paper_id": "2606.12072v1",
+          "carry_days": 1
+        },
+        {
+          "id": "2606.10517v1",
+          "source": "arxiv",
+          "title": "LAFP: Preserving Latent Action Structure in Latent Policy Learning via Flow Matching",
+          "abstract": "Learning high-quality latent actions from large-scale unlabeled videos, coupled with limited real-world interaction data for training an action decoder, has emerged as a promising paradigm for scalable latent policy learning. However, existing approaches typically rely on behavior cloning, which tends to collapse inherently multimodal action distributions into unimodal ones, thereby degrading the pretrained latent action structure. While flow matching provides a potential alternative, directly applying it leads to a misalignment between latent actions and physical actions during action decoder training, due to the stochastic nature of the learned policy. To address these, we propose Latent Action Flow Policy (LAFP), which leverages flow matching for latent policy learning and introduces an inference-time interpolation mechanism to mitigate stochasticity-induced misalignment. Experimental results demonstrate that LAFP consistently outperforms prior methods on downstream imitation learning tasks, achieving up to 10-15% improvement in success rate while incurring less than 1x additional inference overhead.",
+          "authors": [
+            "Jiexi Lyu",
+            "Xizhou Bu",
+            "Qingqiu Huang",
+            "Chufeng Tang",
+            "Xiaoshuai Hao",
+            "Hongbo Wang",
+            "Wei Li"
+          ],
+          "primary_category": "cs.CV",
+          "categories": [
+            "cs.CV"
+          ],
+          "published": "2026-06-09T07:49:49+00:00",
+          "link": "https://arxiv.org/pdf/2606.10517v1",
+          "tags": [
+            "keyword:robot-rl",
+            "keyword:vla-policy",
+            "keyword:world-models",
+            "query:robot-rl",
+            "query:vla-policy",
+            "query:world-models"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "latent action learning with flow matching",
+          "llm_evidence_cn": "用流匹配学习潜在动作",
+          "llm_evidence": "用流匹配学习潜在动作",
+          "canonical_evidence": "用流匹配学习潜在动作",
+          "llm_tldr_en": "LAFP uses flow matching to preserve latent action structure in policy learning from unlabeled videos, enabling better alignment with physical actions.",
+          "llm_tldr_cn": "现有方法从无标签视频学习潜在动作时，行为克隆会坍缩多模态分布，而直接应用流匹配会导致潜在动作与物理动作错位。本文提出LAFP，利用流匹配保留潜在动作结构，在有限真实交互数据下训练动作解码器，实现更准确的策略学习。实验验证了该方法在保持动作多模态性方面的有效性。",
+          "llm_tldr": "现有方法从无标签视频学习潜在动作时，行为克隆会坍缩多模态分布，而直接应用流匹配会导致潜在动作与物理动作错位。本文提出LAFP，利用流匹配保留潜在动作结构，在有限真实交互数据下训练动作解码器，实现更准确的策略学习。实验验证了该方法在保持动作多模态性方面的有效性。",
+          "llm_tags": [
+            "query:world-models"
+          ],
+          "matched_query_tag": "query:world-models",
+          "matched_query_text": "latent action models in robotics",
+          "matched_requirement_id": "req-11",
+          "selection_source": "carryover_cache",
+          "paper_id": "2606.10517v1",
+          "carry_days": 1
+        },
+        {
+          "id": "2606.08962v1",
+          "source": "arxiv",
+          "title": "C$^3$ache: Accelerating World Action Models with Cross Inference Chunk Cache",
+          "abstract": "World Action Models (WAMs) generalize better than standard Vision-Language-Action (VLA) policies to novel motions and environments, because a video-modeling objective lets them learn from abundant unlabeled video rather than scarce labeled robot demonstrations. This generalization is computationally expensive. To complete a task, a WAM runs over multiple inference chunks, and each chunk requires a costly denoising process. Existing acceleration methods reduce this cost by caching and reusing computation within a single chunk's denoising trajectory. Our empirical analysis reveals a substantial source of redundancy they overlook: redundancy across chunks. When a robot executes a smooth behavior, the residuals computed at a given denoising step are strongly correlated from one chunk to the next. We introduce C$^3$ache, a training-free method that caches and reuses these residuals across inference chunks at the same denoising step. Experiments on benchmarks with a Fast-WAM backbone show that C$^3$ache achieves up to a $2.5\\times$ speedup in total wall-clock inference time, with negligible degradation in task success rate.",
+          "authors": [
+            "Weisen Zhao",
+            "Lam Nguyen",
+            "Zhicong Lu",
+            "Yuzhang Shang"
+          ],
+          "primary_category": "cs.LG",
+          "categories": [
+            "cs.LG",
+            "cs.CV",
+            "cs.RO"
+          ],
+          "published": "2026-06-08T03:01:10+00:00",
+          "link": "https://arxiv.org/pdf/2606.08962v1",
+          "tags": [
+            "keyword:robot-rl",
+            "keyword:vla-policy",
+            "keyword:world-models",
+            "query:robot-rl",
+            "query:vla-policy",
+            "query:world-models"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "World Action Models acceleration",
+          "llm_evidence_cn": "世界动作模型加速方法",
+          "llm_evidence": "世界动作模型加速方法",
+          "canonical_evidence": "世界动作模型加速方法",
+          "llm_tldr_en": "Proposes C3ache to accelerate World Action Models by caching across inference chunks, reducing denoising cost while maintaining generalization.",
+          "llm_tldr_cn": "世界动作模型（WAM）通过视频建模目标从无标签视频中学习，泛化能力强但计算成本高。本文提出C3ache方法，利用跨推理块间的冗余进行缓存，加速去噪过程，在保持泛化性能的同时大幅降低计算开销，使WAM更实用。",
+          "llm_tldr": "世界动作模型（WAM）通过视频建模目标从无标签视频中学习，泛化能力强但计算成本高。本文提出C3ache方法，利用跨推理块间的冗余进行缓存，加速去噪过程，在保持泛化性能的同时大幅降低计算开销，使WAM更实用。",
+          "llm_tags": [
+            "query:world-models"
+          ],
+          "matched_query_tag": "query:world-models",
+          "matched_query_text": "World Action Models for robot control",
+          "matched_requirement_id": "req-10",
+          "selection_source": "carryover_cache",
+          "paper_id": "2606.08962v1",
+          "carry_days": 1
+        },
+        {
+          "id": "2606.08657v1",
+          "source": "arxiv",
+          "title": "Latent Diffusion Policy: Shaping Latent Spaces for Diffusion-Based Robotic Manipulation",
+          "abstract": "Diffusion-based visuomotor policies operating directly in raw action spaces conflate scene comprehension with trajectory generation within a single denoising process. The resulting velocity field must simultaneously encode scene information and generate precise trajectories, increasing learning complexity and limiting performance on tasks demanding precise temporal coordination across multiple arms. To simplify this joint learning problem, we introduce Latent Diffusion Policy (LDP), a two-stage framework performing flow matching in a deliberately shaped latent space. By absorbing scene understanding into an observation-conditioned CVAE encoder, LDP concentrates the conditional distribution of each observation. Consequently, the flow model avoids implicitly resolving scene-dependent structures; instead, it generates within a pre-concentrated distribution featuring a smoother velocity field, simplifying learning from limited demonstrations. Furthermore, to capture temporal dependencies among latent tokens, LDP trains with per-token diffusion forcing and employs staircase inference sampling to resolve the resulting distributional mismatch. We also propose reconstruction FID (rFID) as a lightweight proxy predicting downstream task success solely from latent space statistics. On coordination-intensive tasks from RoboTwin 2.0, LDP outperforms DP3 by a substantial margin and transfers effectively to real-world bimanual deployments.",
+          "authors": [
+            "Zhexuan Zhou",
+            "Yichen Lai",
+            "Jinhao Zhang",
+            "Huizhe Li",
+            "Youmin Gong",
+            "Jie Mei"
+          ],
+          "primary_category": "cs.RO",
+          "categories": [
+            "cs.RO",
+            "cs.AI"
+          ],
+          "published": "2026-06-07T14:53:28+00:00",
+          "link": "https://arxiv.org/pdf/2606.08657v1",
+          "tags": [
+            "keyword:robot-rl",
+            "keyword:vla-policy",
+            "keyword:world-models",
+            "query:robot-rl",
+            "query:vla-policy",
+            "query:world-models"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "latent action representation for diffusion policy",
+          "llm_evidence_cn": "扩散策略的潜在动作表征学习",
+          "llm_evidence": "扩散策略的潜在动作表征学习",
+          "canonical_evidence": "扩散策略的潜在动作表征学习",
+          "llm_tldr_en": "Introduces Latent Diffusion Policy (LDP), a two-stage framework that learns a shaped latent action space via CVAE for flow matching, simplifying diffusion-based robotic manipulation.",
+          "llm_tldr_cn": "现有扩散策略直接在原始动作空间建模，混合了场景理解和轨迹生成，学习复杂。本文提出Latent Diffusion Policy（LDP），先用CVAE将场景信息吸收到潜在空间，再进行流匹配，将视觉理解和动作生成解耦，从而简化学习，提升多臂协同等精细操作任务的性能。",
+          "llm_tldr": "现有扩散策略直接在原始动作空间建模，混合了场景理解和轨迹生成，学习复杂。本文提出Latent Diffusion Policy（LDP），先用CVAE将场景信息吸收到潜在空间，再进行流匹配，将视觉理解和动作生成解耦，从而简化学习，提升多臂协同等精细操作任务的性能。",
+          "llm_tags": [
+            "query:world-models"
+          ],
+          "matched_query_tag": "query:world-models",
+          "matched_query_text": "learning action representations for robots",
+          "matched_requirement_id": "req-12",
+          "selection_source": "carryover_cache",
+          "paper_id": "2606.08657v1",
+          "carry_days": 1
+        }
+      ]
     },
     "robot-rl": {
-      "updated_date": "20260608",
+      "updated_date": "20260613",
       "carryover_days": 9,
-      "items": []
+      "items": [
+        {
+          "id": "2606.10825v1",
+          "source": "arxiv",
+          "title": "MODIP: Efficient Model-Based Optimization for Diffusion Policies",
+          "abstract": "Diffusion policies (DPs) have emerged as expressive policy representations for robot learning, often used with imitation learning methods such as behavioral cloning (BC). However, while their success has largely been confined to BC, direct reinforcement learning (RL) fine-tuning remains challenging because actions are generated through a multi-step denoising process. In this work, we propose MODIP, a framework for the offline-to-online fine-tuning of DPs. Rather than directly applying RL to the DPs, MODIP leverages a world model (WM) to guide policy adaptation and keeps the simplicity and stability of BC. We utilize model predictive control (MPC) to generate high-quality trajectories within the WM, and use them as supervised targets for fine-tuning the DP. To make MPC planning efficient, MODIP uses a terminal state value instead of a policy-dependent state-action value, reducing inference time. Additionally, MODIP trains critics with policy-independent TD targets, reducing training time. Experiments on D4RL (MuJoCo, Kitchen) and RoboMimic tasks show that MODIP improves diffusion policies beyond BC, and is competitive with or outperforms diffusion policy RL fine-tuning methods and strong model-based baselines such as TD-MPC2.",
+          "authors": [
+            "Zakariae El Asri",
+            "Philippe Gratias-Quiquandon",
+            "Nicolas Thome",
+            "Olivier Sigaud"
+          ],
+          "primary_category": "cs.LG",
+          "categories": [
+            "cs.LG"
+          ],
+          "published": "2026-06-09T13:09:21+00:00",
+          "link": "https://arxiv.org/pdf/2606.10825v1",
+          "tags": [
+            "keyword:robot-rl",
+            "keyword:vla-policy",
+            "keyword:world-models",
+            "query:robot-rl",
+            "query:vla-policy",
+            "query:world-models"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "model-based optimization for diffusion policy fine-tuning",
+          "llm_evidence_cn": "基于模型的扩散策略微调优化",
+          "llm_evidence": "基于模型的扩散策略微调优化",
+          "canonical_evidence": "基于模型的扩散策略微调优化",
+          "llm_tldr_en": "MODIP uses a world model and MPC to generate supervision targets for fine-tuning diffusion policies, enabling stable RL adaptation.",
+          "llm_tldr_cn": "扩散策略在行为克隆中表现出色，但直接强化学习微调因多步去噪过程而困难。MODIP引入世界模型，通过模型预测控制生成高质量轨迹，作为扩散策略的监督目标，实现了稳定的离线到在线微调。该方法在保持行为克隆简单性的同时，显著提升了策略在新环境中的表现。",
+          "llm_tldr": "扩散策略在行为克隆中表现出色，但直接强化学习微调因多步去噪过程而困难。MODIP引入世界模型，通过模型预测控制生成高质量轨迹，作为扩散策略的监督目标，实现了稳定的离线到在线微调。该方法在保持行为克隆简单性的同时，显著提升了策略在新环境中的表现。",
+          "llm_tags": [
+            "query:robot-rl"
+          ],
+          "matched_query_tag": "query:robot-rl",
+          "matched_query_text": "what are effective strategies for fine tuning generalist robot policies with reinforcement learning",
+          "matched_requirement_id": "req-26",
+          "selection_source": "carryover_cache",
+          "paper_id": "2606.10825v1",
+          "carry_days": 1
+        },
+        {
+          "id": "2606.10305v1",
+          "source": "arxiv",
+          "title": "SARM2: Multi-Task Stage Aware Reward Modeling for Self Improving Robotic Manipulation",
+          "abstract": "Fine-tuning vision-language-action (VLA) policies for long-horizon manipulation still relies heavily on behavior cloning, which requires costly high-quality demonstrations and keeps policies near the demonstration distribution. Reward models can reduce this dependence by reweighting demonstrations and providing dense supervision for on-robot reinforcement learning (RL), but they must be dense, accurate, and general. Existing methods fall short: task-specific stage-aware models are accurate but require per-task annotations, while general vision-language-model (VLM) reward models are broadly applicable but too coarse for fine-grained long-horizon progress. We introduce RM, a multi-task stage-aware reward model that combines an action-primitive-based stage estimator with a multi-gate Mixture-of-Experts (MMoE) value head to produce dense per-step rewards across manipulation tasks. Building on RM, we further propose SPIRAL (Self-Policy Improvement via Reward-Aligned Learning), an on-policy reward-guided framework that improves VLA policies from cheap autonomous rollouts. On a 10-task benchmark, RM reduces value-estimation MSE by 80% over the strongest baselines; when used in SPIRAL, it improves task success from around 50% to near-perfect performance on Folding Shorts (58% to 100%) and Cleaning Whiteboard (50% to 90%), showing that high-quality dense rewards are key to a stable robot data flywheel. Project website: https://qianzhong-chen.github.io/sarm2.github.io/.",
+          "authors": [
+            "Qianzhong Chen",
+            "Hau Zheng",
+            "Justin Yu",
+            "Suning Huang",
+            "Jiankai Sun",
+            "Ken Goldberg",
+            "Chuan Wen",
+            "Pieter Abbeel",
+            "Yide Shentu",
+            "Philipp Wu",
+            "Mac Schwager"
+          ],
+          "primary_category": "cs.RO",
+          "categories": [
+            "cs.RO"
+          ],
+          "published": "2026-06-09T01:46:23+00:00",
+          "link": "https://arxiv.org/pdf/2606.10305v1",
+          "tags": [
+            "keyword:robot-rl",
+            "keyword:vla-policy",
+            "keyword:world-models",
+            "query:robot-rl",
+            "query:vla-policy",
+            "query:world-models"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "VR using reward model for VLA fine-tuning",
+          "llm_evidence_cn": "利用奖励模型的强化学习微调VLA策略",
+          "llm_evidence": "利用奖励模型的强化学习微调VLA策略",
+          "canonical_evidence": "利用奖励模型的强化学习微调VLA策略",
+          "llm_tldr_en": "SARM2 introduces multi-task stage-aware reward modeling for self-improving robotic manipulation via RL.",
+          "llm_tldr_cn": "针对长期操作中VLA策略微调依赖行为克隆和昂贵演示的问题，提出SARM2多任务阶段感知奖励模型，结合动作基元和语言标注实现密集准确且通用的奖励信号，用于在线强化学习，实现策略自我改进。",
+          "llm_tldr": "针对长期操作中VLA策略微调依赖行为克隆和昂贵演示的问题，提出SARM2多任务阶段感知奖励模型，结合动作基元和语言标注实现密集准确且通用的奖励信号，用于在线强化学习，实现策略自我改进。",
+          "llm_tags": [
+            "query:robot-rl"
+          ],
+          "matched_query_tag": "query:robot-rl",
+          "matched_query_text": "how is reinforcement learning used to improve vision language action policies for robotic manipulation",
+          "matched_requirement_id": "req-25",
+          "selection_source": "carryover_cache",
+          "paper_id": "2606.10305v1",
+          "carry_days": 1
+        }
+      ]
     }
   }
 }
