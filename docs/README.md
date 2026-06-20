@@ -6,110 +6,92 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-06-18
-- 运行时间：2026-06-18 22:51:03 UTC
+- 最新运行日期：2026-06-20
+- 运行时间：2026-06-20 22:00:33 UTC
 - 运行状态：成功
-- 本次总论文数：30
-- 精读区：17
+- 本次总论文数：24
+- 精读区：11
 - 速读区：13
 
 ### 今日简报（AI）
-今日精读17篇、速读13篇，两篇满分论文聚焦VLA实际部署与世界模型视频生成。最值得关注Hy-Embodied-0.5-VLA的机器人学习全栈方案与Qwen-RobotWorld的语言条件视频生成。建议进一步研究多语言VLA差距、知识蒸馏实现实时VLA，以及能效深度强化学习在仿人机器人中的应用。
-- 详情：[/202606/18/README](/202606/18/README)
+今日聚焦自动驾驶与具身智能世界模型，精读两篇9.0高分论文，速读三篇8.0相关进展。最值得关注的是Metis的通用高效世界-动作模型与Qwen-RobotWorld语言条件视频生成统一框架。建议普通读者先看Metis理解自动驾驶导航新范式，再结合Qwen-RobotWorld探索语言驱动机器人学习。
+- 详情：[/202606/20/README](/202606/20/README)
 
 ### 精读区论文标签
-1. [Hy-Embodied-0.5-VLA: From Vision-Language-Action Models to a Real-World Robot Learning Stack](/202606/18/2606.14409v1-hy-embodied-05-vla-from-vision-language-action-models-to-a-real-world-robot-learning-stack)  
-   标签：评分：10.0/10、query:vla-policy
-   evidence：端到端VLA系统，包含RL后训练
-2. [Qwen-RobotWorld Technical Report: Unifying Embodied World Modeling through Language-Conditioned Video Generation](/202606/18/2606.17030v3-qwen-robotworld-technical-report-unifying-embodied-world-modeling-through-language-conditioned-video-generation)  
-   标签：评分：10.0/10、query:world-models
-   evidence：语言条件视频世界模型用于机器人控制
-3. [MuseVLA: An Adaptive Multimodal Sensing Vision-Language-Action Model for Robotic Manipulation](/202606/18/2606.17598v1-musevla-an-adaptive-multimodal-sensing-vision-language-action-model-for-robotic-manipulation)  
-   标签：评分：10.0/10、query:vla-policy
-   evidence：自适应多模态感知的视觉-语言-动作模型
-4. [Qwen-RobotManip Technical Report: Alignment Unlocks Scale for Robotic Manipulation Foundation Models](/202606/18/2606.17846v2-qwen-robotmanip-technical-report-alignment-unlocks-scale-for-robotic-manipulation-foundation-models)  
-   标签：评分：10.0/10、query:vla-policy
-   evidence：机器人操作基础模型
-5. [WAM-RL: World-Action Model Reinforcement Learning with Reconstruction Rewards and Online Video SFT](/202606/18/2606.17906v1-wam-rl-world-action-model-reinforcement-learning-with-reconstruction-rewards-and-online-video-sft)  
-   标签：评分：10.0/10、query:world-models
-   evidence：世界-动作模型强化学习用于机器人控制
-6. [Motion-Focused Latent Action Enables Cross-Embodiment VLA Training from Human EgoVideos](/202606/18/2606.18955v1-motion-focused-latent-action-enables-cross-embodiment-vla-training-from-human-egovideos)  
-   标签：评分：10.0/10、query:vla-policy
-   evidence：通过潜在动作码本从人体视频进行跨实体VLA训练
-7. [Trajectory-Level Redirection Attacks on Vision-Language-Action Models](/202606/18/2606.12978v2-trajectory-level-redirection-attacks-on-vision-language-action-models)  
-   标签：评分：9.0/10、query:vla-policy
-   evidence：VLA模型的轨迹级重定向攻击
-8. [EV-WM: Event-Verified World Models for Long-Horizon Robotic Manipulation](/202606/18/2606.13053v2-ev-wm-event-verified-world-models-for-long-horizon-robotic-manipulation)  
+1. [Metis: A Generalizable and Efficient World-Action Model for Autonomous Driving and Urban Navigation](/202606/20/2606.15869v1-metis-a-generalizable-and-efficient-world-action-model-for-autonomous-driving-and-urban-navigation)  
    标签：评分：9.0/10、query:world-models
-   evidence：事件验证的世界模型用于长程机器人操纵规划
-9. [$μ_0$: A Scalable 3D Interaction-Trace World Model](/202606/18/2606.13769v2-0-a-scalable-3d-interaction-trace-world-model)  
+   evidence：提出Metis，一种用于自动驾驶的世界动作模型，解决延迟和泛化问题
+2. [Qwen-RobotWorld Technical Report: Unifying Embodied World Modeling through Language-Conditioned Video Generation](/202606/20/2606.17030v2-qwen-robotworld-technical-report-unifying-embodied-world-modeling-through-language-conditioned-video-generation)  
    标签：评分：9.0/10、query:world-models
-   evidence：可扩展的3D交互轨迹世界模型
-10. [Think Less, Act Early: Reinforced Latent Reasoning with Early Exit in Vision-Language-Action Models](/202606/18/2606.15099v1-think-less-act-early-reinforced-latent-reasoning-with-early-exit-in-vision-language-action-models)  
+   evidence：语言条件视频世界模型用于具身智能
+3. [ACE-Ego-0: Unifying Egocentric Human and Robotic Data for VLA Pretraining](/202606/20/2606.17200v1-ace-ego-0-unifying-egocentric-human-and-robotic-data-for-vla-pretraining)  
    标签：评分：9.0/10、query:vla-policy
-   evidence：强化学习去噪的潜在推理VLA模型
-11. [ATHENA: Accelerated Multi-Task Heterogeneous Influence Functions for Robot Data Curation](/202606/18/2606.16208v1-athena-accelerated-multi-task-heterogeneous-influence-functions-for-robot-data-curation)  
+   evidence：利用自我中心人类视频和机器人数据的统一VLA预训练框架
+4. [PearlVLA: Progressive Embodied Action-Plan Refinement in Latent Space](/202606/20/2606.17924v1-pearlvla-progressive-embodied-action-plan-refinement-in-latent-space)  
    标签：评分：9.0/10、query:vla-policy
-   evidence：为十亿参数VLA模型进行数据筛选
-12. [Unified Motion-Action Modeling for Heterogeneous Robot Learning](/202606/18/2606.16917v1-unified-motion-action-modeling-for-heterogeneous-robot-learning)  
+   evidence：VLA模型的潜在空间 deliberation
+5. [PAIWorld: A 3D-Consistent World Foundation Model for Robotic Manipulation](/202606/20/2606.18375v1-paiworld-a-3d-consistent-world-foundation-model-for-robotic-manipulation)  
    标签：评分：9.0/10、query:world-models
-   evidence：将物体运动与机器人动作联合建模为世界-动作模型
-13. [Geometric Action Model for Robot Policy Learning](/202606/18/2606.17046v1-geometric-action-model-for-robot-policy-learning)  
-   标签：评分：9.0/10、query:vla-policy
-   evidence：使用几何基础模型的语言条件操作策略
-14. [WeaveLA: Event Driven Cross-Subtask Latent Memory Weaving for Repetitive Robot Manipulation](/202606/18/2606.17463v1-weavela-event-driven-cross-subtask-latent-memory-weaving-for-repetitive-robot-manipulation)  
-   标签：评分：9.0/10、query:vla-policy
-   evidence：为视觉-语言-动作策略增加跨子任务记忆
-15. [Visual Verification Enables Inference-time Steering and Autonomous Policy Improvement](/202606/18/2606.18247v1-visual-verification-enables-inference-time-steering-and-autonomous-policy-improvement)  
-   标签：评分：9.0/10、query:vla-policy
-   evidence：通用机器人策略结合视觉验证器实现推理时引导和自我改进
-16. [DREAM-Chunk: Reactive Action Chunking with Latent World Model](/202606/18/2606.18589v1-dream-chunk-reactive-action-chunking-with-latent-world-model)  
+   evidence：3D一致的世界基础模型用于操纵
+6. [Motion-Focused Latent Action Enables Cross-Embodiment VLA Training from Human EgoVideos](/202606/20/2606.18955v1-motion-focused-latent-action-enables-cross-embodiment-vla-training-from-human-egovideos)  
    标签：评分：9.0/10、query:world-models
-   evidence：用于VLA动作分块的隐世界模型
-17. [Object-Centric Residual RL for Zero-Shot Sim-to-Real VLA Enhancement](/202606/18/2606.18953v1-object-centric-residual-rl-for-zero-shot-sim-to-real-vla-enhancement)  
-   标签：评分：9.0/10、query:robot-rl
-   evidence：RL通过仿真到现实迁移改进VLA策略
+   evidence：从人类视频提取潜动作表示实现跨本体VLA训练
+7. [EventVLA: Event-Driven Visual Evidence Memory for Long-Horizon Vision-Language-Action Policies](/202606/20/2606.20092v1-eventvla-event-driven-visual-evidence-memory-for-long-horizon-vision-language-action-policies)  
+   标签：评分：9.0/10、query:vla-policy
+   evidence：事件驱动的视觉证据记忆用于长程VLA策略
+8. [Sensorimotor World Models: Perception for Action via Inverse Dynamics](/202606/20/2606.20104v1-sensorimotor-world-models-perception-for-action-via-inverse-dynamics)  
+   标签：评分：9.0/10、query:world-models
+   evidence：使用逆动力学正则化的感知运动世界模型
+9. [Finetuning Vision-Language-Action Models Requires Fewer Layers Than You Think](/202606/20/2606.20246v1-finetuning-vision-language-action-models-requires-fewer-layers-than-you-think)  
+   标签：评分：9.0/10、query:vla-policy
+   evidence：无训练的结构压缩用于VLA微调
+10. [Co-VLA: Coordination-Aware Structured Action Modeling for Dual-Arm Vision-Language-Action Systems](/202606/20/2606.20285v1-co-vla-coordination-aware-structured-action-modeling-for-dual-arm-vision-language-action-systems)  
+   标签：评分：9.0/10、query:vla-policy
+   evidence：双机械臂VLA的协调感知结构化动作建模
+11. [MemoryWAM: Efficient World Action Modeling with Persistent Memory](/202606/20/2606.20562v1-memorywam-efficient-world-action-modeling-with-persistent-memory)  
+   标签：评分：9.0/10、query:world-models
+   evidence：通过持久记忆联合建模视觉预测和动作
 
 ### 速读区论文标签
-1. [RT-VLA: Real-Time Vision-Language-Action Models via Knowledge Distillation](/202606/18/2606.14010v1-rt-vla-real-time-vision-language-action-models-via-knowledge-distillation)  
+1. [Learned Image Compression for Vision-Language-Action Models](/202606/20/2606.16253v1-learned-image-compression-for-vision-language-action-models)  
    标签：评分：8.0/10、query:vla-policy
-   evidence：通过知识蒸馏实现实时VLA模型用于自动驾驶
-2. [Beyond English: Uncovering the Multilingual Gap in Vision-Language-Action Models](/202606/18/2606.15714v1-beyond-english-uncovering-the-multilingual-gap-in-vision-language-action-models)  
+   evidence：为VLA驱动机器人定制的新型图像压缩方法
+2. [RHO: Your Coding Agent is Secretly a Roboticist](/202606/20/2606.16458v1-rho-your-coding-agent-is-secretly-a-roboticist)  
    标签：评分：8.0/10、query:vla-policy
-   evidence：视觉-语言-动作模型的多语言评估
-3. [Energy-Efficient Arm Reaching for a Humanoid Robot via Deep Reinforcement Learning with Identified Power Models](/202606/18/2606.15918v1-energy-efficient-arm-reaching-for-a-humanoid-robot-via-deep-reinforcement-learning-with-identified-power-models)  
+   evidence：通过代码即策略和仓库搜索实现通用机器人策略
+3. [Steering Generative Reinforcement Learning into Stable Robotic Controller](/202606/20/2606.16572v1-steering-generative-reinforcement-learning-into-stable-robotic-controller)  
    标签：评分：8.0/10、query:robot-rl
-   evidence：深度强化学习用于机器人操纵的能耗优化
-4. [ATOM-Bench: A Real-World Benchmark for Atomic Skills and Compositional Generalization in Manipulation Policies](/202606/18/2606.16826v1-atom-bench-a-real-world-benchmark-for-atomic-skills-and-compositional-generalization-in-manipulation-policies)  
+   evidence：潜在空间强化学习框架稳定生成式策略
+4. [EgoInfinity: A Web-Scale 4D Hand-Object Interaction Data Engine for Any-View Robot Retargeting and Video-to-Action Robot Learning](/202606/20/2606.17385v1-egoinfinity-a-web-scale-4d-hand-object-interaction-data-engine-for-any-view-robot-retargeting-and-video-to-action-robot-learning)  
    标签：评分：8.0/10、query:vla-policy
-   evidence：操作策略组合泛化基准
-5. [ROVE: Unlocking Human Interventions for Humanoid Manipulation via Reinforcement Learning](/202606/18/2606.17011v1-rove-unlocking-human-interventions-for-humanoid-manipulation-via-reinforcement-learning)  
+   evidence：网络规模数据引擎用于视频到动作的机器人学习，支持VLA模型训练
+5. [Benchmarking Action Spaces in Reinforcement Learning for Vision-based Robotic Manipulation](/202606/20/2606.18594v1-benchmarking-action-spaces-in-reinforcement-learning-for-vision-based-robotic-manipulation)  
    标签：评分：8.0/10、query:robot-rl
-   evidence：基于强化学习微调VLA模型，使用不完美的人机交互用于人形操作
-6. [KinematicRL: A Sim-to-Real Reinforcement Learning Framework For Social Navigation With Kinodynamic Feasibility](/202606/18/2606.12042v1-kinematicrl-a-sim-to-real-reinforcement-learning-framework-for-social-navigation-with-kinodynamic-feasibility)  
-   标签：评分：7.0/10、query:robot-rl
-   evidence：用于社交导航的真实机器人强化学习
-7. [Ambient Diffusion Policy: Imitation Learning from Suboptimal Data in Robotics](/202606/18/2606.12365v1-ambient-diffusion-policy-imitation-learning-from-suboptimal-data-in-robotics)  
+   evidence：基准测试基于视觉的RL操作动作空间
+6. [LatentGym: A Testbed For Cross-Task Experiential Learning With Controllable Latent Structure](/202606/20/2606.15306v1-latentgym-a-testbed-for-cross-task-experiential-learning-with-controllable-latent-structure)  
    标签：评分：7.0/10、query:vla-policy
-   evidence：从次优数据中模仿学习用于通用机器人策略
-8. [Inference-time Policy Steering via Vision and Touch](/202606/18/2606.14981v1-inference-time-policy-steering-via-vision-and-touch)  
-   标签：评分：7.0/10、query:vla-policy
-   evidence：推理时策略引导用于机器人控制
-9. [Pixels to Proofs: Probabilistically-Safe Latent World Model Control via Parallel Conformal Robust MPC](/202606/18/2606.15594v1-pixels-to-proofs-probabilistically-safe-latent-world-model-control-via-parallel-conformal-robust-mpc)  
+   evidence：具有可控潜在结构的跨任务体验式学习测试平台
+7. [Pixels to Proofs: Probabilistically-Safe Latent World Model Control via Parallel Conformal Robust MPC](/202606/20/2606.15594v1-pixels-to-proofs-probabilistically-safe-latent-world-model-control-via-parallel-conformal-robust-mpc)  
    标签：评分：7.0/10、query:world-models
-   evidence：潜在世界模型结合保形鲁棒MPC用于安全控制
-10. [LUCID: Learning Embodiment-Agnostic Intent Models from Unstructured Human Videos for Scalable Dexterous Robot Skill Acquisition](/202606/18/2606.11628v1-lucid-learning-embodiment-agnostic-intent-models-from-unstructured-human-videos-for-scalable-dexterous-robot-skill-acquisition)  
-   标签：评分：6.0/10、query:vla-policy
-   evidence：从非结构化人类视频学习任务意图用于通用机器人技能获取
-11. [FACTR 2: Learning External Force Sensing for Commodity Robot Arms Improves Policy Learning](/202606/18/2606.12406v1-factr-2-learning-external-force-sensing-for-commodity-robot-arms-improves-policy-learning)  
-   标签：评分：6.0/10、query:vla-policy
-   evidence：力感知改进通用操纵策略学习
-12. [Rethinking Implicit Spatial Representation in Visuomotor Policy Learning](/202606/18/2606.15232v1-rethinking-implicit-spatial-representation-in-visuomotor-policy-learning)  
-   标签：评分：6.0/10、query:vla-policy
-   evidence：视动策略表示研究，影响通用策略学习
-13. [FlashNav: Ultra-Fast Policy Training for Robot Navigation within 20 Seconds](/202606/18/2606.15846v1-flashnav-ultra-fast-policy-training-for-robot-navigation-within-20-seconds)  
+   evidence：安全的潜在世界模型控制，结合共形鲁棒MPC
+8. [V2P-Manip: Learning Dexterous Manipulation from Monocular Human Videos](/202606/20/2606.16436v1-v2p-manip-learning-dexterous-manipulation-from-monocular-human-videos)  
+   标签：评分：7.0/10、query:vla-policy
+   evidence：从人类视频学习灵巧操作策略
+9. [Decoupled Object-Centric Video Understanding for Generating Robotic Manipulation Commands](/202606/20/2606.16470v1-decoupled-object-centric-video-understanding-for-generating-robotic-manipulation-commands)  
+   标签：评分：7.0/10、query:vla-policy
+   evidence：物体中心的视频理解生成机器人操作指令
+10. [Reinforcement Learning-Guided Retrieval with Soft Fusion for Robust Multimodal Imitation Learning under Missing Modalities](/202606/20/2606.15514v1-reinforcement-learning-guided-retrieval-with-soft-fusion-for-robust-multimodal-imitation-learning-under-missing-modalities)  
    标签：评分：6.0/10、query:robot-rl
-   evidence：用于导航的真实机器人强化学习
+   evidence：强化学习引导的检索用于缺失模态下的鲁棒模仿学习
+11. [Robots as Tokens: Unified Diffusion Transformer for Coordinated Multi-Robot Trajectory Generation](/202606/20/2606.15550v1-robots-as-tokens-unified-diffusion-transformer-for-coordinated-multi-robot-trajectory-generation)  
+   标签：评分：6.0/10、query:world-models
+   evidence：统一扩散Transformer用于协调多机器人轨迹生成
+12. [Task-Error Residual Learning for Real-Robot Five-Ball Juggling](/202606/20/2606.16978v1-task-error-residual-learning-for-real-robot-five-ball-juggling)  
+   标签：评分：6.0/10、query:robot-rl
+   evidence：真实机器人残差强化学习，使用任务误差监督实现杂耍
+13. [Performance-Driven Environment Abstraction with Multi-Timescale Learning](/202606/20/2606.17377v1-performance-driven-environment-abstraction-with-multi-timescale-learning)  
+   标签：评分：6.0/10、query:robot-rl
+   evidence：多时间尺度强化学习实现可扩展的环境抽象
 
 
 <div class="dpr-home-promo-card">

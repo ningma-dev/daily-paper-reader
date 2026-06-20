@@ -1,0 +1,323 @@
+Title: Task-Error Residual Learning for Real-Robot Five-Ball Juggling
+
+URL Source: https://arxiv.org/pdf/2606.16978v1
+
+Published Time: Tue, 16 Jun 2026 02:36:53 GMT
+
+Number of Pages: 16
+
+Markdown Content:
+# Task-Error Residual Learning for Real-Robot Five-Ball Juggling 
+
+Kai Ploeger 1 and Jan Peters 1,2,3 
+
+> 1
+
+Technical University of Darmstadt, Germany  
+
+> 2
+
+German Research Center for AI (DFKI), Germany  
+
+> 3
+
+Hessian Center for Artificial Intelligence (hessian.AI), Germany 
+
+{kai,jan }@robot-learning.de 
+
+Abstract. For residual learning that refines existing behavior, sample efficiency depends on two things: how much information each rollout returns, and how efficiently the learner uses that information. Reinforce-ment learning’s standard scalar reward carries far less information than the directional task error that defines the task. Random exploration fur-ther discards whatever information each rollout returns. Through resid-ual learning with directional task-error supervision and a task error model that drives sample selection, we achieve stable three-, four-, and five-ball juggling on anthropomorphic Barrett WAM arms. Despite plan-ning and controlling through a simple, idealized stack, the system con-verges from the second attempt. The first attempt drops, after which task error decreases monotonically without further failures. In comparison, five-ball juggling typically takes humans years of practice. We compare residual learners across two ternary axes, the directional information in the learning feedback and the commitment of the analytic prior, span-ning Newton-style Jacobian updates, Composite Bayesian Optimization, and stochastic search methods. Both axes prove necessary: neither direc-tional feedback nor an informative prior suffices alone, and the simplest method that combines them, a fixed-Jacobian Newton update, is the most reliable. The learned residual tolerates substantial prior misalign-ment and degraded joint tracking, affecting mainly convergence speed. The bottleneck for residual learning on real robots is therefore the in-formation content of the supervision signal and how the learner uses it, not the accuracy of the surrounding stack. Video documentation of all experiments is available at https://kai-ploeger.com/residual-juggling. 
+
+1
+
+> arXiv:2606.16978v1 [cs.RO] 15 Jun 2026
+
+# 1 Introduction 
+
+Fig. 1: Two 4-DOF Barrett WAM arms juggling a uniform 5-ball cas-cade. The residual learner reaches this pattern from the second at-tempt. With task-error supervision, the rest of the robot-learning stack can be deliber-ately simple. We make this case in the real-robot setting of five-ball juggling on two arms, executed open-loop and with-out simulation. The task is unforgiving: fast, accurate throws on a tight sched-ule, and one miss ends the run. The system juggles reliably within a handful of real-robot attempts, despite kinematic planning through an idealized contact-switch model and a parabolic ballistic flight model, and tracking with a soft proportional-derivative (PD) controller and inertia-only feedforward. Three de-sign choices make this work: directional task-error supervision, a stack built for repeatability rather than accuracy, and model-driven exploration. 
+
+Directional Feedback. A scalar objective, the rewards or costs typical of reinforce-ment learning, collapses an inherently di-rectional task error onto a single number, turning residual learning into local min-imization rather than the easier problem of local root-finding. This cost bites hard-est for on-robot adaptation, where every sample is a real attempt. Sim-based scalar RL faces a different bottleneck, the sim-to-real gap for highly dynamic tasks. ILC already efficiently iterates root-finding on a signed tracking error, but at the joint-tracking level. Its error lives between executed and reference joint tra-jectories rather than between intended and realized task outcomes, leaving it blind to environment interactions like contact dynamics. Lifting root-finding to the task level directly targets the signal that defines task success, leading to fast convergence to optimal performance. Measuring the displacement between intended and observed ball trajectories as the task error, we observe that di-rectional learners converge both faster and to lower final task error than scalar learners, which receive only its norm. 
+
+Stack Repeatability. MPC and related optimization-based approaches demand accuracy at the dynamics model. The broader assumption is that each layer of the stack should be made as accurate as possible. The residual-learning alterna-tive demands only repeatability turing the unlearned stack into a fixed function 2the residual can correct around. At the extremes, stack accuracy makes learn-ing unnecessary, while stack repeatability makes it possible. In between, stack accuracy controls how fast the learner converges and what the residual must com-pensate for. The final task performance is the same, as long as the movement remains coupled to the command. For fast movements, high control gains are conventionally chosen to reduce trajectory tracking error. We show that trading stack accuracy for repeatability removes this demand, permitting softer gains. Lower gains reduce the impact force in any unintended contact, a safety benefit for a highly dynamic task performed close to humans. In our system, the planner uses a 1g contact-switch model and a parabolic ballistic predictor. The controller tracks with soft PD gains and an inertia-only feedforward. The residual learner adapts the takeoff velocity from offline-computed task-error labels, starting with no initial correction. Although no part of the stack is accurate, its repeatability is enough for the system to juggle open-loop, with no active catching or in-loop perception. Varying stack accuracy through control gains and joint-position off-sets doesn’t change final performance, only convergence speed. 
+
+Model-Based Exploration. Evolutionary search and reinforcement learning ex-plore by random perturbation: generate samples, evaluate, update. We instead build a task model of action-to-outcome and use it to explore directly, picking the next sample from the model, not from a noise distribution. The form of the task model depends on the feedback. A local Jacobian for directional task error; a scalar surrogate, such as a local quadratic, for scalar feedback. In our comparison, model-driven exploration converges in fewer attempts than random exploration in both feedback regimes. The combination of directional feedback with an informative prior is the most sample-efficient. With directional task-error feedback the Jacobian is especially cheap to fit. A few rollouts suffice, resulting in faster convergence than surrogate fitting under scalar feedback. A task model is a convenient way to introduce inductive biases (priors, domain knowledge) into exploration, further increasing convergence speed, while random perturba-tion has nowhere to encode them. Our inductive biases come from the idealized ballistic map: its Jacobian is a free analytical sensitivity prior for our learners. We quantify the contribution of each of these choices in our method comparison (Section 5.2). We present three main contributions. First, 3-, 4-, and 5-ball juggling pat-terns on two anthropomorphic 4-DOF arms, converging by the second attempt across all three patterns under a simple stack with no simulation, no in-loop perception, and no active catching. Second, an empirical map of a 3 × 3 method matrix spanning learning feedback (directional, norm, squared-norm) and prior specificity (none, structural, calibrated), identifying which design choices reduce sample complexity. Third, real-robot ablations quantifying the learner’s toler-ance to both prior misspecification (rotation of the analytic Jacobian) and stack inaccuracy (PD-gain sweep), showing that residual learning remains effective across a wide operating range. 32 Related Work 
+
+Most robotic juggling work focuses on batting [25,23] or rolling [27,28]. Toss juggling releases balls into ballistic flight between contacts, demanding high end-effector velocities and forgoing the elastic-collision energy preservation available in batting. It can be scaled to arbitrary difficulty, making it a strong platform for studying dynamic motor control and predictive modeling. This paper builds on a sequence of our own prior work on juggling. Two-ball juggling on a single arm was learned by episodic black-box policy search over movement-primitive parameters under a scalar survival-time reward [20]. The kinematic trajectory planner used here originated in [21]. A 1g contact-switch assumption enables planning through dynamic contacts without explicit contact modeling, as demonstrated in simulation. Extensions to non-uniform patterns, also in simulation, followed in [3]. Prior toss juggling has primarily focused on isolated subskills. Catching has been studied with funnel-shaped end-effectors, fingered hands, and hybrid de-signs [6,14,12], with catch poses either intersecting predicted ballistic trajecto-ries against a fixed plane [13] or optimizing within the reachable workspace [12]. Throwing has relied on kinematic models [9], inverse dynamics [17], hand-tuned movement primitives [24,14], and real-robot trial-and-error learning [1,15,29]. Full juggling systems range from bouncing automatons [26,25] through planar fixed-actuator demonstrations [24,8] to anthropomorphic arms with funnels or fingered hands [22,13,18,20]. Robust five-ball juggling on robot arms remains open. A recurring pattern for sample-efficient real-robot throwing is to keep an analytic ballistic model as the nominal release and learn only a corrective resid-ual on top, supervised by the observed task error [2,29]. The closest precedent is [2], which applied task-level corrections to single-arm juggling. The update rule that we deploy on hardware follows a similar task-level update structure, here scaled to multi-ball juggling across two arms and embedded in a structured comparison of feedback types and prior-specificity levels. A different version of this pattern [29] uses a CNN conditioned on scene features to learn a prior that generalizes to unseen objects on the first toss. We instead refine a posterior on the residual from repeated attempts at a fixed configuration. Three methodological antagonists frame our task-error formulation. Gradient-free reinforcement learning approaches to robotic throwing [15,10,20] consume only a scalar reward, discarding the directional structure of the task error and converging slowly on real robots. Guided policy search [16] restores directional information by computing cost gradients through a local dynamics model, but operates at the trajectory level and struggles with the contact dynamics central to juggling. Iterative learning control [4,7] also uses directional feedback over repeated executions, but at the joint-tracking level rather than at the task level where the ball actually lands. Task-error residual learning sits at the intersection: directional supervision lifted to the task outcome, without explicit integration through contact dynamics. 43 System Overview 
+
+The stack the residual learner sits on top of is simple, built for repeatability rather than accuracy, with idealized assumptions about ball, robot, and contact dynamics throughout. Each throw is open-loop with respect to the ball. The kine-matic trajectory planner (Section 3.1) and joint-tracking controller (Section 3.2) execute the throw without consulting visual feedback. An external ball tracker observes the resulting flight, and the residual learner (Section 4) consumes those observations to improve future throws by correcting the takeoff velocity. 
+
+3.1 Kinematic Trajectory Planning 
+
+Joint trajectories q(t) are generated by solving the constrained acceleration and jerk minimization problem min 
+
+> q(t)
+
+Z T
+
+> 0
+
+∥¨q(t)∥2 + λ ∥...
+
+q(t)∥2 dt
+
+s.t. h(x, ˙x, ¨x) = 0,
+
+c(x, ˙x, ¨x) ≤ 0,
+
+(1) with equality constraints h and inequality constraints c on the end-effector mo-tion x(t). We reuse the constraint structure from our previous work [21]. The catch intercepts the desired ball trajectory at the planned touchdown; visual ball-tracking is available but does not enter the planning loop. The throw matches the desired position, the takeoff velocity computed from an idealized parabolic ballistics model, and acceleration to gravity at takeoff. At each contact switch we constrain the relative motion between the free-falling ball and the end-effector to avoid unintended contact, and during carry we bound the end-effector accelera-tion so that the ball remains seated. The problem is solved by multiple shooting over piecewise-constant jerks in joint space, with h and c imposed through the time derivatives of the forward kinematics; we formulate it in CasADi and solve with IPOPT. 
+
+3.2 Joint-Tracking Control 
+
+The arm is driven by a joint-space PD controller with inertia-only feedforward. The feedforward torques account for link inertia and armature only, taken from the manufacturer’s CAD data without any system identification, and model no friction or other nonlinearities. Gains are chosen overcritically damped; joint position and velocity are fused from joint and motor encoders. The control loop is deliberately minimal: nothing in it is calibrated against ground truth, and any residual tracking error is left for the task-level learner to absorb. 54 Residual Learning 
+
+A throw is specified by a target touchdown position b∗ 
+
+> TD
+
+and a planned flight time tflight . With the flight time fixed at tflight , the parabolic ballistic map 
+
+f (v) = p0 + v tflight + 12 g t2flight (2) sends a takeoff velocity v to the resulting touchdown position, with p0 the takeoff position and g gravity. Inverting the idealized map gives the nominal takeoff velocity command vTO = f −1(b∗
+
+> TD
+
+). The residual learner adds a per-throw correction un ∈ R3, and the trajectory planner (Section 3.1) takes the applied takeoff velocity vTO + un as the release-state constraint that shapes the planned joint trajectory. After each throw, ball tracking yields a task-error label en that measures how far the realized throw fell from the target, and the learner drives this error toward zero (Section 4.1). Updates are episodic, one observation per throw, on the real robot, and no learner is pretrained in simulation. Each juggler runs several learner instances, one per throw index and arm in the transient phase and one per arm in the cyclic phase, all using the same method within a single experiment. Later learners in each arm’s chain are warm-started from the predecessor’s current estimate. In the cyclic phase the learner must commit to the next throw before the previous outcomes are observed. We hold the candidate residual constant over subsequent throws until its feedback arrives, paying an M × per-update slowdown to keep the comparison across methods clean, where M is set by flight time and tracking latency. The remaining subsections describe how the learners turn the error sequence {en} into updates of un.
+
+4.1 Task-Error Model and Learner Taxonomy 
+
+Let ftrue denote the true ballistic map at t = tflight . Locally, around the nom-inal takeoff velocity, we approximate it as the idealized map plus an unknown constant offset 
+
+ftrue (v) ≈ f (v) + c, (3) where c absorbs all model mismatch (drag, spin, motor calibration, contact dy-namics) at a fixed throw configuration. The residual-to-error-label map 
+
+ϕ(u) := f −1 ftrue (vTO + u) − vTO (4) composes the true ballistic map ftrue with the idealized inverse and subtracts the nominal velocity. On throw n the ball lands at the measured touchdown 
+
+bobs TD ,n = ftrue (vTO + un), so the task error evaluates to 
+
+en = ϕ(un) = f −1(bobs TD ,n ) − vTO . (5) We define ϕ to map into takeoff-velocity space. By default, the observed touch-down position bobs TD ,n comes from a least-squares parabolic fit to the late trajec-tory just before catching, projected to t = tflight and back-projected through f −1,6so anchoring near touchdown absorbs ballistic-model error (chiefly air drag) into the label. When that fit is corrupted by mid-air collisions or tracking dropouts, an early-trajectory fit reads the takeoff velocity directly, trading away ballistic-error correction for resilience. Under the constant-offset approximation, the residual-to-error-label map 
+
+ϕ(u) = u + c/t flight with Jϕ = ∂ϕ
+
+∂u = I (6) is exactly affine, so the error Jacobian is the identity and the optimum residual sits at u∗ = −c/t flight . The identity Jϕ = I is the analytic prior the learners may adopt, while u∗ is the unknown every learner must estimate from data. 
+
+Feedback type. A central question of this work is how much the directional struc-ture of the task error is worth. We compare learners that consume the full error vector en against learners that see only a scalar summary of the error, either 
+
+∥en∥ or ∥en∥2, reformulating the root-finding problem as a cost minimization. Under the constant-offset model, all three feedback types 
+
+e = J (u − u∗), (affine) (7) 
+
+∥e∥ = ∥J (u − u∗)∥ , (cone) (8) 
+
+∥e∥2 = ( u − u∗)TJTJ (u − u∗), (paraboloid) (9) are parameterized by the task-error Jacobian J forming the rows of Table 1. 
+
+Prior specificity. Reading the columns of Table 1 left to right, a learner commits to progressively more of this parametric form. None assumes no parametric form and updates from stochastic-search on the raw feedback. Structural fixes the functional form (affine, cone, or paraboloid) and fits its parameters, including the Jacobian J, from data. Calibrated fixes both the form and its values, setting 
+
+J = Jϕ = I from Eq. (6) and leaving only the optimum location u∗ free. The remaining subsections describe a representative method for each cell. Table 1: Residual learners organized by feedback type (rows) and prior specificity (columns). None makes no parametric assumption, Structural fits the parameters of an assumed form, and Calibrated fixes them to the analytic prior Jϕ = I. BO denotes Bayesian Optimization. The subsections below detail each cell.                
+
+> Feedback Prior None Structural Calibrated (J ϕ=I) Directional (e)Per-axis (1+1)-ES MLE Jacobian Fixed Jacobian Composite BO MAP Jacobian Composite BO
+> Norm (∥e∥)(1+1)-ES, CMA-ES, BO + cone BO + cone REPS
+> Squared (∥e∥2)(1+1)-ES, CMA-ES, BO + paraboloid BO + paraboloid REPS
+
+74.2 Jacobian-Based Newton Updates 
+
+The three directional Newton cells of Table 1 treat residual learning as root-finding on the task error e(u): linearize at the current command, e(u) ≈ en +ˆJn(u − un), and step toward the command that zeros the linearization. With a local Jacobian estimate ˆJn, the damped update is 
+
+un+1 = un − αn ˆJ+ 
+
+> n
+
+en, (10) where ˆJ+ 
+
+> n
+
+is the Moore–Penrose pseudo-inverse and αn is an exponential damping schedule that trades early speed against noise-driven thrashing near the error floor. The cells differ only in ˆJn. The data-driven flavors relate each past sample’s command deviation ∆ui to its error deviation ∆ei from the current operating point, by kernel-weighted local least squares ˆJn = arg min 
+
+> J
+
+X
+
+> i
+
+k(∆ui) ∥∆ei − J ∆ui∥2 + λ ∥J − J0∥2 
+
+> F
+
+, (11) with a Gaussian kernel k. The three Jacobian-based methods in Table 1 differ only in their choice of ( J0, λ ). The MLE Jacobian (Structural) fits ˆJn from data alone, retaining only a small λ toward J0 = 0 for numerical stability. The 
+
+MAP Jacobian (Calibrated) sets the prior to the analytic value J0 = Jϕ = I
+
+from Eq. (6) with finite λ, so it steps along the prior where data is absent and approaches the MLE fit as data accumulates. The Fixed Jacobian (Calibrated) is its λ → ∞ limit: data is ignored and ˆJn = Jϕ = I throughout, collapsing Eq. (10) to un+1 = un − αnen.Two practical safeguards apply on top of the Newton step for the data-driven flavors. When ˆJn is poorly conditioned (data sparse or correlated in u-space), the step is augmented with a stochastic perturbation 
+
+∆un ← ∆un + |ξ| dn, ξ ∼ N (0 , σ 2explore ), (12) along the smallest-singular-vector direction dn of ˆJn, exploring the residual di-rection the data has failed to constrain. The damped step is then accepted only if the residual norm decreases below the most recently accepted error; the new sample is added to the regression of Eq. (11) either way, so a rejected step still shifts ˆJn+1 and influences the next proposed command. 
+
+4.3 Bayesian Optimization 
+
+The Bayesian Optimization methods of Table 1 model the objective with a Gaussian-process surrogate, a Mat´ ern-5 /2 kernel whose hyperparameters are refit by marginal likelihood once per juggling attempt, and choose the next command as the lower-confidence-bound minimizer 
+
+un+1 = arg min 
+
+> u
+
+μn(u) − β σ n(u), (13) 8with posterior mean μn, standard deviation σn, and exploration weight β, im-plemented using BoTorch [5]. The scalar methods regress the cost, with the ana-lytic shape from Section 4.1 as the GP prior mean: the cone m(u) = ∥J(u − u∗)∥
+
+for the norm cost, the paraboloid m(u) = ( u − u∗)TQ (u − u∗) with curvature 
+
+Q = JTJ for the squared norm. The directional (composite) methods instead place a multi-output GP on 
+
+e(u) itself with the affine mean m(u) = J(u−u∗). Since the analytic Jacobian is diagonal, the three channels are modeled independently. The resulting Gaussian posterior e(u) ∼ N (μn(u), Σ n(u)) is projected onto the scalar cost ∥e∥2 in closed form, 
+
+E
+
+h
+
+∥e∥2i
+
+= ∥μn∥2 + tr( Σn), Var 
+
+h
+
+∥e∥2i
+
+= 2 tr( Σ2
+
+> n
+
+) + 4 μT
+
+> n
+
+Σn μn, (14) and the projected mean and standard deviation enter the same lower-confidence-bound acquisition of Eq. (13) in place of μn, σ n.All Structural methods fit the mean’s parameter ( J or Q) from data by marginal likelihood, while Calibrated methods fix it at J = Jϕ = I from Eq. (6). Either way the optimum location u∗ is fit from data. The search is anchored at the origin by a Gaussian prior on u∗ centered at 0. Calibrated variants take u0 = 0 as the first command, while Structural variants instead seed a small Sobol pool around 0 to bootstrap the parameter fit. Combined with the analytic mean from Section 4.1, the GP performs a local search around u = 0 rather than the global search a flat-mean GP would run on the full residual space. Composite BO relates conceptually to the Jacobian flavors of Section 4.2, with the difference that Composite BO trades substantially more compute for calibrated uncertainty over e, where the Jacobian flavors settle for a point estimate of ˆJn.
+
+4.4 Stochastic Search 
+
+All methods in the None column of Table 1 avoid parametric assumption and explore by random perturbation of the command, without ever fitting a Jacobian or surrogate, the baseline against which the Structural and Calibrated priors are measured. For the two scalar cells we run two black-box optimizers on the cost 
+
+∥e∥ and ∥e∥2: CMA-ES with population-based covariance adaptation for noise robustness [11], and episodic REPS, which maximizes the negative cost under a KL-bounded distribution update [19]. These scalar searches are the scalar-reward reinforcement-learning baseline, expected to be the least sample-efficient of the methods we compare. As a directional variant, we run an independent (1+1)-ES per axis, deciding each step’s acceptance and step-size adaptation on |ei| rather than on the norm. This exploits the directional feedback with the least commitment to a parametric form, by only assuming that each error channel depends primarily on its own residual dimension. 95 Experiments 
+
+The experiments establish both which residual formulation to use and how lit-tle the surrounding stack must be trusted. We select a learner in simulation, demonstrate it juggling on the real robot, and then degrade the analytic prior and the tracking controller in turn to map its operating range. 
+
+5.1 Experimental Setup 
+
+We evaluate the residual learners both on a real two-arm robot and in a MuJoCo simulation of the same system, sweeping the full method matrix in simulation. The hardware platform is a pair of 4-DOF Barrett WAM 3.0 arms with dual joint and motor encoders run at 160 V under custom cooling and a 1 kHz con-trol rate. Each arm carries a 3D-printed, funnel-shaped end-effector at the wrist for catching and throwing. Balls are tracked with an OptiTrack motion-capture system using per-ball Kalman filters with scheduled dynamics-model switches and Hungarian data association. Simulation and hardware share the entire soft-ware stack: the same planner (Section 3.1) and controller (Section 3.2) run in both, with only the underlying physics replaced by MuJoCo. The dominant sim-ulation error source is joint-tracking error from the unmodeled ball payload and impacts. We perturb the ball velocity after takeoff to reflect the finite repeatabil-ity of the real system. As a calibration check, the converged residual magnitude in simulation matches the real-robot value within 30 %, with simulation slightly above. 
+
+5.2 Method Comparison 
+
+We sweep the full 3 × 3 method matrix of Table 1 in simulation at 5-ball cas-cade, with ten seeds per cell, measuring the number of attempts to the first success and to a ten-in-a-row streak (Fig. 2). Sample efficiency degrades almost monotonically along both axes. Richer feedback beats scalarized feedback (rows, directional → norm → squared) and a more specific prior beats a vaguer one (columns, calibrated → structural → none), and the two effects compound. The exception is the calibrated squared-norm cell, where Bayesian optimization on a paraboloid mean fails on every seed. The squared cost flattens at the optimum, so the surrogate mean’s gradient vanishes there and only the non-monotone pos-terior uncertainty is left to steer the non-convex search. The cone mean instead keeps a constant-magnitude gradient up to the optimum, so its norm feedback still points the search in a usable direction and reaches successes where the paraboloid does not. The only cell that is both fast and fully reliable is direc-tional feedback paired with a calibrated prior, where the Fixed Jacobian, MAP Jacobian, and Composite BO learners each converge within a handful of at-tempts and reach a streak on all ten seeds. Among these the Fixed Jacobian Newton update is also the simplest, with no data-driven Jacobian fit and no surrogate model to optimize, so the best-performing learner is also the cheapest to run. We therefore adopt it as the canonical learner for all of the real-robot experiments that follow. 10 0
+
+> 25
+> 50
+> 75
+> 100
+> Number of juggling attempts
+> Fixed Jacobian
+> MAP Jacobian
+> Composite BO
+> MLE Jacobian
+> Composite BO
+> Per-axis (1+1)-ES
+> BO + cone
+> BO + cone
+> CMA-ES
+> REPS
+> BO + paraboloid
+> BO + paraboloid
+> CMA-ES
+> REPS
+
+Directional (e) Norm ( e ) Squared ( e 2)   
+
+> Prior specificity
+> Calibrated
+> (J=I)
+> Structural None
+> Milestones
+> first success
+> (20 catches)
+> 10-in-a-row streak
+> (x/10 = seeds reached)
+> 10/10
+> 10/10
+> 10/10
+> 5/10
+> 9/10
+> 2/10
+> 2/10
+> 3/10
+> 4/10
+> 4/10
+> 0/10
+> 1/10
+> 4/10
+> 4/10
+
+Fig. 2: [ Method Comparison ] Fast, reliable convergence needs both directional feedback and an informative prior. Evaluated in simulation at 5-ball cascade, over the full feedback × prior-specificity matrix of Table 1, grouped by feedback type and coloured by prior specificity. Bars give the number of attempts to the first success (solid) and to a 10-in-a-row streak (light; reached by X/ 10 seeds). Values are mean ± s.d. over 10 seeds. 
+
+5.3 Real-Robot Juggling 
+
+We then deploy the Fixed Jacobian residual on the real robot across all three patterns (Table 2). Convergence is near-immediate: the 3-ball cascade typically succeeds on the first attempt and the 4- and 5-ball patterns by the second, after which all three hold a steady streak of completed runs. Each pattern is evaluated over six seeds of ten attempts, with every attempt running up to 120 throws, about 30 s of continuous juggling at four and five balls. Table 2: [ Real-Robot Juggling ] The Fixed Jacobian residual converges near-immediately, bringing all three patterns to a reliable juggle within two attempts. Each pattern is run over six seeds of ten attempts each, and every attempt executes up to 120 throws, about 30 s at four and five balls, counting as a success only when the pattern completes them all. The converged residual command norm ∥u∥ and the task-error norm ∥e∥ are given in m s −1.
+
+Pattern 1st succ. 1st 3-in-a-row Residual ∥u∥ Noise floor σ∥e∥
+
+3-ball cascade 1.2 ± 0.4 3.2 ± 0.4 0.19 ± 0.02 0.016 4-ball fountain 1.8 ± 0.4 3.8 ± 0.4 0.22 ± 0.02 0.019 5-ball cascade 2.2 ± 0.4 4.2 ± 0.4 0.23 ± 0.01 0.022 
+
+11 1 2 3 4 5 6 7 8 9 10                 
+
+> attempt
+> 0
+> 2
+> 4
+> 6
+> 8
+> 10
+> catches
+> 12345678910
+> attempt
+> 0.00
+> 0.05
+> 0.10
+> 0.15
+> 0.20
+> 0.25
+> 0.30
+> takeoff vel. error  e [m/s]
+> 0° 10° 30° 45° 60° 90° mean individual seeds
+
+Fig. 3: [ Prior-Quality Ablation ] Residual learning tolerates substantial mis-alignment of the analytic prior. The analytic Jacobian is rotated about a random axis, J′ = RJ , by 0–90 ◦ on the real robot with the Fixed Jacobian learner at 5-ball cascade. The left panel shows the catches per attempt, capped at ten; the right panel shows the transient task-error norm ∥e∥. Each setting is run over four seeds of ten attempts each. The residual command norm ∥u∥ is the magnitude of the velocity correction the learner settles on, around 0 .2 m s −1 across patterns. The noise floor σ∥e∥ is the irreducible run-to-run variability of the real system. Propagated ballistically through the 1 .00 s flight time, the 5-ball noise floor corresponds to a steady-state landing-position scatter of about 22 mm at the catch plane. 
+
+5.4 Prior-Quality Ablation 
+
+Both real-robot ablations share thighter joint limits than the headline runs of Section 5.3. Under degraded tracking the arms can overswing far enough to tip the end-effector forward and let the balls roll out, so we constrain the joints in the stack-accuracy sweep and, for comparability, apply the same limits to the prior-quality ablation. The tighter limits require a larger residual and shift convergence from the second attempt to the third. The Fixed Jacobian learner starts from an identity prior. To probe how much prior quality matters, we deliberately degrade it: the analytic Jacobian is rotated about a random axis by 0 to 90 ◦, and the residual must converge through the misalignment (Fig. 3). The learner absorbs substantial misalignment: rotations up to 30 ◦ leave convergence speed unchanged, and even a 60 ◦ rotation still converges. Slower, but still faster and more reliably than any scalar or stochastic-search method in simulation (Fig. 2). Directional feedback explains why. As long as the rotated Jacobian keeps a positive projection onto the true descent direction, each Newton step still reduces the error. Only the degenerate 90 ◦
+
+rotation fails, where that projection vanishes and the prior no longer points toward lower error. 12 0                                    
+
+> 2
+> 4
+> 6
+> 8
+> 10
+> catches
+> KpKdKp&Kd
+> 12345678910
+> attempt
+> 0.0
+> 0.1
+> 0.2
+> takeoff vel. error  e [m/s]
+> 12345678910
+> attempt
+> 12345678910
+> attempt
+> 100% 75% 50% 25% mean individual seeds
+
+Fig. 4: [ Stack-Accuracy Ablation ] Final task performance is invariant to controller-gain quality, with weaker gains affecting only the convergence speed. The robot runs the Fixed Jacobian learner at 5-ball cascade. Each column weak-ens a different gain set from 100 % down to 25 % of nominal. The top row reports catches per attempt and the bottom row the transient task-error norm ∥e∥. Each setting is run over four seeds of ten attempts each. 
+
+5.5 Stack-Accuracy Ablation 
+
+The complementary question is how much the quality of the underlying controller matters. We scale the nominal PD gains, Kp = (400 , 400 , 200 , 200) N m rad −1
+
+and Kd = (40 , 20 , 15 , 5) N m s rad −1 from base to wrist, down to as little as 25 % of their default values, sweeping the proportional gains, the derivative gains, and both together (Fig. 4). Final task performance is unchanged across the entire sweep. Every setting reaches the same task-error floor and the same reliable juggle, and only the transient differs, with weaker gains needing more attempts to converge. The reason is repeatability rather than accuracy. A softer controller tracks less accurately, but it does so consistently, making the same error on every throw; the residual simply absorbs that fixed offset, and the throws keep landing where they should. Gain quality therefore sets how large a correction the residual must learn and how quickly it gets there, not the final result. This holds as long as the executed motion stays coupled to the commanded one. Under more extreme gain reductions the coupling weakens and the residual loses its grip on the plant. 13 6 Conclusions 
+
+We presented task-error residual learning on real anthropomorphic arms juggling 3-, 4-, and 5-ball patterns. The unlearned stack uses a 1g contact-switch planner, a parabolic ballistic predictor, and a soft PD controller with inertia-only feedfor-ward, rough by design. Across all three patterns the residual learner converges by the second attempt and holds steady. The empirical method comparison shows that directional feedback and an informative prior are both necessary: neither suffices alone, and only their combination converges in a handful of attempts. The simplest method we tested, a Fixed Jacobian Newton update with an iden-tity prior, is also the most effective and reliable on hardware. A full evaluation of all methods on the real robot would take prohibitively much wall time, so the 3 × 3 matrix is swept only in simulation. The real-robot ablations use the Fixed Jacobian throughout. The prior-quality ablation shows the learner tolerates substantial rotation of the analytic Jacobian. The stack-accuracy sweep shows final task error invariant to PD gain scaling from 100 % down to 25 %, with only convergence speed varying. This invariance holds for as long as the executed motion remains coupled to the commanded one. Under strongly reduced gains the coupling weakens and the residual approach degrades. The scalar-feedback critique applies wherever sample efficiency matters. In sim-ulation that cost is bounded by compute, but the bottleneck for transferring sim-trained policies to highly dynamic throwing tasks is the sim-to-real gap. Our work hints at a way to narrow that gap: transferring a robust adap-tation process alongside the nominal policy, rather than the policy alone. The priors used here, such as Jϕ = I, are simple enough to be extracted from a sim-ulator autonomously. Our prior-rotation results suggest that simple local adap-tation processes transfer well across modest model mismatch, which is exactly the regime a sim-to-real gap introduces. Two other directions follow. Contextual residual learning would propagate catch-side outcomes into the next throw’s residual rather than absorbing them into a static vector. Non-uniform juggling patterns require no methodological changes but additional task-decomposition machinery to handle multiple learner roles per throw. 14 References 
+
+1. Aboaf, E., Atkeson, C., Reinkensmeyer, D.: Task-level robot learning. In: IEEE ICRA. pp. 1309–1310 vol.2 (1988) 2. Aboaf, E., Drucker, S., Atkeson, C.: Task-level robot learning: Juggling a tennis ball more accurately. In: IEEE ICRA. pp. 1290–1295. IEEE Comput. Soc. Press (1989) 3. Andreu, M.G., Ploeger, K., Peters, J.: Beyond the Cascade: Juggling Vanilla Siteswap Patterns. In: IEEE/RSJ IROS. pp. 2928–2934 (2024) 4. Arimoto, S., Kawamura, S., Miyazaki, F.: Bettering operation of Robots by learn-ing. Journal of Robotic Systems 1(2), 123–140 (1984) 5. Balandat, M., Karrer, B., Jiang, D., Daulton, S., Letham, B., Wilson, A.G., Bakshy, E.: BoTorch: A Framework for Efficient Monte-Carlo Bayesian Optimization. In: NeurIPS. vol. 33, pp. 21524–21538. Curran Associates, Inc. (2020) 6. Bauml, B., Wimbock, T., Hirzinger, G.: Kinematically optimal catching a flying ball with a hand-arm-system. In: IEEE/RSJ IROS. pp. 2592–2599. IEEE (2010) 7. Bristow, D.A., Tharayil, M., Alleyne, A.G.: A survey of Iterative Learning Control. IEEE CSM 26(3) (2006) 8. Burget, P., Mezera, P.: A visual-feedback juggler with servo drives. In: IEEE AMC. pp. 472–477. IEEE (2010) 9. Chen, H., Zhang, B., Fuhlbrigge, T.: Robot Throwing Trajectory Planning for Solid Waste Handling. In: IEEE CYBER. pp. 1372–1375. IEEE (2019) 10. Ghadirzadeh, A., Maki, A., Kragic, D., Bjorkman, M.: Deep predictive policy train-ing using reinforcement learning. In: IEEE/RSJ IROS. pp. 2351–2358. IEEE (2017) 11. Hansen, N., Ostermeier, A.: Completely Derandomized Self-Adaptation in Evolu-tion Strategies. Evolutionary Computation 9(2), 159–195 (2001) 12. Kim, S., Shukla, A., Billard, A.: Catching Objects in Flight. IEEE TRO 30(5), 1049–1065 (2014) 13. Kizaki, T., Namiki, A.: Two ball juggling with high-speed hand-arm and high-speed vision system. In: IEEE ICRA. pp. 1372–1377. IEEE (2012) 14. Kober, J., Glisson, M., Mistry, M.: Playing catch and juggling with a humanoid robot. In: IEEE-RAS Humanoids. pp. 875–881. IEEE (2012) 15. Kober, J., Muelling, K., Peters, J.: Learning throwing and catching skills. In: IEEE/RSJ IROS. pp. 5167–5168. IEEE (2012) 16. Levine, S., Koltun, V.: Guided policy search. In: ICML. pp. 1–9 (2013) 17. Lombai, F., Szederkenyi, G.: Throwing motion generation using nonlinear optimi-zation on a 6-degree-of-freedom robot manipulator. In: IEEE ICM. pp. 1–6. IEEE (2009) 18. Oka, T., Komura, N., Namiki, A.: Ball juggling robot system controlled by high-speed vision. In: IEEE CBS. pp. 91–96 (2017) 19. Peters, J., Mulling, K., Altun, Y.: Relative Entropy Policy Search. AAAI 24(1), 1607–1612 (2010) 20. Ploeger, K., Lutter, M., Peters, J.: High Acceleration Reinforcement Learning for Real-World Juggling with Binary Rewards. In: CoRL. pp. 642–653. PMLR (2021) 21. Ploeger, K., Peters, J.: Controlling the Cascade: Kinematic Planning for N-ball Toss Juggling. In: IEEE/RSJ IROS. pp. 1139–1144. IEEE (2022) 22. Riley, M., Atkeson, C.G.: Robot catching: Towards engaging human-humanoid interaction. Autonomous Robots (2002) 23. Rizzi, A., Koditschek, D.: Further progress in robot juggling: Solvable mirror laws. In: IEEE ICRA. pp. 2935–2940. IEEE Comput. Soc. Press (1994) 
+
+15 24. Sakaguchi, T., Masutani, Y., Miyazaki, F.: A study on juggling tasks. In: IEEE/RSJ IROS. pp. 1418–1423. IEEE (1991) 25. Schaal, S., Atkeson, C.: Open loop stable control strategies for robot juggling. In: IEEE ICRA. pp. 913–918. IEEE Comput. Soc. Press (1993) 26. Shannon, C.E.: Scientific Aspects of Juggling. IEEE (1993) 27. Tanaka, K., Hamaya, M., Joshi, D., von Drigalski, F., Yonetani, R., Matsubara, T., Ijiri, Y.: Learning Robotic Contact Juggling. In: IEEE/RSJ IROS. pp. 958–964 (2021) 28. Woodruff, J.Z., Lynch, K.M.: Robotic Contact Juggling. IEEE TRO 39(3), 1964– 1981 (2023) 29. Zeng, A., Song, S., Lee, J., Rodriguez, A., Funkhouser, T.: TossingBot: Learning to Throw Arbitrary Objects With Residual Physics. IEEE TRO 36(4), 1307–1319 (2020) 
+
+16

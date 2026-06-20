@@ -1,56 +1,12 @@
 {
-  "generated_at": "2026-06-18T22:32:51.916294+00:00",
-  "updated_date": "20260618",
+  "generated_at": "2026-06-20T21:47:12.391106+00:00",
+  "updated_date": "20260620",
   "carryover_days": 9,
   "tag_states": {
     "vla-policy": {
-      "updated_date": "20260618",
+      "updated_date": "20260620",
       "carryover_days": 9,
       "items": [
-        {
-          "id": "2606.19088v1",
-          "source": "arxiv",
-          "title": "ReSiReg: Towards Spatially Consistent Semantics in Language-Conditioned Robotic Tasks",
-          "abstract": "Vision-Language Models (VLMs) enable robots to follow open-language instructions. However, dense VLM embeddings have shown to be noisy and lack spatial consistency. This is problematic for robotic applications, which require simultaneous reasoning over semantics and 3D space. We examine spatial structure across recent VLMs and propose ReSiReg, a feature reconstruction method that uses spatially consistent VLM intermediates to improve dense language-grounded retrieval. ReSiReg clusters intermediates into visual prototypes, derives their language descriptors, and reconstructs each patch as a soft mixture of prototype-level language embeddings. We evaluate quantitatively on OVSS and 3D mapping across backbones, and qualitatively in real-world manipulation scenes. Quantitative results show improved dense retrieval; manipulation scenes show more spatially consistent target activations. We further provide a compact 25M dense VLM for robotic applications, substantially smaller than and competitive with ViT-B baselines. Available at https://resireg.github.io",
-          "authors": [
-            "Simon Schwaiger",
-            "David Seyser",
-            "Alessandro Scherl",
-            "Wilfried Wöber",
-            "Gerald Steinbauer-Wagner"
-          ],
-          "primary_category": "cs.RO",
-          "categories": [
-            "cs.RO"
-          ],
-          "published": "2026-06-17T13:58:06+00:00",
-          "link": "https://arxiv.org/pdf/2606.19088v1",
-          "tags": [
-            "keyword:robot-rl",
-            "keyword:vla-policy",
-            "keyword:world-models",
-            "query:robot-rl",
-            "query:vla-policy",
-            "query:world-models"
-          ],
-          "llm_score": 8.0,
-          "llm_evidence_en": "language-conditioned robotic manipulation with spatial consistency",
-          "llm_evidence_cn": "语言条件机器人操作中的空间一致性",
-          "llm_evidence": "语言条件机器人操作中的空间一致性",
-          "canonical_evidence": "语言条件机器人操作中的空间一致性",
-          "llm_tldr_en": "ReSiReg improves dense language-grounded retrieval by reconstructing patch features as soft mixtures of spatially consistent VLM prototypes for robotic tasks.",
-          "llm_tldr_cn": "针对VLM嵌入在机器人操作任务中缺乏空间一致性的问题，ReSiReg提出特征重建方法：将VLM中间特征聚类为视觉原型，利用语言描述重构每个图像块为原型的软混合，从而获得空间一致的语义表示。在开放词汇语义分割和3D地图构建任务上验证了有效性，提升了语言条件机器人任务的空间推理能力。",
-          "llm_tldr": "针对VLM嵌入在机器人操作任务中缺乏空间一致性的问题，ReSiReg提出特征重建方法：将VLM中间特征聚类为视觉原型，利用语言描述重构每个图像块为原型的软混合，从而获得空间一致的语义表示。在开放词汇语义分割和3D地图构建任务上验证了有效性，提升了语言条件机器人任务的空间推理能力。",
-          "llm_tags": [
-            "query:vla-policy"
-          ],
-          "matched_query_tag": "query:vla-policy",
-          "matched_query_text": "language-conditioned robotic manipulation",
-          "matched_requirement_id": "req-3",
-          "selection_source": "carryover_cache",
-          "paper_id": "2606.19088v1",
-          "carry_days": 1
-        },
         {
           "id": "2606.19194v1",
           "source": "arxiv",
@@ -79,13 +35,13 @@
             "query:world-models"
           ],
           "llm_score": 8.0,
-          "llm_evidence_en": "generates high-dimensional actions from multimodal observations for robot manipulation",
-          "llm_evidence_cn": "从多模态观测生成高维动作用于机器人操作",
-          "llm_evidence": "从多模态观测生成高维动作用于机器人操作",
-          "canonical_evidence": "从多模态观测生成高维动作用于机器人操作",
-          "llm_tldr_en": "An invertible neural network adapter enables one-step flow matching for efficient action generation from visual, linguistic, and proprioceptive inputs in robot manipulation.",
-          "llm_tldr_cn": "机器人操作需要高效生成高维动作。本文提出可逆神经网络适配器，基于流匹配公式在可逆潜空间约束动作生成轨迹，仅需一步去噪即可合成精确的高维灵巧动作。大量实验证明其在保持精度的同时大幅降低推理复杂度。",
-          "llm_tldr": "机器人操作需要高效生成高维动作。本文提出可逆神经网络适配器，基于流匹配公式在可逆潜空间约束动作生成轨迹，仅需一步去噪即可合成精确的高维灵巧动作。大量实验证明其在保持精度的同时大幅降低推理复杂度。",
+          "llm_evidence_en": "one-step flow matching for vision-language-action policy",
+          "llm_evidence_cn": "一步流匹配视觉-语言-动作策略",
+          "llm_evidence": "一步流匹配视觉-语言-动作策略",
+          "canonical_evidence": "一步流匹配视觉-语言-动作策略",
+          "llm_tldr_en": "Proposes an invertible neural network adapter that generates precise high-dimensional actions conditioned on multimodal observations via one-step flow matching, reducing inference complexity.",
+          "llm_tldr_cn": "该文提出一种可逆神经网络适配器，基于流匹配公式，在可逆隐空间中约束动作生成轨迹，仅需一步去噪即可生成高质量灵巧动作。相比传统迭代流匹配策略，该方法显著降低推理复杂度，同时保持高精度和稳定性，为VLA模型高效推理提供了新思路。",
+          "llm_tldr": "该文提出一种可逆神经网络适配器，基于流匹配公式，在可逆隐空间中约束动作生成轨迹，仅需一步去噪即可生成高质量灵巧动作。相比传统迭代流匹配策略，该方法显著降低推理复杂度，同时保持高精度和稳定性，为VLA模型高效推理提供了新思路。",
           "llm_tags": [
             "query:vla-policy"
           ],
@@ -95,64 +51,27 @@
           "selection_source": "carryover_cache",
           "paper_id": "2606.19194v1",
           "carry_days": 1
-        }
-      ]
-    },
-    "world-models": {
-      "updated_date": "20260618",
-      "carryover_days": 9,
-      "items": [
+        },
         {
-          "id": "2606.17030v2",
+          "id": "2606.19340v1",
           "source": "arxiv",
-          "title": "Qwen-RobotWorld Technical Report: Unifying Embodied World Modeling through Language-Conditioned Video Generation",
-          "abstract": "We introduce Qwen-RobotWorld, a language-conditioned video world model for embodied intelligence. With natural language as a unified action interface, it predicts physically grounded future visual trajectories from current observations across robotic manipulation, autonomous driving, indoor navigation, and human-to-robot transfer. This unified formulation provides three promising application directions: synthetic data generation for policy training augmentation, scalable virtual environments for policy evaluation, and language-guided planning signals for downstream robot control. This is achieved through a three-part design: a) Double-Stream MMDiT with MLLM Action Encoding, where a 60-layer double-stream diffusion transformer couples frozen Qwen2.5-VL semantics with video-VAE latents through layer-wise joint attention; b) Embodied World Knowledge (EWK), an 8.6M video-text corpus (200M+ frames) with action-language mapping over 20+ embodiments and 500+ action categories; and c) General+Expert Progressive Curriculum, a two-stage training strategy that first learns general visual priors and then injects embodied specialization under a shared language interface. Extensive results show strong competitiveness: ranks 1st overall on EWMBench and DreamGen Bench, outperforms all open-source models on WorldModelBench and PBench. Additional zero-shot analyses on RoboTwin-IF benchmark further support robust generalization and multi-view consistency.",
+          "title": "Zero-Shot Long-Horizon Dexterous Manipulation via Multi-View 3D-Grounded VLM Reasoning",
+          "abstract": "We present a zero-shot framework for long-horizon dexterous manipulation that grounds language instructions into executable 3D task plans from calibrated multi-view RGB images. Rather than training an end-to-end policy, our system uses a vision-language model (VLM) to produce reference-frame task grounding and primitive-level 2D keypoints, then lifts them into 3D via multi-view fusion. This lifting combines triangulation of view-wise VLM groundings with reference-view ray voting, which searches along a semantic camera ray for geometrically consistent candidates across neighboring views. The resulting 3D keypoints support both pick-and-place and tool-use: for tool-use, we retrieve an object-centric atomic action corresponding to the inferred skill category and align its stored 6D tool trajectory to the scene; for dexterous execution, we expand the lifted grasp keypoint into a task-conditioned grasp affordance region and generate feasible grasp-motion pairs with an arm-hand motion generator. Real-world experiments show improved 3D grounding accuracy and execution reliability over single-view RGB-D grounding and fine-tuned VLA baselines. We further demonstrate long-horizon manipulation through closed-loop status verification and replan, enabling zero-shot execution on unseen objects and tool-use tasks in novel scenes.",
           "authors": [
-            "Jie Zhang",
-            "Xiaoyue Chen",
-            "Anzhe Chen",
-            "Deqing Li",
-            "Gengze Zhou",
-            "Hale Yin",
-            "Haoqi Yuan",
-            "Haoyang Li",
-            "Jiahao Li",
-            "Jiazhao Zhang",
-            "Jingren Zhou",
-            "Kaiyuan Gao",
-            "Kun Yan",
-            "Lihan Jiang",
-            "Ningyuan Tang",
-            "Pei Lin",
-            "Qihang Peng",
-            "Shengming Yin",
-            "Tianhe Wu",
-            "Tianyi Yan",
-            "Xiao Xu",
-            "Yan Shu",
-            "Yanran Zhang",
-            "Ye Wang",
-            "Yi Wang",
-            "Yilei Chen",
-            "Yixian Xu",
-            "Yiyang Huang",
-            "Yuxiang Chen",
-            "Zekai Zhang",
-            "Zhendong Wang",
-            "Zixing Lei",
-            "Zhixuan Liang",
-            "Zihao Liu",
-            "Zikai Zhou",
-            "Chenxu Lv",
-            "Xiong-Hui Chen",
-            "Chenfei Wu"
+            "Jisoo Kim",
+            "Sangwon Baik",
+            "Taeksoo Kim",
+            "Sungjoo Kim",
+            "Junyoung Lee",
+            "Mingi Choi",
+            "Hanbyul Joo"
           ],
-          "primary_category": "cs.CV",
+          "primary_category": "cs.RO",
           "categories": [
-            "cs.CV"
+            "cs.RO"
           ],
-          "published": "2026-06-15T17:52:31+00:00",
-          "link": "https://arxiv.org/pdf/2606.17030v2",
+          "published": "2026-06-17T17:59:56+00:00",
+          "link": "https://arxiv.org/pdf/2606.19340v1",
           "tags": [
             "keyword:robot-rl",
             "keyword:vla-policy",
@@ -162,23 +81,29 @@
             "query:world-models"
           ],
           "llm_score": 8.0,
-          "llm_evidence_en": "language-conditioned video world model for robot control",
-          "llm_evidence_cn": "语言条件视频世界模型用于机器人控制",
-          "llm_evidence": "语言条件视频世界模型用于机器人控制",
-          "canonical_evidence": "语言条件视频世界模型用于机器人控制",
-          "llm_tldr_en": "Qwen-RobotWorld is a language-conditioned video world model that unifies embodied world modeling across domains, enabling synthetic data generation, scalable evaluation, and language-guided planning.",
-          "llm_tldr_cn": "该论文提出Qwen-RobotWorld，一种语言条件视频世界模型，以自然语言为统一动作接口，预测未来视觉轨迹，适用于机器人操作、自动驾驶等多领域。它提供合成数据生成、可扩展虚拟环境和语言引导规划三个应用方向。模型采用双流MMDiT与MLLM动作编码设计。该工作为具身智能提供了一个统一的世界建模框架，有望加速策略学习和规划。",
-          "llm_tldr": "该论文提出Qwen-RobotWorld，一种语言条件视频世界模型，以自然语言为统一动作接口，预测未来视觉轨迹，适用于机器人操作、自动驾驶等多领域。它提供合成数据生成、可扩展虚拟环境和语言引导规划三个应用方向。模型采用双流MMDiT与MLLM动作编码设计。该工作为具身智能提供了一个统一的世界建模框架，有望加速策略学习和规划。",
+          "llm_evidence_en": "zero-shot VLM manipulation with 3D grounding",
+          "llm_evidence_cn": "零样本VLM推理实现3D灵巧操纵",
+          "llm_evidence": "零样本VLM推理实现3D灵巧操纵",
+          "canonical_evidence": "零样本VLM推理实现3D灵巧操纵",
+          "llm_tldr_en": "Uses multi-view VLM to generate 3D task plans for long-horizon dexterous manipulation without training, enabling zero-shot generalization.",
+          "llm_tldr_cn": "大多数灵巧操纵方法需要大量训练数据，本文提出零样本框架，利用多视图视觉语言模型（VLM）从语言指令推理出3D任务计划。系统通过多视图融合将VLM输出的2D关键点提升到3D，支持抓取和工具使用。实验证明，在多种长时灵巧任务上实现了零样本执行，展示了将预训练VLM直接转移到机器人控制的有效性。",
+          "llm_tldr": "大多数灵巧操纵方法需要大量训练数据，本文提出零样本框架，利用多视图视觉语言模型（VLM）从语言指令推理出3D任务计划。系统通过多视图融合将VLM输出的2D关键点提升到3D，支持抓取和工具使用。实验证明，在多种长时灵巧任务上实现了零样本执行，展示了将预训练VLM直接转移到机器人控制的有效性。",
           "llm_tags": [
-            "query:world-models"
+            "query:vla-policy"
           ],
-          "matched_query_tag": "query:world-models",
-          "matched_query_text": "World Action Models for robot control",
-          "matched_requirement_id": "req-10",
+          "matched_query_tag": "query:vla-policy",
+          "matched_query_text": "How to transfer vision language models to real robot control",
+          "matched_requirement_id": "req-6",
           "selection_source": "carryover_cache",
-          "paper_id": "2606.17030v2",
+          "paper_id": "2606.19340v1",
           "carry_days": 1
-        },
+        }
+      ]
+    },
+    "world-models": {
+      "updated_date": "20260620",
+      "carryover_days": 9,
+      "items": [
         {
           "id": "2606.18960v1",
           "source": "arxiv",
@@ -212,13 +137,13 @@
             "query:world-models"
           ],
           "llm_score": 8.0,
-          "llm_evidence_en": "memory-augmented action-conditioned world model for persistent manipulation",
-          "llm_evidence_cn": "记忆增强的动作条件世界模型用于持久操作",
-          "llm_evidence": "记忆增强的动作条件世界模型用于持久操作",
-          "canonical_evidence": "记忆增强的动作条件世界模型用于持久操作",
-          "llm_tldr_en": "Mem-World addresses persistent world modeling in manipulation by adding memory retrieval to overcome occlusion and motion issues, enabling more faithful future video prediction.",
-          "llm_tldr_cn": "该论文针对机器人操作中持久世界建模的挑战，即频繁遮挡和快速运动导致当前观测不足以预测未来，提出Mem-World记忆增强的多视角动作条件世界模型。核心是设计可检索历史信息的记忆机制，从而在动态操作场景中保持场景细节。实验表明，该方法在多个操作任务上生成更准确、更一致的未来视频。该工作提升了世界模型在真实操作中的可用性。",
-          "llm_tldr": "该论文针对机器人操作中持久世界建模的挑战，即频繁遮挡和快速运动导致当前观测不足以预测未来，提出Mem-World记忆增强的多视角动作条件世界模型。核心是设计可检索历史信息的记忆机制，从而在动态操作场景中保持场景细节。实验表明，该方法在多个操作任务上生成更准确、更一致的未来视频。该工作提升了世界模型在真实操作中的可用性。",
+          "llm_evidence_en": "memory-augmented action-conditioned world model for robot manipulation",
+          "llm_evidence_cn": "用于机器人操作的内存增强动作条件世界模型",
+          "llm_evidence": "用于机器人操作的内存增强动作条件世界模型",
+          "canonical_evidence": "用于机器人操作的内存增强动作条件世界模型",
+          "llm_tldr_en": "Proposes Mem-World, a memory-augmented multi-view action-conditioned world model that retrieves informative history to improve video prediction in occluded manipulation scenes.",
+          "llm_tldr_cn": "该论文针对持久世界建模中因遮挡和快速运动导致历史信息丢失的问题，提出了Mem-World。该方法采用多视角动作条件世界模型，并引入高效记忆检索机制从历史帧中提取关键信息。实验表明，Mem-World在预测未来视频帧时能保持场景一致性，尤其在遮挡严重的操作任务中显著优于无记忆基线。该工作提升了世界模型在真实操作中的实用性。",
+          "llm_tldr": "该论文针对持久世界建模中因遮挡和快速运动导致历史信息丢失的问题，提出了Mem-World。该方法采用多视角动作条件世界模型，并引入高效记忆检索机制从历史帧中提取关键信息。实验表明，Mem-World在预测未来视频帧时能保持场景一致性，尤其在遮挡严重的操作任务中显著优于无记忆基线。该工作提升了世界模型在真实操作中的实用性。",
           "llm_tags": [
             "query:world-models"
           ],
@@ -264,13 +189,13 @@
             "query:world-models"
           ],
           "llm_score": 8.0,
-          "llm_evidence_en": "action-conditioned video world model for evaluating robot policies",
-          "llm_evidence_cn": "动作条件视频世界模型用于评估机器人策略",
-          "llm_evidence": "动作条件视频世界模型用于评估机器人策略",
-          "canonical_evidence": "动作条件视频世界模型用于评估机器人策略",
-          "llm_tldr_en": "SC3-Eval adapts a video foundation model into a policy evaluator using self-consistency constraints, enabling scalable evaluation of generalist robot manipulation policies via simulated rollouts.",
-          "llm_tldr_cn": "该论文提出SC3-Eval，通过前向-逆向动力学一致性和多视图一致性等三项约束，将预训练视频基础模型转化为准确的策略评估器。该方法可替代昂贵的真实世界评估，在多个操作策略上实现与真实评价高度相关的打分。为通用机器人策略的规模化评估提供了可行方案。",
-          "llm_tldr": "该论文提出SC3-Eval，通过前向-逆向动力学一致性和多视图一致性等三项约束，将预训练视频基础模型转化为准确的策略评估器。该方法可替代昂贵的真实世界评估，在多个操作策略上实现与真实评价高度相关的打分。为通用机器人策略的规模化评估提供了可行方案。",
+          "llm_evidence_en": "self-consistent video world model for policy evaluation",
+          "llm_evidence_cn": "自一致视频世界模型用于策略评估",
+          "llm_evidence": "自一致视频世界模型用于策略评估",
+          "canonical_evidence": "自一致视频世界模型用于策略评估",
+          "llm_tldr_en": "SC3-Eval adapts a video foundation model into a policy evaluator using forward-inverse dynamics and multi-view consistency for scalable robot policy evaluation.",
+          "llm_tldr_cn": "该论文提出SC3-Eval，利用自一致视频生成方法将预训练视频基础模型转化为准确的机器人策略评估器。通过前向-逆向动力学一致性和多视图一致性，解决了 rollout 误差累积和分布外泛化问题，为通用机器人策略提供低成本评估方案。",
+          "llm_tldr": "该论文提出SC3-Eval，利用自一致视频生成方法将预训练视频基础模型转化为准确的机器人策略评估器。通过前向-逆向动力学一致性和多视图一致性，解决了 rollout 误差累积和分布外泛化问题，为通用机器人策略提供低成本评估方案。",
           "llm_tags": [
             "query:world-models"
           ],
@@ -280,32 +205,31 @@
           "selection_source": "carryover_cache",
           "paper_id": "2606.18610v1",
           "carry_days": 1
-        }
-      ]
-    },
-    "robot-rl": {
-      "updated_date": "20260618",
-      "carryover_days": 9,
-      "items": [
+        },
         {
-          "id": "2606.18594v1",
+          "id": "2606.18960v2",
           "source": "arxiv",
-          "title": "Benchmarking Action Spaces in Reinforcement Learning for Vision-based Robotic Manipulation",
-          "abstract": "In real-world reinforcement learning (RL), the choice of action space can play a key role in shaping motion smoothness, safety, and overall task performance. In this study, we evaluate pose increment, pose velocity, joint position increment, and joint velocity across two vision-based manipulation tasks: object picking and pushing. We train policies in simulation and deploy them to the real world using sim-to-real transfer. We find that action-space representation indeed significantly affects sim-to-real performance. In particular, we find that the joint velocity action space is best for the vision-based picking and pushing tasks in terms of smoothness and final task performance. We also provide practical guidance for RL practitioners in choosing action spaces for both simulation and real-world experiments.",
+          "title": "Mem-World: Memory-Augmented Action-Conditioned World Models for Persistent Robot Manipulation",
+          "abstract": "Action-conditioned world models have emerged as a promising paradigm for robot learning, offering a scalable alternative to costly real-world experimentation by generating action-consistent video rollouts. However, persistent world modeling remains challenging in manipulation: frequent end-effector occlusions and rapid wrist-camera motion make the current observation insufficient for predicting future views, causing models to forget or hallucinate scene details seen in earlier frames. Existing memory retrieval strategies often fail to identify informative history in dynamic manipulation scenarios. To address this limitation, we propose Mem-World, a memory-augmented multi-view action-conditioned world model. At its core, we present W-VMem, a 4D wrist-view-centered surfel-indexed memory that anchors historical observations to temporally evolving surface elements. By explicitly modeling when and where scene elements are observed, W-VMem enables geometry-aware retrieval of relevant history frames conditioned on future actions. During generation, relevant history frames are selected via surfel-based rendering and scoring, providing informative and non-redundant context for prediction. Extensive experiments show that Mem-World generates persistent rollouts in complex manipulation scenarios, enables more reliable policy evaluation than Ctrl-World, improving the Pearson correlation with real-world performance by 14.5\\%, and supports effective policy improvement through synthetic data generation, increasing success rates from 58\\% to 72\\% on long-horizon tasks.",
           "authors": [
-            "Seyed Alireza Azimi",
-            "Homayoon Farrahi",
-            "Abhishek Naik",
-            "Colin Bellinger",
-            "A. Rupam Mahmood"
+            "Zirui Zheng",
+            "Jiaqian Yu",
+            "Xiongfeng Peng",
+            "jun shi",
+            "Mingyi Li",
+            "Chao Zhang",
+            "Weiming Li",
+            "Dong Wang",
+            "Huchuan Lu",
+            "Xu Jia"
           ],
-          "primary_category": "cs.RO",
+          "primary_category": "cs.CV",
           "categories": [
-            "cs.RO",
-            "cs.AI"
+            "cs.CV",
+            "cs.RO"
           ],
-          "published": "2026-06-17T01:45:13+00:00",
-          "link": "https://arxiv.org/pdf/2606.18594v1",
+          "published": "2026-06-17T11:42:00+00:00",
+          "link": "https://arxiv.org/pdf/2606.18960v2",
           "tags": [
             "keyword:robot-rl",
             "keyword:vla-policy",
@@ -315,21 +239,69 @@
             "query:world-models"
           ],
           "llm_score": 8.0,
-          "llm_evidence_en": "benchmarking action spaces in reinforcement learning for vision-based robotic manipulation",
-          "llm_evidence_cn": "基于视觉的机器人操作中强化学习动作空间基准测试",
-          "llm_evidence": "基于视觉的机器人操作中强化学习动作空间基准测试",
-          "canonical_evidence": "基于视觉的机器人操作中强化学习动作空间基准测试",
-          "llm_tldr_en": "Benchmarks four action spaces in reinforcement learning for vision-based manipulation, finding joint velocity best for picking and pushing tasks.",
-          "llm_tldr_cn": "该工作系统评估了四种动作空间（位姿增量、位姿速度、关节位置增量、关节速度）在视觉机器人操作中的效果。在模拟中训练策略并通过Sim-to-Real迁移到真实世界。结果表明关节速度动作空间在任务平滑度和成功率上最佳，为RL实践者提供了实用指导。",
-          "llm_tldr": "该工作系统评估了四种动作空间（位姿增量、位姿速度、关节位置增量、关节速度）在视觉机器人操作中的效果。在模拟中训练策略并通过Sim-to-Real迁移到真实世界。结果表明关节速度动作空间在任务平滑度和成功率上最佳，为RL实践者提供了实用指导。",
+          "llm_evidence_en": "memory-augmented action-conditioned world model for robot manipulation",
+          "llm_evidence_cn": "用于机器人操作的内存增强动作条件世界模型",
+          "llm_evidence": "用于机器人操作的内存增强动作条件世界模型",
+          "canonical_evidence": "用于机器人操作的内存增强动作条件世界模型",
+          "llm_tldr_en": "Proposes Mem-World, a memory-augmented multi-view action-conditioned world model that retrieves informative history to improve video prediction in occluded manipulation scenes.",
+          "llm_tldr_cn": "该论文针对持久世界建模中因遮挡和快速运动导致历史信息丢失的问题，提出了Mem-World。该方法采用多视角动作条件世界模型，并引入高效记忆检索机制从历史帧中提取关键信息。实验表明，Mem-World在预测未来视频帧时能保持场景一致性，尤其在遮挡严重的操作任务中显著优于无记忆基线。该工作提升了世界模型在真实操作中的实用性。",
+          "llm_tldr": "该论文针对持久世界建模中因遮挡和快速运动导致历史信息丢失的问题，提出了Mem-World。该方法采用多视角动作条件世界模型，并引入高效记忆检索机制从历史帧中提取关键信息。实验表明，Mem-World在预测未来视频帧时能保持场景一致性，尤其在遮挡严重的操作任务中显著优于无记忆基线。该工作提升了世界模型在真实操作中的实用性。",
+          "llm_tags": [
+            "query:world-models"
+          ],
+          "matched_query_tag": "query:world-models",
+          "matched_query_text": "World Action Models for robot control",
+          "matched_requirement_id": "req-10",
+          "selection_source": "carryover_cache",
+          "paper_id": "2606.18960v2",
+          "carry_days": 1
+        }
+      ]
+    },
+    "robot-rl": {
+      "updated_date": "20260620",
+      "carryover_days": 9,
+      "items": [
+        {
+          "id": "2606.19752v1",
+          "source": "arxiv",
+          "title": "Temporal Self-Imitation Learning",
+          "abstract": "Long-horizon robot manipulation policies trained with reward shaping can still exploit dense rewards through inefficient interaction, while rare efficient behaviors may be forgotten during training. We argue that temporal efficiency itself provides a powerful and underutilized source of self-supervision for reinforcement learning. We introduce Temporal Self-Imitation Learning (TSIL), a reinforcement learning framework that mines temporally efficient successful trajectories generated during learning and converts them into reusable supervision for future policy improvement. TSIL progressively refines learning using configuration-conditioned adaptive temporal targets derived from fast successful trajectories, while preserving and replaying efficient behaviors through efficiency-weighted self-imitation learning. Across 15 distinct long-horizon manipulation tasks, TSIL consistently improves learning efficiency, task-completion efficiency, revisitation of fast successful behaviors, and robustness to unstable training conditions. More broadly, our results suggest that the temporal structure of successful behavior itself provides a scalable self-supervisory signal for reinforcement learning beyond manually engineered reward shaping alone.",
+          "authors": [
+            "Yinsen Jia",
+            "Boyuan Chen"
+          ],
+          "primary_category": "cs.RO",
+          "categories": [
+            "cs.RO",
+            "cs.AI"
+          ],
+          "published": "2026-06-18T03:31:56+00:00",
+          "link": "https://arxiv.org/pdf/2606.19752v1",
+          "tags": [
+            "keyword:robot-rl",
+            "keyword:vla-policy",
+            "keyword:world-models",
+            "query:robot-rl",
+            "query:vla-policy",
+            "query:world-models"
+          ],
+          "llm_score": 8.0,
+          "llm_evidence_en": "temporal self-imitation learning for long-horizon manipulation",
+          "llm_evidence_cn": "用于长程操纵的时间自模仿学习",
+          "llm_evidence": "用于长程操纵的时间自模仿学习",
+          "canonical_evidence": "用于长程操纵的时间自模仿学习",
+          "llm_tldr_en": "Temporal Self-Imitation Learning mines temporally efficient trajectories to improve long-horizon robot manipulation RL.",
+          "llm_tldr_cn": "该论文提出时间自模仿学习，从训练过程中产生的有效轨迹中提取时间效率监督信号，用于改进长程机器人操纵强化学习。方法通过效率加权重放和自适应时间目标，减少了密集奖励下的低效探索，提升了样本效率。",
+          "llm_tldr": "该论文提出时间自模仿学习，从训练过程中产生的有效轨迹中提取时间效率监督信号，用于改进长程机器人操纵强化学习。方法通过效率加权重放和自适应时间目标，减少了密集奖励下的低效探索，提升了样本效率。",
           "llm_tags": [
             "query:robot-rl"
           ],
           "matched_query_tag": "query:robot-rl",
-          "matched_query_text": "real robot reinforcement learning",
-          "matched_requirement_id": "req-20",
+          "matched_query_text": "reinforcement learning for robot manipulation",
+          "matched_requirement_id": "req-21",
           "selection_source": "carryover_cache",
-          "paper_id": "2606.18594v1",
+          "paper_id": "2606.19752v1",
           "carry_days": 1
         }
       ]
