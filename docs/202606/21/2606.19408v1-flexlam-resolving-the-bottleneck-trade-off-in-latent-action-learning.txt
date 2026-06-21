@@ -1,0 +1,612 @@
+Title: FlexLAM: Resolving the Bottleneck Trade-off in Latent Action Learning
+
+URL Source: https://arxiv.org/pdf/2606.19408v1
+
+Published Time: Fri, 19 Jun 2026 00:02:36 GMT
+
+Number of Pages: 24
+
+Markdown Content:
+# FlexLAM: Resolving the Bottleneck Trade-off in Latent Action Learning 
+
+Takanori Yoshimoto 1 ∗, Yang Hu 2, Naruya Kondo 1, Tatsuya Matsushima 2 ∗
+
+> 1
+
+University of Tsukuba, 2The University of Tokyo  
+
+> ∗
+
+Corresponding authors 
+
+https://yn35.github.io/flexible-latent-action/ 
+
+## Abstract 
+
+Latent actions provide a compact interface between action-free video and downstream decision-making, yet existing Latent Action Models (LAMs) force every transition through a fixed-capacity bottleneck. We identify a bottleneck trade-off: overly tight codes can discard transition cues needed for action alignment, while overly loose codes preserve additional transition variation that must be resolved when alignment labels are scarce or narrowly distributed. FlexLAM replaces this fixed capacity with variable-length latent actions trained by nested dropout, yielding prefix-valid codes that capture compact transition structure first and add detail only when needed, without new architectures or losses. A single FlexLAM matches or surpasses separately trained fixed-capacity LAMs at every evaluated token budget under standard scarce-label supervision and under a low-return single-task alignment stress test, indicating that FlexLAM is not merely adjustable at inference time but learns a better latent-action interface at the same token budgets. The same model supports inference-time token-budget adjustment without retraining, and FlexLAM improves Ego4D transition reconstruction. These results suggest that variable-length latent actions are an architecture-free, drop-in upgrade to the fixed-capacity bottleneck in latent action models, latent-action world models, and video-pretrained action interfaces. 
+
+## 1 Introduction 
+
+Latent actions provide a compact interface between action-free video and downstream decision-making. A Latent Action Model (LAM) compresses an observation transition (ot, o t+1 ) into a latent code learned from action-free video, then aligns this code with executable actions using a smaller labeled set [Edwards et al., 2019, Rybkin et al., 2019, Menapace et al., 2021, Schmidt and Jiang, 2024, Ye et al., 2025, Nikulin et al., 2025, Chen et al., 2025b, 2026]. This setting is attractive because action-free videos are abundant, whereas action labels are costly and often concentrated around particular tasks or embodiments [O’Neill et al., 2024, Black et al., 2025, Kim et al., 2024, Bruce et al., 2024]. Recent in-the-wild latent-action world models study how latent actions can support world modeling when videos contain richer action variation, environmental noise, and no common embodiment [Garrido et al., 2026]. A central design choice in this interface is its capacity. Existing LAMs typically instantiate a fixed-capacity interface in which every transition is represented with the same latent-action budget. This resembles a fixed-rate tokenizer, but transition complexity is not fixed. Some transitions involve small camera-stable changes, while others include viewpoint shifts, occlusions, or fine-grained motion. Recent analyses further suggest that LAM latents may capture nuisance frame differences in addition to controllable changes, making bottleneck capacity a central design choice rather than a mere hyperparameter [Zhang et al., 2026, Nikulin et al., 2025, Liang et al., 2025]. Figure 1 summarizes the capacity mismatch and previews the main DMLab result.    
+
+> Preprint.
+> arXiv:2606.19408v1 [cs.LG] 17 Jun 2026 Overfitting
+> Fixed-length LAM FlexLAM
+> Action lost Robust
+> ←←
+> DMLab return Reconstruction
+> GT
+
+Figure 1: The fixed-capacity bottleneck trade-off. Left: One fixed transition-code budget must serve transitions of varying complexity, creating tight- and loose-capacity failure modes for action alignment under limited labels. Right: The main DMLab result: one FlexLAM model beats separately trained Fixed-K baselines at every evaluated token budget. This mismatch exposes a bottleneck trade-off. Tight codes impose useful compression but can remove transition cues needed for latent-to-action alignment. Loose codes preserve more transition variation, but then the translator must determine which variation corresponds to executable actions from scarce or narrowly distributed labels. Thus, the problem is not simply to tune one global capacity, but to learn transition codes that remain valid across capacities. Driven by this diagnosis, FlexLAM changes only how the latent-action bottleneck is trained. Instead of training one fixed code per transition, FlexLAM trains many retained prefixes of the same code to support transition decoding and action alignment. This simple rule makes the interface less dependent on suffix-only transition variation, which stabilizes alignment when labels are scarce or narrowly distributed. As a consequence, the same model also supports multiple current-step token budgets at inference time. Because the surrounding LAM pipeline is unchanged, improvements can be attributed to the latent-action interface rather than to a new downstream evaluator, policy, or world model. We evaluate this intervention in the standard LAM pipeline with a fixed latent-token sequence-model evaluator. The main DMLab comparison is direct: for each budget k ∈ { 4, 16 , 64 }, we train a separate Fixed-K k model and compare it with the same FlexLAM model evaluated as FlexLAM@ k.FlexLAM wins at every evaluated budget. This shows that retained-prefix training does more than expose intermediate budgets; it improves the latent-action interface at matched budgets. We use latency, Ego4D reconstruction, and transition-token visualizations as secondary diagnostics. We summarize three contributions. • We characterize a fixed-capacity bottleneck trade-off in LAMs, where one transition-code budget must serve transitions of varying complexity, creating capacity-related risks for latent-to-action alignment under scarce or narrowly distributed labels. • We introduce retained-prefix training, which makes every prefix of a transition code a valid latent action for both transition decoding and latent-to-action alignment. These prefix-valid codes let one model span multiple token budgets, and only the bottleneck training changes while the rest of the LAM pipeline is unchanged. • We show that a single FlexLAM model outperforms separately trained Fixed-K baselines at every evaluated token budget on DMLab under scarce labels. We further analyze narrow-source alignment, inference-time token-budget trade-offs, Ego4D reconstruction, and cross-embodiment latent-action transfer. 
+
+## 2 Related Work 
+
+Latent action models from action-free video. Latent Action Models (LAMs) learn transition codes from action-free observation pairs and later align these codes with executable actions using a smaller labeled set [Edwards et al., 2019, Rybkin et al., 2019, Menapace et al., 2021, Schmidt and Jiang, 2024, Ye et al., 2025, Nikulin et al., 2025, Chen et al., 2025b, 2026]. Existing LAMs differ in whether their latent actions are discrete or continuous, how they are aligned to actions, and how they are used downstream. However, most of them instantiate a fixed-capacity transition-code interface. Recent analyses have also questioned what LAM codes capture. They may encode controllable 2transition structure, but can also reflect nuisance frame differences or distractors [Zhang et al., 2026, Nikulin et al., 2025, Liang et al., 2025]. FlexLAM keeps the standard LAM pipeline and studies a complementary representation question of whether every transition should be forced through the same latent-action capacity. 
+
+Variable-capacity and nested representations. Variable-capacity representations have been stud-ied through nested and elastic embeddings, including nested dropout [Rippel et al., 2014, Koike-Akino and Wang, 2020] and Matryoshka representations [Kusupati et al., 2022]. Recent tokenization meth-ods similarly adapt the number of tokens to input complexity, representing simple inputs with fewer tokens and complex inputs with more [Bachmann et al., 2025, Shen et al., 2026]. Ordered action tokenization has also been explored for autoregressive robot policies [Liu et al., 2026]. FlexLAM applies this principle to action-free transition codes rather than image tokens or policy action tokens. Because transition complexity varies, the capacity of the latent-action interface should also vary. We use nested dropout as a local modification to make retained prefixes valid transition codes and evaluate whether this helps latent-to-action alignment under scarce or narrowly distributed labels. 
+
+Latent-action world models and bottlenecked transitions. World models predict future obser-vations or dynamics from learned states or tokens [Hafner et al., 2024, Bruce et al., 2024, Gao et al., 2025, Cui and Gao, 2023]. Latent-action world models add an action-like bottleneck to this prediction interface. Recent in-the-wild latent-action world models study how latent actions can support world modeling when videos contain richer action variation, environmental noise, and no common embodiment [Garrido et al., 2026]. FlexLAM is complementary because it studies the capacity of the latent-action interface itself. 
+
+Action-label scarcity and VLA policies. Many LAMs are motivated by robot and VLA settings, where action labels are costly and datasets are often concentrated around particular embodiments or tasks [O’Neill et al., 2024, Black et al., 2025, Kim et al., 2024, Khazatsky et al., 2024]. LAPA-style work uses latent actions to pretrain VLA policies and validates the resulting policies through robot manipulation tasks [Ye et al., 2025]. FlexLAM addresses an earlier representation-level bottleneck that precedes such policy learning by asking how much transition information a latent action code should retain before it is aligned to executable actions. We therefore evaluate the latent-action interface itself, rather than proposing a new robot policy architecture or a direct VLA comparison. 
+
+## 3 The Fixed-Capacity Bottleneck Trade-off 
+
+We isolate the capacity mismatch created by fixed-capacity latent actions. Let Du = {(ot, o t+1 )}
+
+denote action-free transitions and De = {(ot, o t+1 , a t)} a smaller action-labeled set used for align-ment. A LAM represents each transition by a length-K latent-action code zt = ( zt, 1, . . . , z t,K ). The decoder reconstructs ot+1 from ot and zt, while a translator maps zt to executable actions using De.The token length K determines the capacity of the transition-code interface. More generally, the effective capacity also depends on the token alphabet or quantizer used by the LAM; we make the exact bottleneck settings explicit in the experiments and appendix. Here, the key point is that fixed-capacity LAMs assign one capacity to every transition. This fixed capacity yields two predictions we test directly. If the bottleneck is too tight (P1), the code removes cues needed for latent-to-action alignment, so alignment should degrade as labels grow scarce (Section 5.2). If it is too loose (P2), the translator must select action-predictive information from more transition variation, so a high-capacity code should be fragile under a narrow labeled source (Section 5.3). Thus the issue is not whether one fixed capacity is universally best, but whether a single global transition-code budget is a stable interface for alignment. FlexLAM tests this diagnosis by replacing the fixed interface with retained-prefix codes while holding the downstream alignment and evaluation interfaces fixed. 
+
+## 4 FlexLAM 
+
+FlexLAM modifies only the latent-action bottleneck in the standard LAM pipeline. The surround-ing stages—latent-action pretraining, latent-to-action alignment, and downstream sequence-model 3Encoder 
+
+> Decoder Translator
+> LAM-Enc
+
+Causal Transformer  
+
+> Translator
+> LAM-Enc
+> Translator Translator
+> nested dropout
+
+Planner LAM Figure 2: FlexLAM overview. (a) During LAM pretraining, FlexLAM samples a retained prefix length k and replaces suffix slots with a shared null latent before decoder training. (b) The same prefix representation is used for latent-to-action alignment with a small labeled set. (c) A fixed latent-token evaluator predicts latent-action tokens for downstream evaluation using the same translator interface. evaluation—are kept fixed across bottleneck designs whenever possible. This makes FlexLAM a controlled intervention on the representation interface, rather than a new downstream evaluator, policy architecture, or world model. 
+
+4.1 Retained-Prefix Training for Prefix-Valid Latent Actions 
+
+Let zt = ( zt, 1, . . . , z t,K ) denote the K-slot latent-action representation produced by the LAM encoder and quantizer for a transition (ot, o t+1 ). In a fixed-capacity bottleneck, every transition is represented with the same K-slot capacity. FlexLAM instead samples a retained prefix length 
+
+k ∼ p(k) with p(k) = Unif {0, . . . , K } and replaces all suffix slots with a shared learnable null latent z∅:
+
+˜z(k) 
+
+> t,j
+
+=
+
+zt,j , j ≤ k, z∅, j > k, ˜z(k) 
+
+> t
+
+∈ RK×d.
+
+The null latent is optimized with the LAM parameters. The k = 0 case corresponds to an all-null training input. This retained-prefix training follows nested and adaptive representation learning [Rippel et al., 2014, Koike-Akino and Wang, 2020, Kusupati et al., 2022, Bachmann et al., 2025]. We train the LAM encoder and decoder by conditioning the decoder on the current observation and the null-filled retained prefix: 
+
+min  
+
+> θ,ϕ
+
+E(ot,o t+1 )∼D u Ek∼p(k)
+
+h
+
+Ldec (ot+1 ; ot, ˜z(k) 
+
+> t
+
+)
+
+i
+
+.
+
+Here θ denotes the LAM encoder-side parameters, including the bottleneck parameters, and ϕ denotes the decoder parameters. The objective Ldec is the transition-decoding objective; in our experiments, it is implemented with a rectified-flow objective in both DMLab and real-world video settings [Lipman et al., 2023, Liu et al., 2023, Esser et al., 2024]. In the real-world setting, the decoder is initialized from SD3 and fine-tuned with the same retained-prefix conditioning principle, enabling higher-resolution real-video evaluation without changing the core FlexLAM objective. This objective gives earlier tokens denser training pressure because token zt,j is retained whenever k ≥ j. As a result, information useful across many retained prefixes is encouraged to appear earlier, while later tokens can add residual transition detail. We use retained-prefix training not only to expose shorter prefixes at inference time, but also to make the latent-action interface less sensitive to suffix-only variation during alignment. 
+
+4.2 Latent-to-Action Alignment 
+
+To obtain executable actions from latent-action codes learned from action-free video, we train a trans-lator gψ on the labeled set De = {(ot, o t+1 , a t)} to map null-filled retained-prefix representations to actions. Translator training uses the same prefix sampling distribution p(k) as LAM pretraining: 
+
+min  
+
+> ψ
+
+E(ot,o t+1 ,a t)∼D e Ek∼p(k)
+
+h
+
+ℓact 
+
+
+
+gψ (˜ z(k) 
+
+> t
+
+, a t−1), a t
+
+i 
+
+.
+
+4This exposes the translator to many partial views of the same transition code, which discourages reliance on suffix-only variation when labels are limited. The translator conditions on the previous action at−1 in all compared methods to reduce egocentric ambiguity. This is a lightweight action-history cue; related latent-action systems similarly use proprioceptive cues to ground visually subtle dynamics [Chen et al., 2026]. Different retained prefix lengths are represented through the null-filled suffix slots, with no separate length input or attention mask. In our implementation, gψ is a fixed-input MLP that receives the flattened K-slot representation. The previous-action conditioning choice is ablated in Appendix D.1. The objective above describes the frozen-alignment setting, which isolates the quality of the latent-action representation by updating only the translator. Prior work has shown that action supervision during latent-action learning or co-fine-tuning can improve grounding to executable actions [Nikulin et al., 2025, Liang et al., 2025, Chen et al., 2025b]. We therefore treat joint LAM-translator fine-tuning as a complementary strengthening of the alignment stage rather than as part of the core FlexLAM intervention. Section 6.3 shows that this stronger alignment recipe improves bottlenecked models while preserving FlexLAM’s advantage over the fixed-capacity baseline. 
+
+4.3 Latent-Token Sequence Model for Downstream Evaluation 
+
+We use a fixed causal latent-token evaluator only as a downstream evaluator, following prior latent-action pipelines [Ye et al., 2025, Nikulin et al., 2025, Chen et al., 2025b]. The model predicts latent-action codes from sparse observation embeddings and past latent-action blocks. Observation embeddings are used as conditioning inputs rather than prediction targets. At decision time, FlexLAM may predict only the first k tokens of the current latent-action block. The remaining slots are filled with the null latent before the translator decodes the action, so reducing k
+
+shortens only the current-step autoregressive generation. Full sequence construction, objective, and inference procedure are provided in Appendix B. Architecture, quantizer, decoder objectives, and hyperparameter details are reported in Appendix A and Appendix E. 
+
+## 5 Experiments 
+
+We organize the experiments around the bottleneck-interface diagnosis. DMLab is our controlled downstream setting, where we test whether training many prefixes of the same transition code to remain useful stabilizes alignment under scarce or narrow labels. Ego4D is a complementary real-video reconstruction setting: it tests whether the same retained-prefix bottleneck yields usable transition representations under real camera motion and appearance variation. We report the controlled DMLab comparisons first, then use Ego4D reconstruction as a complementary real-video diagnostic. 
+
+5.1 Experimental Setup DMLab. We evaluate downstream task performance in DeepMind Lab (DMLab), an egocentric partially observed environment with viewpoint changes, occlusions, and visual distractors [Beattie et al., 2016]. Expert videos are generated by rolling out a pretrained DreamerV3 agent [Hafner et al., 2024]. The action-free dataset contains observation transitions (ot, o t+1 ), and the action-labeled subset contains (ot, o t+1 , a t). Although simulated, these factors mirror nuisance variation common in real video, while DMLab still allows controlled downstream return evaluation. 
+
+DMLab baselines and notation. We use Fixed-K k for a fixed-capacity LAM trained separately with a k-token bottleneck, and FlexLAM@ k for the same FlexLAM model evaluated with prefix length k. Our main comparison uses k ∈ { 4, 16 , 64 }. All methods use the same LAM backbone, translator, evaluator architecture, training protocol, and FSQ vocabulary family; the intended dif-ference is the bottleneck training rule. This gives a matched-budget test of whether retained-prefix training improves the latent-action interface. Returns are normalized by the DreamerV3 expert score. 
+
+Real-world video. For real-world video, we pretrain FlexLAM on a mixture of Internet, egocentric, and robot videos, including Ego4D, OXE, and other datasets listed in Appendix E.1 [Grauman et al., 2022, O’Neill et al., 2024]. We compare against the released villa-X-LAM checkpoint [Chen et al., 2026] as an external fixed-bottleneck LAM reference. villa-X-LAM encodes an 8-frame clip into 50.0125 0.0250 0.0500 0.1000 0.2000 0.4000 0.8000      
+
+> Data amount (%)
+> 10 0
+> 3 × 10 1
+> 4 × 10 1
+> 6 × 10 1
+> Test loss
+> IDM
+> Fixed-K2
+> Fixed-K64
+> FlexLAM (ours)
+> 416 64
+> Token budget (K)
+> 0
+> 5
+> 10
+> 15
+> 20
+> normalized return (%)  Fixed-K
+> FlexLAM@
+
+Figure 3: Scarce-label alignment and matched-budget return. Left: translator test loss versus labeled dataset size. Right: downstream normalized return under 0.025% labels at matched token budgets. Fixed-k models are trained separately; FlexLAM@ k evaluates one FlexLAM model at prefix length k. FlexLAM outperforms Fixed-K at every evaluated budget. 7 latent actions with VQ codebook size 32, and we evaluate it at its native fixed-bottleneck setting while matching the evaluation fps and input resolution. 
+
+5.2 Sample Efficiency under Scarce Labels 
+
+We first test prediction P1 by asking whether retained-prefix training improves alignment when action labels are extremely scarce. This is the regime where LAMs are most useful because action-free video can be abundant, but only a small labeled set is available to align latent codes with executable actions. We pretrain the LAM and latent-token evaluator on action-free transitions, freeze them, and vary only the amount of labeled data used to train the translator. Figure 3 provides the full scarce-label comparison previewed in Figure 1. Across k ∈{4, 16 , 64 }, FlexLAM@ k outperforms a separately trained Fixed-K k model. The full-budget result, FlexLAM@64 > Fixed-K64, is especially important: it shows that the gain is not just access to smaller or intermediate budgets. Retained-prefix training improves the interface even when the evaluation budget is matched. 
+
+5.3 Action Alignment from a Narrow Single-Task Source 
+
+We next evaluate whether FlexLAM remains stable when the labeled alignment set is drawn from a narrow single-task source. The translator is trained using labels from Lasertag One Opponent Large, corresponding to 0.04% of the full dataset. This source task has low expert return and is excluded from the normalized evaluation suite; therefore, this setting serves as a practical stress test for action alignment from a narrow, low-return labeled source. The source task is excluded from the normalized evaluation suite, so the reported 11-task average evaluates transfer from this narrow source to the remaining tasks. Figure 4 confirms prediction P2. Fixed-capacity baselines are more fragile under this narrow alignment source. In particular, the high-capacity Fixed-K64 baseline falls below the random policy on rooms_watermaze, whereas FlexLAM avoids this degradation. This is a realistic failure mode for LAMs because action labels may be sparse and collected from a limited set of behaviors. FlexLAM is substantially more stable in this setting, outperforming the corresponding fixed-capacity baselines on most tasks. This suggests that retained-prefix training makes the interface less dependent on high-capacity suffix slots under narrow labels. 
+
+5.4 Real-World Transition Reconstruction 
+
+DMLab evaluates downstream task performance, but the fixed-capacity bottleneck trade-off is not specific to simulated environments. We therefore evaluate whether retained-prefix bottlenecks also improve transition reconstruction on visually diverse real-world video. Ego4D evaluates whether the same bottleneck design improves real-world transition representation quality, complementing 60.0 0.2 0.4 0.6 0.8 1.0 1.2  
+
+> Test Loss
+> FlexLAM (non-bias)
+> Fixed-K64 (non-bias)
+> FlexLAM
+> Fixed-K64
+> IDM
+> FlexLAM (ours) Fixed-K64
+> 0
+> 2
+> 4
+> 6
+> 8
+> 10
+> 12
+> 14
+> 16
+> normalized return (%)
+
+Figure 4: Action alignment from a narrow single-task source. The translator is trained using labels from a single low-return source task (Lasertag One Opponent Large; 0.04% of the full dataset), then evaluated on the normalized multi-task suite excluding that source task. Left panel shows translator test loss in this narrow-source setting, compared with a control using the same label budget sampled uniformly across tasks. Right panel shows normalized downstream task return (% of DreamerV3 expert). Full per-task results are reported in Appendix C.1. Table 1: Transition reconstruction on Ego4D. Per-frame reconstruction metrics averaged over 200 held-out Ego4D clips. villa-X-LAM is evaluated using the released checkpoint at its native fixed bottleneck setting of 7 latent actions per 8-frame clip with VQ codebook size 32. FlexLAM is evaluated with retained prefix lengths k ∈ { 5, 20 , 80 } for each transition. Method PSNR ↑ SSIM ↑ LPIPS ↓
+
+villa-X-LAM 16.91 0.5442 0.5473 FlexLAM ( k=5 ) 18.13 0.5758 0.3607 FlexLAM ( k=20 ) 19.55 0.6358 0.3290 FlexLAM ( k=80 ) 19.84 0.6532 0.3216 
+
+DMLab downstream return evaluation. We compare FlexLAM against the released villa-X-LAM reference on Ego4D using per-frame reconstruction metrics, including LPIPS [Zhang et al., 2018]. Table 1 shows that FlexLAM improves over the external fixed-bottleneck reference across PSNR, SSIM, and LPIPS. Because the two models differ in pretraining data (ours includes Ego4D), initial-ization, and nominal capacity, we read villa-X-LAM as a reference point rather than a controlled baseline; the controlled evidence here is the within-model trend, where increasing k from 5 to 80 progressively improves reconstruction quality, consistent with the prefix-valid transition structure induced by retained-prefix training. Figure 5 provides representative decoded transitions. The reference comparison illustrates recon-struction stability under camera and background changes, while the prefix sweep shows that larger prefixes add visual detail within the same model. Together with Table 1, these results provide com-plementary evidence that the retained-prefix bottleneck also yields usable transition representations under real-video variation. 
+
+## 6 Analysis and Ablations 
+
+Having shown that FlexLAM improves over separately trained Fixed-K baselines at matched budgets, we next analyze what the single retained-prefix model provides at inference time. We first test whether learned latent actions transfer across embodiments and scenes, then examine how retained prefix length affects translation loss, downstream return, and latency within the same trained model. 
+
+6.1 Latent Actions Transfer Across Embodiments 
+
+We test whether FlexLAM latent actions generalize beyond the source scene. Figure 6 extracts a latent action z from a source pair, applies it to a target frame from a different embodiment or 7villa-X-LAM GT 0 token 1 token 4 token 16 token 32 token 80 token Figure 5: Real-world transition reconstruction. We decode latent transition tokens on Ego4D and robot-video reconstruction examples. Compared with the released villa-X-LAM reference, FlexLAM produces more stable one-step reconstructions under camera and background changes. Varying the retained prefix length k within the same model progressively adds visual detail. These examples evaluate transition reconstruction under real-video variation. 1. Extract action z 2. Apply z to new scene 3. Re-extract z' from 2, apply to o src                      
+
+> t
+> osrc
+> tosrc
+> t+ 1 otgt
+> tDec( otgt
+> t,z)Dec( osrc
+> t,z′)osrc
+> t+ 1 (GT)
+> osrc
+> treused
+> zz' zz' zz' zz' zz'
+> source scene new scene generated (predicted) latent action ( z)
+
+Figure 6: Latent actions transfer across embodiments. Each row runs a round trip across two scenes by encoding the source transition, z = Enc( ot, o t+1 ) (left); decoding it onto the target frame, 
+
+ˆot+1 = Dec( otgt  
+
+> t
+
+, z ) (middle); re-encoding, z′ = Enc( otgt  
+
+> t
+
+, ˆot+1 ); and decoding back to the source, 
+
+Dec( osrc  
+
+> t
+
+, z ′) ≈ ot+1 (right). Green frames denote the source scene, red the new scene, and dashed frames are model-generated. scene, and verifies consistency by re-extracting and applying back to the source. These pairings span two axes of variation: morphology (human hands vs. robotic grippers) and scene context (real kitchens and gardens vs. tabletop robot setups). Across all combinations, the target frames consistently reproduce the source transition—hand movements and object interactions are preserved. The round-trip recovery closely matches the original ot+1 , confirming that the action information survives the cross-embodiment transfer. This test is complementary to the reconstruction metrics in Table 1: reconstruction measures within-domain fidelity, whereas cross-embodiment transfer tests whether the latent code captures motion structure independently of visual identity. 81 2 4 8 16 32 64   
+
+> Num tokens
+> 4 × 10 1
+> 6 × 10 1
+> Test loss
+> FlexLAM-K64
+> FlexLAM (ours)
+
+Figure 7: Prefix-length scaling within one FlexLAM model. Translator test loss as a function of retained prefix length k. This plot varies only the retained prefix used by the same trained FlexLAM model. Lower loss indicates better latent-to-action alignment. Table 2: Current-step token-budget trade-off. FlexLAM supports multiple current-step generation budgets within one model. Latency is measured per decision step under the same inference context and hardware; full measurement details are provided in Appendix B. 
+
+k Norm. Return (%) Trans. Loss Latency (ms/step) 4 20.8 0.590 57.1 16 27.3 0.462 176.0 64 28.8 0.413 638.8 
+
+6.2 Retained Prefixes: Alignment and Token-Budget Trade-offs 
+
+Retained-prefix training exposes multiple operating points within one model. Reducing k shortens the autoregressive generation for the current action decision while the historical context is unchanged. We therefore treat k as a current-step inference budget and measure the resulting translation, return, and latency trade-offs. Figure 7 shows that intermediate prefixes remain meaningful operating points within one retained-prefix model. Alignment generally improves as more tokens are retained, while shorter prefixes remain usable. This analysis is separate from the matched Fixed-K comparison in Figure 3; it characterizes how one FlexLAM model can be operated after training. Table 2 reports representative operating points of the same trained FlexLAM model. At k=16 ,current-step generation retains 95% of the return obtained with full current-step generation while reducing latency by 3.6 ×. This is a practical consequence of retained-prefix training, whereas the main evidence for improved representation quality comes from the matched Fixed-K comparison in Figure 3. 
+
+6.3 Joint LAM-Translator Fine-Tuning 
+
+The main scarce-label experiments use the frozen-alignment setting, which isolates the quality of the latent-action interface by updating only the translator. This setting is intentionally controlled, but it is not necessarily the strongest way to use LAMs when more action labels are available. Because IDM directly observes the input frames and has no latent bottleneck, it can become competitive with or stronger than frozen bottlenecked LAM translators as the labeled set grows. We therefore evaluate the joint-alignment recipe used in prior LAM systems, where the action loss is allowed to update the LAM encoder and bottleneck parameters together with the translator. Figure 8 shows that joint alignment improves bottlenecked LAMs enough to reverse the frozen-alignment ordering against IDM. This effect is not specific to FlexLAM: the fixed-capacity LAM also benefits from action-supervised fine-tuning. The FlexLAM-specific observation is that, under the same joint recipe, the prefix-valid bottleneck yields a larger improvement than the fixed-capacity baseline. Thus, retained-prefix training is complementary to joint alignment rather than a replacement for it. 90.00 0.05 0.10 0.15 0.20 0.25 0.30 0.35 0.40 
+
+> Test Loss
+> FlexLAM+joint (ours)
+> Fixed-K64+joint
+> IDM
+> FlexLAM (ours)
+> Fixed-K64
+
+Figure 8: Joint LAM-translator fine-tuning. Using 0.5% action-labeled data, we compare translator validation loss for IDM (no bottleneck), a fixed-capacity LAM, and FlexLAM, with and without joint alignment. In the frozen setting, IDM can be stronger because it directly observes the input frames. Joint alignment allows action loss to update the LAM bottleneck, improving bottlenecked LAMs and reversing the IDM-vs-LAM ordering. Under the same joint recipe, FlexLAM improves more than the fixed-capacity LAM. 
+
+## 7 Discussion and Limitations 
+
+We studied a fixed-capacity bottleneck trade-off in latent action learning, where one transition-code budget must serve transitions of varying complexity. The main DMLab finding is that a single retained-prefix FlexLAM model outperforms separately trained Fixed-K baselines at every evaluated token budget, consistently across both alignment settings and the eleven-task suite. This suggests that retained-prefix training improves the latent-action interface itself, rather than only providing additional inference-time budgets. Ego4D reconstruction and transition-token visualizations provide complementary representation-level evidence beyond the controlled DMLab setting. The present evaluation focuses on representation-level evidence: controlled DMLab alignment and return, Ego4D transition reconstruction, and decoded transition-token reuse across scenes and embodiments. Two boundaries remain. The controlled downstream comparison is confined to the DMLab family, and the real-video comparison (Section 5.4) is an external reference rather than a controlled baseline. Future work should connect these evaluations to real-world executable policy transfer and action selection under visually ambiguous transitions. Large-scale video pretraining can involve private, copyrighted, or biased data. Careful dataset curation, filtering, licensing, and evaluation under distribution shift remain important before using such representations in downstream systems. 
+
+## References 
+
+AgiBot-World-Contributors, Qingwen Bu, Jisong Cai, Li Chen, Xiuqi Cui, Yan Ding, Siyuan Feng, Shenyuan Gao, Xindong He, Xuan Hu, Xu Huang, Shu Jiang, Yuxin Jiang, Cheng Jing, Hongyang Li, Jialu Li, Chiming Liu, Yi Liu, Yuxiang Lu, Jianlan Luo, Ping Luo, Yao Mu, Yuehan Niu, Yixuan Pan, Jiangmiao Pang, Yu Qiao, Guanghui Ren, Cheng Ruan, Jiaqi Shan, Yongjian Shen, Chengshi Shi, Mingkang Shi, Modi Shi, Chonghao Sima, Jianheng Song, Huijie Wang, Wenhao Wang, Dafeng Wei, Chengen Xie, Guo Xu, Junchi Yan, Cunbiao Yang, Lei Yang, Shukai Yang, Maoqing Yao, Jia Zeng, Chi Zhang, Qinglin Zhang, Bin Zhao, Chengyue Zhao, Jiaqi Zhao, and Jianchao Zhu. Agibot world colosseo: A large-scale manipulation platform for scalable and intelligent embodied systems, 2025. URL https://arxiv.org/abs/2503.06669 .Roman Bachmann, Jesse Allardice, David Mizrahi, Enrico Fini, O˘ guzhan Fatih Kar, Elmira Amirloo, Alaaeldin El-Nouby, Amir Zamir, and Afshin Dehghan. FlexTok: Resampling images into 1D token sequences of flexible length. In Aarti Singh, Maryam Fazel, Daniel Hsu, Simon Lacoste-Julien, Felix Berkenkamp, Tegan Maharaj, Kiri Wagstaff, and Jerry Zhu, editors, Proceedings of the 42nd International Conference on Machine Learning , volume 267 of Proceedings of Machine Learning Research , pages 2241–2292. PMLR, 13–19 Jul 2025. URL https://proceedings.mlr.press/v267/bachmann25a.html .Charles Beattie, Joel Z. Leibo, Denis Teplyashin, Tom Ward, Marcus Wainwright, Heinrich Küttler, Andrew Lefrancq, Simon Green, Víctor Valdés, Amir Sadik, Julian Schrittwieser, Keith Anderson, Sarah York, Max 
+
+10 Cant, Adam Cain, Adrian Bolton, Stephen Gaffney, Helen King, Demis Hassabis, Shane Legg, and Stig Petersen. Deepmind lab, 2016. URL https://arxiv.org/abs/1612.03801 .Kevin Black, Noah Brown, Danny Driess, Adnan Esmail, Michael Robert Equi, Chelsea Finn, Niccolo Fusai, Lachy Groom, Karol Hausman, Brian Ichter, Szymon Jakubczak, Tim Jones, Liyiming Ke, Sergey Levine, Adrian Li-Bell, Mohith Mothukuri, Suraj Nair, Karl Pertsch, Lucy Xiaoyang Shi, Laura Smith, James Tanner, Quan Vuong, Anna Walling, Haohuan Wang, and Ury Zhilinsky. π0: A Vision-Language-Action Flow Model for General Robot Control. In Proceedings of Robotics: Science and Systems , LosAngeles, CA, USA, June 2025. doi: 10.15607/RSS.2025.XXI.010. Jake Bruce, Michael D Dennis, Ashley Edwards, Jack Parker-Holder, Yuge Shi, Edward Hughes, Matthew Lai, Aditi Mavalankar, Richie Steigerwald, Chris Apps, Yusuf Aytar, Sarah Maria Elisabeth Bechtle, Feryal Behbahani, Stephanie C.Y. Chan, Nicolas Heess, Lucy Gonzalez, Simon Osindero, Sherjil Ozair, Scott Reed, Jingwei Zhang, Konrad Zolna, Jeff Clune, Nando De Freitas, Satinder Singh, and Tim Rocktäschel. Genie: Generative interactive environments. In Ruslan Salakhutdinov, Zico Kolter, Katherine Heller, Adrian Weller, Nuria Oliver, Jonathan Scarlett, and Felix Berkenkamp, editors, Proceedings of the 41st International Conference on Machine Learning , volume 235 of Proceedings of Machine Learning Research , pages 4603– 4623. PMLR, 21–27 Jul 2024. URL https://proceedings.mlr.press/v235/bruce24a.html .Meng-Hsi Chen, Yu-Ang Lee, Feng-Ting Liao, and Da shan Shiu. Rethinking the shape convention of an mlp, 2025a. URL https://arxiv.org/abs/2510.01796 .Xiaoyu Chen, Hangxing Wei, Pushi Zhang, Chuheng Zhang, Kaixin Wang, Yanjiang Guo, Rushuai Yang, Yucen Wang, Xinquan Xiao, Li Zhao, Jianyu Chen, and Jiang Bian. villa-x: Enhancing latent action modeling in vision-language-action models. In The Fourteenth International Conference on Learning Representations ,2026. URL https://openreview.net/forum?id=y5CaJb17Fn .Yi Chen, Yuying Ge, Weiliang Tang, Yizhuo Li, Yixiao Ge, Mingyu Ding, Ying Shan, and Xihui Liu. Moto: Latent motion token as the bridging language for learning robot manipulation from videos. In Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV) , pages 19752–19763, October 2025b. Hanchen Cui and Yang Gao. A universal world model learned from large scale and diverse videos. In NeurIPS 2023 Foundation Models for Decision Making Workshop , 2023. URL https://openreview.net/forum? id=lw5GlytIY5 .Ashley Edwards, Himanshu Sahni, Yannick Schroecker, and Charles Isbell. Imitating latent policies from observation. In Kamalika Chaudhuri and Ruslan Salakhutdinov, editors, Proceedings of the 36th International Conference on Machine Learning , volume 97 of Proceedings of Machine Learning Research , pages 1755– 1763. PMLR, 09–15 Jun 2019. URL https://proceedings.mlr.press/v97/edwards19a.html .Patrick Esser, Sumith Kulal, Andreas Blattmann, Rahim Entezari, Jonas Müller, Harry Saini, Yam Levi, Dominik Lorenz, Axel Sauer, Frederic Boesel, Dustin Podell, Tim Dockhorn, Zion English, and Robin Rombach. Scaling rectified flow transformers for high-resolution image synthesis. In Ruslan Salakhutdinov, Zico Kolter, Katherine Heller, Adrian Weller, Nuria Oliver, Jonathan Scarlett, and Felix Berkenkamp, editors, Proceedings of the 41st International Conference on Machine Learning , volume 235 of Proceedings of Machine Learning Research , pages 12606–12633. PMLR, 21–27 Jul 2024. URL https://proceedings.mlr.press/v235/ esser24a.html .Shenyuan Gao, Siyuan Zhou, Yilun Du, Jun Zhang, and Chuang Gan. AdaWorld: Learning adaptable world mod-els with latent actions. In Aarti Singh, Maryam Fazel, Daniel Hsu, Simon Lacoste-Julien, Felix Berkenkamp, Tegan Maharaj, Kiri Wagstaff, and Jerry Zhu, editors, Proceedings of the 42nd International Conference on Machine Learning , volume 267 of Proceedings of Machine Learning Research , pages 18744–18771. PMLR, 13–19 Jul 2025. URL https://proceedings.mlr.press/v267/gao25u.html .Quentin Garrido, Tushar Nagarajan, Basile Terver, Nicolas Ballas, Yann LeCun, and Michael Rabbat. Learning latent action world models in the wild, 2026. URL https://arxiv.org/abs/2601.05230 .Kristen Grauman, Andrew Westbury, Eugene Byrne, Zachary Chavis, Antonino Furnari, Rohit Girdhar, Jackson Hamburger, Hao Jiang, Miao Liu, Xingyu Liu, Miguel Martin, Tushar Nagarajan, Ilija Radosavovic, San-thosh Kumar Ramakrishnan, Fiona Ryan, Jayant Sharma, Michael Wray, Mengmeng Xu, Eric Zhongcong Xu, Chen Zhao, Siddhant Bansal, Dhruv Batra, Vincent Cartillier, Sean Crane, Tien Do, Morrie Doulaty, Akshay Erapalli, Christoph Feichtenhofer, Adriano Fragomeni, Qichen Fu, Abrham Gebreselasie, Cristina González, James Hillis, Xuhua Huang, Yifei Huang, Wenqi Jia, Weslie Khoo, Jáchym Koláˇ r, Satwik Kottur, Anurag Kumar, Federico Landini, Chao Li, Yanghao Li, Zhenqiang Li, Karttikeya Mangalam, Raghava Modhugu, Jonathan Munro, Tullie Murrell, Takumi Nishiyasu, Will Price, Paola Ruiz, Merey Ramazanova, Leda Sari, Kiran Somasundaram, Audrey Southerland, Yusuke Sugano, Ruijie Tao, Minh Vo, Yuchen Wang, Xindi Wu, Takuma Yagi, Ziwei Zhao, Yunyi Zhu, Pablo Arbeláez, David Crandall, Dima Damen, Giovanni Maria 
+
+11 Farinella, Christian Fuegen, Bernard Ghanem, Vamsi Krishna Ithapu, C. V. Jawahar, Hanbyul Joo, Kris Kitani, Haizhou Li, Richard Newcombe, Aude Oliva, Hyun Soo Park, James M. Rehg, Yoichi Sato, Jianbo Shi, Mike Zheng Shou, Antonio Torralba, Lorenzo Torresani, Mingfei Yan, and Jitendra Malik. Ego4d: Around the world in 3,000 hours of egocentric video. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) , pages 18995–19012, June 2022. Danijar Hafner, Jurgis Pasukonis, Jimmy Ba, and Timothy Lillicrap. Mastering diverse domains through world models, 2024. URL https://arxiv.org/abs/2301.04104 .Alexander Khazatsky, Karl Pertsch, Suraj Nair, Ashwin Balakrishna, Sudeep Dasari, Siddharth Karamcheti, Soroush Nasiriany, Mohan Kumar Srirama, Lawrence Yunliang Chen, Kirsty Ellis, Peter David Fagan, Joey Hejna, Masha Itkina, Marion Lepert, Yecheng Jason Ma, Patrick Tree Miller, Jimmy Wu, Suneel Belkhale, Shivin Dass, Huy Ha, Arhan Jain, Abraham Lee, Youngwoon Lee, Marius Memmel, Sungjae Park, Ilija Radosavovic, Kaiyuan Wang, Albert Zhan, Kevin Black, Cheng Chi, Kyle Beltran Hatch, Shan Lin, Jingpei Lu, Jean Mercat, Abdul Rehman, Pannag R Sanketi, Archit Sharma, Cody Simpson, Quan Vuong, Homer Rich Walke, Blake Wulfe, Ted Xiao, Jonathan Heewon Yang, Arefeh Yavary, Tony Z. Zhao, Christopher Agia, Rohan Baijal, Mateo Guaman Castro, Daphne Chen, Qiuyu Chen, Trinity Chung, Jaimyn Drake, Ethan Paul Foster, Jensen Gao, David Antonio Herrera, Minho Heo, Kyle Hsu, Jiaheng Hu, Donovon Jackson, Charlotte Le, Yunshuang Li, Roy Lin, Zehan Ma, Abhiram Maddukuri, Suvir Mirchandani, Daniel Morton, Tony Nguyen, Abigail O’Neill, Rosario Scalise, Derick Seale, Victor Son, Stephen Tian, Emi Tran, Andrew E. Wang, Yilin Wu, Annie Xie, Jingyun Yang, Patrick Yin, Yunchu Zhang, Osbert Bastani, Glen Berseth, Jeannette Bohg, Ken Goldberg, Abhinav Gupta, Abhishek Gupta, Dinesh Jayaraman, Joseph J Lim, Jitendra Malik, Roberto Martín-Martín, Subramanian Ramamoorthy, Dorsa Sadigh, Shuran Song, Jiajun Wu, Michael C. Yip, Yuke Zhu, Thomas Kollar, Sergey Levine, and Chelsea Finn. DROID: A Large-Scale In-The-Wild Robot Manipulation Dataset. In Proceedings of Robotics: Science and Systems , Delft, Netherlands, July 2024. doi: 10.15607/RSS.2024.XX.120. Moo Jin Kim, Karl Pertsch, Siddharth Karamcheti, Ted Xiao, Ashwin Balakrishna, Suraj Nair, Rafael Rafailov, Ethan P Foster, Pannag R Sanketi, Quan Vuong, Thomas Kollar, Benjamin Burchfiel, Russ Tedrake, Dorsa Sadigh, Sergey Levine, Percy Liang, and Chelsea Finn. OpenVLA: An open-source vision-language-action model. In 8th Annual Conference on Robot Learning , 2024. URL https://openreview.net/forum?id= ZMnD6QZAE6 .Toshiaki Koike-Akino and Ye Wang. Stochastic bottleneck: Rateless auto-encoder for flexible dimensionality reduction. In 2020 IEEE International Symposium on Information Theory (ISIT) , page 2735–2740. IEEE, June 2020. doi: 10.1109/isit44484.2020.9174523. URL http://dx.doi.org/10.1109/ISIT44484.2020. 9174523 .Aditya Kusupati, Gantavya Bhatt, Aniket Rege, Matthew Wallingford, Aditya Sinha, Vivek Ramanujan, William Howard-Snyder, Kaifeng Chen, Sham Kakade, Prateek Jain, and Ali Farhadi. Matryoshka representation learning. In S. Koyejo, S. Mohamed, A. Agarwal, D. Belgrave, K. Cho, and A. Oh, editors, Advances in Neural Information Processing Systems , volume 35, pages 30233–30249. Curran Associates, Inc., 2022. URL https://proceedings.neurips.cc/paper_files/paper/2022/file/ c32319f4868da7613d78af9993100e42-Paper-Conference.pdf .Anthony Liang, Pavel Czempin, Matthew Hong, Yutai Zhou, Erdem Biyik, and Stephen Tu. Clam: Continuous latent action models for robot learning from unlabeled demonstrations, 2025. URL https://arxiv.org/ abs/2505.04999 .Yaron Lipman, Ricky T. Q. Chen, Heli Ben-Hamu, Maximilian Nickel, and Matthew Le. Flow matching for generative modeling. In The Eleventh International Conference on Learning Representations , 2023. URL 
+
+https://openreview.net/forum?id=PqvMRDCJT9t .Chaoqi Liu, Xiaoshen Han, Jiawei Gao, Yue Zhao, Haonan Chen, and Yilun Du. Oat: Ordered action tokenization, 2026. URL https://arxiv.org/abs/2602.04215 .Kun Liu, Qi Liu, Xinchen Liu, Jie Li, Yongdong Zhang, Jiebo Luo, Xiaodong He, and Wu Liu. Hoigen-1m: A large-scale dataset for human-object interaction video generation. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) , pages 24001–24010, June 2025. Xingchao Liu, Chengyue Gong, and qiang liu. Flow straight and fast: Learning to generate and transfer data with rectified flow. In The Eleventh International Conference on Learning Representations , 2023. URL 
+
+https://openreview.net/forum?id=XVjTT1nw5z .Willi Menapace, Stephane Lathuiliere, Sergey Tulyakov, Aliaksandr Siarohin, and Elisa Ricci. Playable video generation. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) , pages 10061–10070, June 2021. 
+
+12 Fabian Mentzer, David Minnen, Eirikur Agustsson, and Michael Tschannen. Finite scalar quantization: VQ-VAE made simple. In The Twelfth International Conference on Learning Representations , 2024. URL 
+
+https://openreview.net/forum?id=8ishA3LxN8 .Kepan Nan, Rui Xie, Penghao Zhou, Tiehan Fan, Zhenheng Yang, Zhijie Chen, Xiang Li, Jian Yang, and Ying Tai. Openvid-1m: A large-scale high-quality dataset for text-to-video generation. In The Thirteenth International Conference on Learning Representations , 2025. URL https://openreview.net/forum? id=j7kdXSrISM .Alexander Nikulin, Ilya Zisman, Denis Tarasov, Lyubaykin Nikita, Andrei Polubarov, Igor Kiselev, and Vladislav Kurenkov. Latent action learning requires supervision in the presence of distractors. In Forty-second Interna-tional Conference on Machine Learning , 2025. URL https://openreview.net/forum?id=2gcEQCT7QW .Abby O’Neill, Abdul Rehman, Abhiram Maddukuri, Abhishek Gupta, Abhishek Padalkar, Abraham Lee, Acorn Pooley, Agrim Gupta, Ajay Mandlekar, Ajinkya Jain, Albert Tung, Alex Bewley, Alex Herzog, Alex Irpan, Alexander Khazatsky, Anant Rai, Anchit Gupta, Andrew Wang, Anikait Singh, Animesh Garg, Aniruddha Kembhavi, Annie Xie, Anthony Brohan, Antonin Raffin, Archit Sharma, Arefeh Yavary, Arhan Jain, Ashwin Balakrishna, Ayzaan Wahid, Ben Burgess-Limerick, Beomjoon Kim, Bernhard Schölkopf, Blake Wulfe, Brian Ichter, Cewu Lu, Charles Xu, Charlotte Le, Chelsea Finn, Chen Wang, Chenfeng Xu, Cheng Chi, Chenguang Huang, Christine Chan, Christopher Agia, Chuer Pan, Chuyuan Fu, Coline Devin, Danfei Xu, Daniel Morton, Danny Driess, Daphne Chen, Deepak Pathak, Dhruv Shah, Dieter Büchler, Dinesh Jayaraman, Dmitry Kalashnikov, Dorsa Sadigh, Edward Johns, Ethan Foster, Fangchen Liu, Federico Ceola, Fei Xia, Feiyu Zhao, Freek Stulp, Gaoyue Zhou, Gaurav S. Sukhatme, Gautam Salhotra, Ge Yan, Gilbert Feng, Giulio Schiavi, Glen Berseth, Gregory Kahn, Guanzhi Wang, Hao Su, Hao-Shu Fang, Haochen Shi, Henghui Bao, Heni Ben Amor, Henrik I Christensen, Hiroki Furuta, Homer Walke, Hongjie Fang, Huy Ha, Igor Mordatch, Ilija Radosavovic, Isabel Leal, Jacky Liang, Jad Abou-Chakra, Jaehyung Kim, Jaimyn Drake, Jan Peters, Jan Schneider, Jasmine Hsu, Jeannette Bohg, Jeffrey Bingham, Jeffrey Wu, Jensen Gao, Jiaheng Hu, Jiajun Wu, Jialin Wu, Jiankai Sun, Jianlan Luo, Jiayuan Gu, Jie Tan, Jihoon Oh, Jimmy Wu, Jingpei Lu, Jingyun Yang, Jitendra Malik, João Silvério, Joey Hejna, Jonathan Booher, Jonathan Tompson, Jonathan Yang, Jordi Salvador, Joseph J. Lim, Junhyek Han, Kaiyuan Wang, Kanishka Rao, Karl Pertsch, Karol Hausman, Keegan Go, Keerthana Gopalakrishnan, Ken Goldberg, Kendra Byrne, Kenneth Oslund, Kento Kawaharazuka, Kevin Black, Kevin Lin, Kevin Zhang, Kiana Ehsani, Kiran Lekkala, Kirsty Ellis, Krishan Rana, Krishnan Srinivasan, Kuan Fang, Kunal Pratap Singh, Kuo-Hao Zeng, Kyle Hatch, Kyle Hsu, Laurent Itti, Lawrence Yunliang Chen, Lerrel Pinto, Li Fei-Fei, Liam Tan, Linxi Jim Fan, Lionel Ott, Lisa Lee, Luca Weihs, Magnum Chen, Marion Lepert, Marius Memmel, Masayoshi Tomizuka, Masha Itkina, Mateo Guaman Castro, Max Spero, Maximilian Du, Michael Ahn, Michael C. Yip, Mingtong Zhang, Mingyu Ding, Minho Heo, Mohan Kumar Srirama, Mohit Sharma, Moo Jin Kim, Naoaki Kanazawa, Nicklas Hansen, Nicolas Heess, Nikhil J Joshi, Niko Suenderhauf, Ning Liu, Norman Di Palo, Nur Muhammad Mahi Shafiullah, Oier Mees, Oliver Kroemer, Osbert Bastani, Pannag R Sanketi, Patrick Tree Miller, Patrick Yin, Paul Wohlhart, Peng Xu, Peter David Fagan, Peter Mitrano, Pierre Sermanet, Pieter Abbeel, Priya Sundaresan, Qiuyu Chen, Quan Vuong, Rafael Rafailov, Ran Tian, Ria Doshi, Roberto Martín-Martín, Rohan Baijal, Rosario Scalise, Rose Hendrix, Roy Lin, Runjia Qian, Ruohan Zhang, Russell Mendonca, Rutav Shah, Ryan Hoque, Ryan Julian, Samuel Bustamante, Sean Kirmani, Sergey Levine, Shan Lin, Sherry Moore, Shikhar Bahl, Shivin Dass, Shubham Sonawani, Shuran Song, Sichun Xu, Siddhant Haldar, Siddharth Karamcheti, Simeon Adebola, Simon Guist, Soroush Nasiriany, Stefan Schaal, Stefan Welker, Stephen Tian, Subramanian Ramamoorthy, Sudeep Dasari, Suneel Belkhale, Sungjae Park, Suraj Nair, Suvir Mirchandani, Takayuki Osa, Tanmay Gupta, Tatsuya Harada, Tatsuya Matsushima, Ted Xiao, Thomas Kollar, Tianhe Yu, Tianli Ding, Todor Davchev, Tony Z. Zhao, Travis Armstrong, Trevor Darrell, Trinity Chung, Vidhi Jain, Vincent Vanhoucke, Wei Zhan, Wenxuan Zhou, Wolfram Burgard, Xi Chen, Xiaolong Wang, Xinghao Zhu, Xinyang Geng, Xiyuan Liu, Xu Liangwei, Xuanlin Li, Yao Lu, Yecheng Jason Ma, Yejin Kim, Yevgen Chebotar, Yifan Zhou, Yifeng Zhu, Yilin Wu, Ying Xu, Yixuan Wang, Yonatan Bisk, Yoonyoung Cho, Youngwoon Lee, Yuchen Cui, Yue Cao, Yueh-Hua Wu, Yujin Tang, Yuke Zhu, Yunchu Zhang, Yunfan Jiang, Yunshuang Li, Yunzhu Li, Yusuke Iwasawa, Yutaka Matsuo, Zehan Ma, Zhuo Xu, Zichen Jeff Cui, Zichen Zhang, and Zipeng Lin. Open x-embodiment: Robotic learning datasets and rt-x models : Open x-embodiment collaboration. In 2024 IEEE International Conference on Robotics and Automation (ICRA) , page 6892–6903. IEEE, May 2024. doi: 10.1109/icra57147.2024.10611477. URL http://dx.doi.org/10.1109/ICRA57147.2024.10611477 .William Peebles and Saining Xie. Scalable diffusion models with transformers. In Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV) , pages 4195–4205, October 2023. Oren Rippel, Michael A. Gelbart, and Ryan P. Adams. Learning ordered representations with nested dropout, 2014. URL https://arxiv.org/abs/1402.0915 .Oleh Rybkin, Karl Pertsch, Andrew Jaegle, Konstantinos G. Derpanis, and Kostas Daniilidis. Learning what you can do before doing anything. In International Conference on Learning Representations , 2019. URL 
+
+https://openreview.net/forum?id=SylPMnR9Ym .
+
+13 Dominik Schmidt and Minqi Jiang. Learning to act without actions. In B. Kim, Y. Yue, S. Chaudhuri, K. Fragkiadaki, M. Khan, and Y. Sun, editors, International Conference on Learning Representations ,volume 2024, pages 9379–9395, 2024. URL https://proceedings.iclr.cc/paper_files/paper/ 2024/file/27985d21f0b751b933d675930aa25022-Paper-Conference.pdf .Junhong Shen, Kushal Tirumala, Michihiro Yasunaga, Ishan Misra, Luke Zettlemoyer, LILI YU, and Chunting Zhou. CAT: Content-adaptive image tokenization. In The Thirty-ninth Annual Conference on Neural Information Processing Systems , 2026. URL https://openreview.net/forum?id=cot6mZPkWo .Zhiyu Tan, Xiaomeng Yang, Luozheng Qin, and Hao Li. Vidgen-1m: A large-scale dataset for text-to-video generation, 2024. URL https://arxiv.org/abs/2408.02629 .Limin Wang, Bingkun Huang, Zhiyu Zhao, Zhan Tong, Yinan He, Yi Wang, Yali Wang, and Yu Qiao. Videomae v2: Scaling video masked autoencoders with dual masking. In Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) , pages 14549–14560, June 2023. Seonghyeon Ye, Joel Jang, Byeongguk Jeon, Se June Joo, Jianwei Yang, Baolin Peng, Ajay Mandlekar, Reuben Tan, Yu-Wei Chao, Bill Yuchen Lin, Lars Liden, Kimin Lee, Jianfeng Gao, Luke Zettlemoyer, Dieter Fox, and Minjoon Seo. Latent action pretraining from videos. In The Thirteenth International Conference on Learning Representations , 2025. URL https://openreview.net/forum?id=VYOe2eBQeh .Chuheng Zhang, Tim Pearce, Pushi Zhang, Kaixin Wang, Xiaoyu Chen, Wei Shen, Li Zhao, and Jiang Bian. What do latent action models actually learn? In The Thirty-ninth Annual Conference on Neural Information Processing Systems , 2026. URL https://openreview.net/forum?id=DQMjemrVhe .Richard Zhang, Phillip Isola, Alexei A. Efros, Eli Shechtman, and Oliver Wang. The unreasonable effectiveness of deep features as a perceptual metric. In Proceedings of the IEEE Conference on Computer Vision and Pattern Recognition (CVPR) , June 2018. 
+
+14 A DMLab Experimental Details 
+
+This appendix provides the experimental details needed to reproduce the DMLab experiments. We describe the environments, expert-video collection, task filtering, bottleneck configurations, architectures, decoder objective, training stages, and prefix-length sampling. The goal is to make clear that the main DMLab comparisons isolate the bottleneck design because the surrounding LAM, translator, and latent-token sequence model are kept fixed across methods whenever possible. 
+
+A.1 Environments and Expert Video Dataset 
+
+We evaluate downstream task performance in DeepMind Lab (DMLab) [Beattie et al., 2016]. DMLab provides egocentric partially observed environments with viewpoint changes, occlusions, distractors, and task-dependent visual structure. These properties make it a useful testbed for studying latent-action representations because the observation transition (ot, o t+1 ) contains both potentially action-relevant changes and nuisance variation. Expert trajectories are collected by rolling out agents trained with DreamerV3 [Hafner et al., 2024]. Observations are RGB images of size 64 × 64 . We use the resulting trajectories in two forms. The action-free portion provides observation transitions (ot, o t+1 ) for LAM pretraining and latent-token sequence-model training. A much smaller action-labeled subset provides (ot, o t+1 , a t) tuples for translator training and evaluation. For each environment in Table 3, the dataset contains 9,000,000 recorded training steps and 1,000,000 recorded test steps. The DreamerV3 returns in the table are used to normalize downstream task performance in the main text and in Appendix C. Table 3: DreamerV3 expert returns. Returns for the DMLab environments used to normalize downstream task performance. Environment Return explore_goal_locations_large 158.82 explore_goal_locations_small 368.09 explore_object_locations_large 56.12 explore_object_locations_small 92.00 explore_object_rewards_few 40.83 explore_object_rewards_many 53.45 explore_obstructed_goals_large 60.02 explore_obstructed_goals_small 269.45 language_execute_random_task -10.14 lasertag_one_opponent_large -0.03 lasertag_one_opponent_small -0.06 lasertag_three_opponent_large 7.40 natlab_varying_map_regrowth 9.49 psychlab_visual_search 39.85 rooms_exploit_deferred_effects_train 40.16 rooms_watermaze 28.32 
+
+A.2 Task Filtering and Normalization 
+
+Expert trajectories are collected for all 16 DMLab tasks. For normalized-return evaluation, we exclude five tasks with extremely low or unstable expert returns: Language Execute Random Task, Lasertag One Opponent Large, Lasertag One Opponent Small, Lasertag Three Opponent Large, and Natlab Varying Map Regrowth. The remaining 11 tasks are used for reported normalized returns. For each task, normalized return is computed as a percentage of the DreamerV3 expert return. This makes scores comparable across tasks with different reward scales. The resulting averages support controlled comparisons among bottleneck designs under scarce or narrowly distributed action-alignment labels. 15 The single-task alignment source, Lasertag One Opponent Large, is included in the available trajectory collection but excluded from the normalized evaluation suite. 
+
+A.3 Bottleneck Settings for FlexLAM and Fixed-K Baselines 
+
+The main DMLab comparison uses controlled Fixed-K baselines rather than only the previous tight/loose endpoint comparison. Fixed-K k models are trained separately with a fixed k-token bottleneck. FlexLAM uses the same maximum K = 64 code space and is evaluated as FlexLAM@ k
+
+by retaining the first k tokens. The latent sequence is quantized with FSQ [Mentzer et al., 2024]. Table 4: Bottleneck settings for DMLab. Fixed-K k models are trained separately at each token budget. FlexLAM is trained once with retained-prefix sampling and evaluated at multiple prefix lengths.                          
+
+> Method FSQ levels Train KRetained-prefix Notes Fixed-K2 †[5] 2×fixed-capacity baseline trained separately Fixed-K4 [8, 5, 5, 5] 4×fixed-capacity baseline trained separately Fixed-K16 [8, 5, 5, 5] 16 ×fixed-capacity baseline trained separately Fixed-K64 [8, 5, 5, 5] 64 ×loose fixed-capacity endpoint FlexLAM [8, 5, 5, 5] 64 ✓trained once; evaluated as FlexLAM@ k
+
+A.4 LAM and Translator Architectures 
+
+We keep the encoder, decoder, and translator architectures fixed across methods whenever possible. Only the bottleneck configuration differs. The encoder processes two consecutive frames and outputs a token sequence. The decoder is conditioned on ot and the null-filled retained-prefix representation 
+
+˜z(k) 
+
+> t
+
+to decode the transition target under the decoder objective. The decoder follows a DiT-style architecture [Peebles and Xie, 2023]. DMLab LAM hyperparameters are listed in Table 6. The translator maps latent transition tokens to executable actions. We use an Hourglass MLP [Chen et al., 2025a]. Discrete action dimensions are trained with cross-entropy; continuous dimensions, when present, are trained with MSE. The translator conditions on the previous action at−1 in all compared methods. This conditioning choice is shared by FlexLAM and the fixed-capacity baselines. 
+
+A.5 Decoder Objective Details 
+
+Both DMLab and real-world decoders are trained with a rectified-flow objective [Lipman et al., 2023, Liu et al., 2023, Esser et al., 2024]. In both settings, the decoder is conditioned on the current observation ot and the null-filled retained-prefix representation ˜z(k) 
+
+> t
+
+. The retained-prefix conditioning principle is therefore shared across simulated and real-world video experiments, even though the two settings differ in architecture, resolution, initialization, and data mixture. For DMLab, the encoder and decoder are trained from scratch on 64 ×64 RGB observation transitions. For real-world video, the encoder and decoder are initialized from pretrained video and image-generation models, as described in Appendix E. We use Ldec in the main text to denote this transition-decoding objective abstractly, since the same retained-prefix bottleneck is used across settings while the decoder family and data regime differ. 
+
+A.6 Training Stages and Checkpoint Selection 
+
+DMLab training uses three main stages. An optional fourth stage is used for the joint-alignment variant in Section 6.3. Each bottleneck design uses a single NVIDIA H100 GPU; LAM pretraining takes approximately 24 hours per method, and latent-token sequence-model training takes approximately 46 hours per method. 
+
+Stage 1. LAM pretraining. We train the encoder and decoder on action-free transitions Du =
+
+{(ot, o t+1 )}. FlexLAM samples a retained prefix length and conditions the decoder on the null-filled retained-prefix representation ˜z(k) 
+
+> t
+
+. Fixed-capacity baselines expose their fixed bottleneck to the decoder. 16 Table 5: Nominal discrete bottleneck capacity in DMLab. Fixed-K k and FlexLAM@ k use the same FSQ vocabulary at the same evaluated token budget. Capacity is computed as k log 2 |C| , where 
+
+|C| = Q 
+
+> i
+
+Li for FSQ levels L.Operating point Quantizer Tokens Nominal capacity Fixed-K4 / FlexLAM@4 FSQ [8,5,5,5] 4 4 log 2 1000 ≈ 39 .9 bits Fixed-K16 / FlexLAM@16 FSQ [8,5,5,5] 16 16 log 2 1000 ≈ 159 .5 bits Fixed-K64 / FlexLAM@64 FSQ [8,5,5,5] 64 64 log 2 1000 ≈ 637 .8 bits Table 6: DMLab LAM hyperparameters. Key architectural settings for the encoder and decoder. Component Parameter Value Encoder depth 8embed dim 192 mlp ratio 4tubelet size 2patch size 4 × 4
+
+Decoder (DiT) num layers 12 num heads 3head dim 64 ffn dim 776 patch size 4 × 4
+
+Stage 2. latent-token sequence-model training. We train the latent-token sequence model on trajectories represented as interleaved continuous observation patch embeddings and latent-action code blocks. This stage uses only action-free data. The sequence-model architecture is fixed across methods, but the latent codes come from each method’s LAM. 
+
+Stage 3. translator training. We train the translator on the small labeled subset De =
+
+{(ot, o t+1 , a t)}. Unless otherwise stated, the LAM and latent-token sequence model are frozen. We select checkpoints using translator validation loss, which correlates with downstream task perfor-mance in our DMLab experiments. 
+
+Optional stage. joint alignment. Section 6.3 evaluates a performance-oriented joint-alignment variant where the action loss is allowed to update the LAM encoder and bottleneck parameters together with the translator. 
+
+A.7 Prefix-Length Sampling Distribution 
+
+In all stages that use prefix sampling, we sample k ∼ Unif {0, . . . , K } independently for each example. Suffix slots j > k are replaced by the shared learnable null latent. The k = 0 case is used only during training and corresponds to an all-null latent input; all reported operating points use 
+
+k > 0. Biasing p(k) toward shorter prefixes may encourage more aggressive compression, while biasing it toward longer prefixes may improve high-capacity decoding. 
+
+## B Latent-Token Sequence Model and Inference Details 
+
+The main text treats the latent-token sequence model as a downstream evaluator. We include the details here to make the DMLab rollout procedure reproducible. This component determines how latent actions are generated during DMLab evaluation, whereas FlexLAM changes how the latent-action bottleneck is trained. This separation keeps the experiments focused on the bottleneck comparison with a shared sequence model. 17 Table 7: Translator hyperparameters. 
+
+Parameter Value depth 5hidden dim 96 wide dim 512 
+
+B.1 Sequence Construction 
+
+For each prediction window, frames are maintained in a 34-frame context and subsampled at stride 
+
+s = 8 , while the latest frame is always included. A typical context for predicting the next latent-action block has the form 
+
+[. . . , x t−16 , c t−16 ,1: K , . . . , c t−9,1: K , x t−8, c t−8,1: K , . . . , c t−1,1: K , x t].
+
+Here, xt denotes continuous observation patch embeddings. Each cu, 1: K is a latent-action code block encoded from the observed transition (ou, o u+1 ). The same 34-frame context length and latest-frame refresh pattern are used during inference. 
+
+B.2 Sequence-Model Training Targets 
+
+The latent-token sequence model is trained on latent-action code blocks encoded from observed transitions. Prefix truncation is used for LAM/translator training and for current-step action selection at inference; sequence-model training targets remain complete code blocks. Observation patch embeddings serve as conditioning inputs. The sequence model minimizes next-token prediction loss over latent-action code positions. Let ILA 
+
+denote positions corresponding to latent-action codes. The objective is 
+
+min  
+
+> ω
+
+Ey∼D u
+
+" X
+
+> i∈I LA
+
+− log pω (ci | y<i )
+
+#
+
+.
+
+B.3 Translator Training Token Source 
+
+During translator training, latent codes are obtained from the LAM encoder applied to observed transitions. During rollout, the translator receives sequence-model-generated codes for the current transition. This follows the standard LAM pipeline in which the translator learns the latent-to-action map from encoded transitions, while the sequence model supplies predicted latent actions at decision time. 
+
+B.4 Sequence Model Architecture and Hyperparameters 
+
+The evaluator is a decoder-only causal transformer with RoPE and a Qwen-style configuration. Table 8 lists the architecture, training curriculum, context length, and inference-cache settings. These settings are shared across bottleneck designs so that downstream differences reflect the latent-action codes under a common sequence-model architecture. 
+
+B.5 Inference Procedure 
+
+Algorithm 1 gives one decision step of the DMLab rollout procedure. The sequence model generates only the current latent-action prefix; after the next observation arrives, the realized transition is encoded and appended to the history. Reducing k shortens current-step generation while the stored history remains unchanged. For fixed-capacity baselines, k is fixed to the bottleneck size. Here, Fθ denotes the LAM encoder and quantizer composed as a code encoder, so Fθ (ot−1, o t) returns discrete latent-action codes ct−1,1: K . BuildContext constructs sparse observation embeddings from 
+
+Q using stride s and interleaves them with cached latent-action codes from B. DecodePrefix applies the latent-token sequence model autoregressively for k code positions. NullFill embeds predicted codes into latent vectors and fills suffix slots with the shared null latent. 18 Table 8: Latent-token sequence model hyperparameters. These settings correspond to the down-stream sequence model used in DMLab. Parameter Value architecture Qwen3-style decoder-only transformer positional encoding RoPE hidden size 256 intermediate size 1024 num attention heads 4num key-value heads 4image patch size 8image tokens per frame 64 input frame stride 8total training steps 300k LR schedule cosine decay curriculum stage1 num_frames 10 curriculum stage1 batch size 256 curriculum stage1 steps ∼250k curriculum stage2 num_frames 34 curriculum stage2 batch size 128 curriculum stage2 steps 250k–300k context frames at inference 34 latency benchmark context frames 34 KV cache at inference enabled 
+
+Algorithm 1 One FlexLAM decision step with sparse observation context 
+
+Require: observations ot−1, o t, previous action at−1
+
+Require: frame buffer Q, latent-code buffer B
+
+Require: code encoder Fθ , sequence model pω , translator gψ
+
+Require: observation stride s, retained prefix length k
+
+Ensure: predicted action ˆat 
+
+> 1:
+
+if t > 0 then  
+
+> 2:
+
+ct−1,1: K ← Fθ (ot−1, o t) 
+
+> 3:
+
+B ← Append( B, c t−1,1: K ) 
+
+> 4:
+
+end if  
+
+> 5:
+
+Q ← Append( Q, o t) 
+
+> 6:
+
+Ht ← BuildContext( Q, B; s) 
+
+> 7:
+
+ˆct, 1: k ← DecodePrefix( pω , Ht, k ) 
+
+> 8:
+
+˜z(k) 
+
+> t
+
+← NullFill(ˆ ct, 1: k) 
+
+> 9:
+
+ˆat ← gψ (˜ z(k) 
+
+> t
+
+, a t−1) 
+
+> 10:
+
+return ˆat
+
+B.6 Latency Measurement Protocol 
+
+Latency in Table 2 is measured as wall-clock time per decision step using the same 34-frame context length used at inference and in the second stage of sequence-model training. Measurements use a single NVIDIA RTX 6000 Ada GPU, batch size 1, bf16 precision, and KV cache enabled. Each decision step includes image preprocessing, encoding the newest observed transition (ot−1, o t) into latent-action codes, sequence-model context construction, autoregressive generation of k current latent-action codes, null filling, and action decoding. Previously encoded history tokens are cached and are not recomputed. Reported values are means over 100 steady-state decision steps after 20 warmup steps. 
+
+B.7 DMLab Latent-Token Prediction Visualization 
+
+This visualization documents the behavior of the downstream evaluation pipeline. 19 Traj 
+
+## Pred 
+
+0T= 5 10 15 20 25 30 35 40 Figure 9: DMLab latent-token prediction visualization. We decode latent tokens generated by the downstream sequence model to visualize predicted one-step transitions and illustrate the behavior of the evaluation pipeline. 
+
+## C Full DMLab Results 
+
+C.1 Per-Task Normalized Returns 
+
+Table 9 reports per-task normalized returns under both standard scarce-label supervision and action alignment from a narrow single-task source. Standard supervision uses 0.025% labels sampled uniformly across tasks. The biased columns use labels from Lasertag One Opponent Large. We report mean ± standard error over 50 evaluation episodes per task. The table includes the tight Fixed-K endpoint, the full-capacity Fixed-K endpoint, and the corresponding FlexLAM operating points used in the main analysis. Table 9: Per-task normalized returns. Downstream task return normalized by DreamerV3 expert performance under standard scarce-label supervision (0.025% labels) and action alignment from a narrow single-task source. Columns marked biased use labels from Lasertag One Opponent Large; the source task is excluded from the normalized evaluation suite. We report mean ± standard error over 50 evaluation episodes per task. † denotes the two-token tight fixed-capacity endpoint. 
+
+Task Random Fixed-K2 † FlexLAM@1 Fixed-K64 FlexLAM@64 Fixed-K64 (biased) FlexLAM@64 (biased) explore_goal_locations_large 1.95 5.20 ± 1.27 13.00 ± 1.98 14.60 ± 2.14 15.40 ± 2.53 6.60 ± 1.46 9.80 ± 1.48 
+
+explore_goal_locations_small 2.09 15.40 ± 2.39 27.60 ± 3.27 30.20 ± 2.99 38.40 ± 4.70 24.60 ± 3.02 19.20 ± 3.16 
+
+explore_object_locations_large 8.37 7.56 ± 0.44 12.00 ± 0.46 11.98 ± 0.48 14.10 ± 0.62 8.72 ± 0.41 10.58 ± 0.43 
+
+explore_object_locations_small 3.91 5.46 ± 0.24 11.04 ± 0.52 9.76 ± 0.65 12.42 ± 0.89 7.06 ± 0.47 8.54 ± 0.71 
+
+explore_object_rewards_few 5.14 1.66 ± 0.32 6.02 ± 0.73 6.86 ± 0.73 10.48 ± 0.96 5.44 ± 0.75 7.94 ± 1.21 
+
+explore_object_rewards_many 4.49 4.14 ± 0.56 10.20 ± 1.09 10.74 ± 0.85 16.08 ± 1.45 8.00 ± 0.80 10.22 ± 1.08 
+
+explore_obstructed_goals_large 4.33 5.80 ± 1.33 10.60 ± 1.80 11.20 ± 2.17 9.40 ± 1.97 5.20 ± 1.17 7.80 ± 1.21 
+
+explore_obstructed_goals_small 2.52 10.00 ± 2.14 19.80 ± 2.29 22.40 ± 2.78 26.80 ± 3.41 12.80 ± 1.92 16.20 ± 2.10 
+
+psychlab_visual_search 0.25 1.32 ± 0.16 3.82 ± 0.37 8.72 ± 0.80 30.96 ± 1.75 0.66 ± 0.12 8.24 ± 0.68 
+
+rooms_exploit_deferred_effects_train 21.17 16.98 ± 2.75 15.14 ± 2.22 13.20 ± 2.40 18.62 ± 3.04 17.44 ± 2.99 12.48 ± 2.21 
+
+rooms_watermaze 14.48 9.34 ± 0.96 9.60 ± 1.52 6.90 ± 1.07 14.84 ± 1.79 1.80 ± 0.42 7.54 ± 0.95 
+
+Mean 3.79 7.53 ± 1.14 12.62 ± 1.48 13.32 ± 1.55 18.86 ± 2.10 8.94 ± 1.23 10.78 ± 1.38 
+
+## D Additional DMLab Ablations 
+
+This section reports DMLab ablations that complement the main analysis. We study whether previous-action conditioning is responsible for the translation gains and how decoded DMLab transitions change with retained prefix length. 
+
+D.1 Translator Conditioning 
+
+The translator conditions on latent tokens and the previous action. We ablate this choice by comparing three inputs, namely latent tokens only, latent tokens plus previous action, and latent tokens plus previous action and current observation. The same conditioning choice is used for FlexLAM and fixed-capacity baselines in the main comparisons. 20 0.0 0.1 0.2 0.3 0.4 0.5 0.6 
+
+> Test loss
+> latent act only
+> prev act + obs
+> prev act
+
+Figure 10: Translator conditioning ablation. Translator test loss for three input choices, namely z
+
+only, z + previous action, and z + previous action + observation. Conditioning on at−1 improves prediction in egocentric settings. Directly feeding ot can make the translator more sensitive to appearance variation under limited supervision. Routing through the latent transition representation reduces direct access to task-specific appearance cues in ot and makes the conditioning path consistent with the LAM interface used in the main experiments. 
+
+D.2 DMLab Prefix-Length Reconstruction 
+
+We visualize how DMLab reconstructions change as the retained prefix length varies. This diagnostic illustrates the prefix-valid structure induced by retained-prefix training. 
+
+## E Real-World Video Pretraining and Evaluation Details 
+
+E.1 Data Mixture and Sampling 
+
+We pretrain the real-world FlexLAM model on a mixture of Internet video, egocentric video, and robot video. All videos are sampled at 1.6 fps, and adjacent sampled frames are used as transition pairs (ot, o t+1 ). Robot video datasets are upsampled relative to their raw size to ensure sufficient coverage of robot-video transitions. The mixture is intentionally heterogeneous because it combines egocentric human video, robot-video data, and Internet video. We use this setting to test whether the retained-prefix bottleneck remains usable across diverse transition sources. Table 10: Pretraining data statistics. Data mixture for real-world and robot video pretraining. The weight column indicates sampling ratios during training.                                 
+
+> Name Rows Weight Orig. rows Hours OXE [O’Neill et al., 2024] 1,570,254 3523,418 3000h AgiBot alpha [AgiBot-World-Contributors et al., 2025] 621,216 3207,072 300h AgiBot beta (40%) [AgiBot-World-Contributors et al., 2025] 2,447,904 3815,968 1200h Ego4D [Grauman et al., 2022] 4,464,867 14,464,867 3670h OpenVidHD-0.4M [Nan et al., 2025] 1,200,111 3406,781 1200h VIDGEN-1M [Tan et al., 2024] 4,012,652 41,003,163 2200h HOIGen-1M [Liu et al., 2025] 2,620,624 4655,156 2200h
+
+E.2 Model Initialization and Latent Injection 
+
+For real-world video, the encoder is initialized with VideoMAE-v2 Large [Wang et al., 2023]. The decoder is initialized with SD3 [Esser et al., 2024]. We condition on the current observation ot
+
+through an image-conditioning pathway and inject a null-filled retained-prefix representation into the conditioning pathway. The bottleneck uses FSQ with maximum token length K = 80 .21 0 tokens 1 token 4 tokens 8 tokens 16 tokens 32 tokens 64 tokens Figure 11: DMLab prefix-length reconstruction. Reconstruction results for the same DMLab transition while varying retained prefix length k. Increasing k progressively recovers finer details, while small prefixes capture coarse transition structure. 
+
+E.3 Real-World Decoder Objective Details 
+
+The real-world decoder uses the same retained-prefix conditioning principle as the DMLab decoder. The decoder is conditioned on ot and ˜z(k) 
+
+> t
+
+, and is trained with a rectified-flow objective. In imple-mentation, the objective is a flow-matching velocity objective under a rectified-flow formulation. Compared with DMLab, the real-world setting uses higher-resolution inputs, pretrained initialization, and a larger bottleneck to accommodate greater visual diversity. 
+
+E.4 FlexLAM-Real Hyperparameters 
+
+Table 11 summarizes the real-world FlexLAM model. The real-world setting differs from DMLab in resolution, initialization, and data mixture, but uses the same retained-prefix bottleneck principle. The encoder is initialized from VideoMAE-v2, the decoder from SD3, and the bottleneck uses FSQ with maximum length K = 80 .22 Table 11: FlexLAM-real hyperparameters. Initialization and training settings for the real-world video setting. 
+
+Component Parameter Value Input frame sampling 1.6 fps image size 224 × 304 
+
+Bottleneck FSQ levels [7, 5, 5, 5, 5] max tokens K 80 retained-prefix training with k ∼ p(k)
+
+VAE model SD3.5 medium VAE Encoder init VideoMAE-v2 Large depth 24 embed dim 1024 mlp ratio 4tubelet size 2Decoder init SD3.5 medium num layers 24 num attention heads 24 attention head dim 64 in_channels 32 (default ×2)out_channels 16 Conditioning ot injection image-conditioning path null-filled retained-prefix representation conditioning pathway Objective decoder training rectified flow Training steps 200k learning rate 3 × 10 −5
+
+batch size 1024 hardware 8 NVIDIA H100 GPUs wall-clock time approximately 350 hours 
+
+E.5 Ego4D Evaluation Protocol 
+
+Table 12 gives the protocol used for the Ego4D transition-reconstruction comparison. The evaluation uses held-out clips and adjacent sampled frames. The released villa-X-LAM checkpoint is evaluated at its native fixed-bottleneck setting, while FlexLAM is evaluated at retained prefix lengths k ∈{5, 20 , 80 }.Table 12: Ego4D reconstruction evaluation protocol. 
+
+Item Setting Dataset Ego4D held-out clips [Grauman et al., 2022] Evaluated clips 200 Frame sampling 1.6 fps Input resolution 224 × 304 
+
+Evaluated transition adjacent sampled frames Metrics PSNR, SSIM, LPIPS [Zhang et al., 2018] Averaging per-frame average over evaluated clips Prefix lengths k ∈ { 5, 20 , 80 }
+
+Baseline released villa-X-LAM checkpoint [Chen et al., 2026] Baseline setting native fixed bottleneck setting, 7 latent actions per 8-frame clip, VQ size 32 
+
+E.6 Real-World Nominal Bottleneck Capacity 
+
+Table 13 reports nominal discrete bottleneck capacities for the released villa-X-LAM reference and FlexLAM-real. These values document the bottleneck budgets used in the real-world evaluation. 23 Table 13: Nominal discrete bottleneck capacity in real-world evaluation. villa-X-LAM is reported at its native 8-frame-clip setting. FlexLAM-real uses FSQ [7,5,5,5,5], with nominal vocabulary size 4375 per latent token. These values are reported to document the nominal token budgets. Method / setting Quantizer Tokens Nominal capacity villa-X-LAM, 8-frame clip VQ size 32 7 7 log 2 32 = 35 .0 bits FlexLAM-real k = 1 FSQ [7,5,5,5,5] 5 5 log 2 4375 ≈ 12 .1 bits FlexLAM-real k = 5 FSQ [7,5,5,5,5] 5 5 log 2 4375 ≈ 60 .4 bits FlexLAM-real k = 20 FSQ [7,5,5,5,5] 20 20 log 2 4375 ≈ 241 .8 bits FlexLAM-real k = 80 FSQ [7,5,5,5,5] 80 80 log 2 4375 ≈ 967 .2 bits 
+
+## F Additional Real-World Visualizations 
+
+F.1 Additional Real-World Prefix Sweeps 
+
+We provide additional examples of real-world prefix sweeps. These visualizations complement the Ego4D metrics in Table 1 by showing how decoded transitions change as more latent-action tokens are retained. The examples include egocentric video and robot-video clips, so they illustrate the same prefix-valid behavior under camera motion, background variation, and object interaction. 0 token 1 token 4 token 16 token 32 token 80 token GT 
+
+Figure 12: Additional real-world prefix sweeps. Reconstructions from the same FlexLAM model while varying retained prefix length k across Ego4D and robot-video examples. Larger prefixes recover additional visual detail, while shorter prefixes preserve coarse transition structure. 
+
+## G Extended Impact Details 
+
+Large-scale video pretraining may involve private, copyrighted, biased, or geographically imbalanced content. Dataset curation, filtering, licensing, consent, and distribution-shift evaluation are important before applying similar pipelines. Decoded frames should not be treated as factual evidence of real events. 24
