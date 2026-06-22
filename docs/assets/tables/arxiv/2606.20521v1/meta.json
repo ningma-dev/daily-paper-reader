@@ -1,0 +1,24 @@
+{
+  "version": 2,
+  "extractor": "papercropper",
+  "tables": [
+    {
+      "url": "assets/tables/arxiv/2606.20521v1/table-001.webp",
+      "caption": "",
+      "page": 0,
+      "index": 1,
+      "width": 1721,
+      "height": 762,
+      "label": "Table"
+    },
+    {
+      "url": "assets/tables/arxiv/2606.20521v1/table-002.webp",
+      "caption": "",
+      "page": 0,
+      "index": 2,
+      "width": 967,
+      "height": 194,
+      "label": "Table"
+    }
+  ]
+}
