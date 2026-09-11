@@ -6,85 +6,77 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-09-10
-- 运行时间：2026-09-10 21:39:09 UTC
+- 最新运行日期：2026-09-11
+- 运行时间：2026-09-11 21:27:04 UTC
 - 运行状态：成功
-- 本次总论文数：21
+- 本次总论文数：19
 - 精读区：8
-- 速读区：13
+- 速读区：11
 
 ### 今日简报（AI）
-2026-09-10日报：21篇中精读8篇、速读13篇，VLA-Precision以10.0分领跑，VLA在线强化学习成为今日焦点。  
-最值得看的是10.0分VLA-Precision与9.0分Toward Unified Robot Learning，前者指向高效真实世界VLA在线RL，后者尝试打通表征、VLA与世界模型。  
-普通读者可先读这两篇高分精读，再按“世界模型、部分可观测、无扩散模仿学习”线索速览13篇速读。
-- 详情：[/202609/10/README](/202609/10/README)
+19篇机器人论文中筛出8篇精读、11篇速读，两篇9分焦点锁定统一机器人学习与灵巧手世界模型。最值得看的是用世界模型/VLA打通机器人表示与动作，以及WM-Craftnet提升通用鲁棒灵巧手操作；速读可顺带关注GTA-2、RoboDrop和世界模型中的物理/干扰识别。普通读者建议先读两篇9分精读，再按兴趣速览速读清单。
+- 详情：[/202609/11/README](/202609/11/README)
 
 ### 精读区论文标签
-1. [VLA-Precision: Asymmetric Co-Bootstrapping for Efficient Real-World Online RL of Vision-Language-Action Models](/202609/10/2609.04355v2-vla-precision-asymmetric-co-bootstrapping-for-efficient-real-world-online-rl-of-vision-language-action-models)  
-   标签：评分：10.0/10、query:robot-rl
-   evidence：面向VLA模型真实在线强化学习后训练
-2. [Toward Unified Robot Learning: Bridging Representation, Vision-Language-Action, and World Models](/202609/10/2609.03927v1-toward-unified-robot-learning-bridging-representation-vision-language-action-and-world-models)  
+1. [Toward Unified Robot Learning: Bridging Representation, Vision-Language-Action, and World Models](/202609/11/2609.03927v1-toward-unified-robot-learning-bridging-representation-vision-language-action-and-world-models)  
    标签：评分：9.0/10、query:vla-policy
-   evidence：统一表征、VLA与世界模型的综述
-3. [Proxy Policy Steering](/202609/10/2609.09148v2-proxy-policy-steering)  
+   evidence：统一表征学习、VLA模型与世界模型的机器人学习综述
+2. [WM-Craftnet: World Synesthesia Model for Generalizable and Robust Dexterous In-Hand Manipulation](/202609/11/2609.07002v1-wm-craftnet-world-synesthesia-model-for-generalizable-and-robust-dexterous-in-hand-manipulation)  
+   标签：评分：9.0/10、query:world-models
+   evidence：学习动作条件潜在动力学的世界模型框架
+3. [HuRo: Robotizing Human Videos for Scalable VLA Pretraining](/202609/11/2609.10706v1-huro-robotizing-human-videos-for-scalable-vla-pretraining)  
    标签：评分：9.0/10、query:vla-policy
-   evidence：用少量演示将通用机器人策略专用化
-4. [HaWMPO: Hallucination-Aware World Model-based Policy Optimization for Generalist Robot Policy](/202609/10/2609.09941v1-hawmpo-hallucination-aware-world-model-based-policy-optimization-for-generalist-robot-policy)  
-   标签：评分：9.0/10、query:robot-rl
-   evidence：面向通用机器人策略的世界模型强化学习优化
-5. [Frequency-Conditioned Flow Matching for Vision-Language-Action Models](/202609/10/2609.10405v1-frequency-conditioned-flow-matching-for-vision-language-action-models)  
+   evidence：利用机器人化人类视频进行VLA策略预训练
+4. [IMLE-VLA: Fast Single-Step Action Generation for Vision-Language-Action Policies](/202609/11/2609.10915v1-imle-vla-fast-single-step-action-generation-for-vision-language-action-policies)  
    标签：评分：9.0/10、query:vla-policy
-   evidence：面向视觉-语言-动作模型的频率条件化流匹配
-6. [GIFT: Goal-Injected Fine-Tuning for Efficient Manipulation Policy Adaptation](/202609/10/2609.07006v1-gift-goal-injected-fine-tuning-for-efficient-manipulation-policy-adaptation)  
+   evidence：面向视觉-语言-动作机器人策略的单步动作生成
+5. [UniMPA: A Unified Memory-Prediction-Action Model via Action-Grounded Transition Modeling](/202609/11/2609.11875v1-unimpa-a-unified-memory-prediction-action-model-via-action-grounded-transition-modeling)  
+   标签：评分：9.0/10、query:world-models
+   evidence：通过转移建模联合建模未来状态预测与动作
+6. [Beyond Noise Steering: Dual-Latent Space Reinforcement Learning for Generative Robot Policy](/202609/11/2609.11270v1-beyond-noise-steering-dual-latent-space-reinforcement-learning-for-generative-robot-policy)  
+   标签：评分：8.0/10、query:robot-rl
+   evidence：通过双潜在空间控制对生成式机器人策略做RL微调
+7. [Memory as Plans: World-Action Modeling with Memory-Grounded Planning](/202609/11/2609.11561v1-memory-as-plans-world-action-modeling-with-memory-grounded-planning)  
+   标签：评分：8.0/10、query:world-models
+   evidence：面向长时程操作的世界-动作建模与记忆接地规划
+8. [ActSafeGuard: Differentiable and Training-Aligned Constraint Enforcement for Flow-Matching Policies](/202609/11/2609.11697v1-actsafeguard-differentiable-and-training-aligned-constraint-enforcement-for-flow-matching-policies)  
    标签：评分：8.0/10、query:vla-policy
-   evidence：VLA策略的目标注入微调
-7. [Measuring Language Transfer in Robot Policies: Adding Greek to a Cosmos3 Vision-Language-Action Policy](/202609/10/2609.07470v1-measuring-language-transfer-in-robot-policies-adding-greek-to-a-cosmos3-vision-language-action-policy)  
-   标签：评分：8.0/10、query:vla-policy
-   evidence：Cosmos3 VLA策略中的语言迁移
-8. [RoboDrop: Curating VLA Post-Training Data via Local Gradient Compatibility](/202609/10/2609.10021v1-robodrop-curating-vla-post-training-data-via-local-gradient-compatibility)  
-   标签：评分：8.0/10、query:vla-policy
-   evidence：VLA后训练数据筛选
+   evidence：为VLA与世界动作流匹配策略施加硬约束的安全层
 
 ### 速读区论文标签
-1. [Learning Counterfactual World Models for Embodied Reasoning under Partial Observability](/202609/10/2609.05834v1-learning-counterfactual-world-models-for-embodied-reasoning-under-partial-observability)  
-   标签：评分：8.0/10、query:world-models
-   evidence：面向具身推理与可行动性的世界模型
-2. [WM-Craftnet: World Synesthesia Model for Generalizable and Robust Dexterous In-Hand Manipulation](/202609/10/2609.07002v1-wm-craftnet-world-synesthesia-model-for-generalizable-and-robust-dexterous-in-hand-manipulation)  
-   标签：评分：8.0/10、query:world-models
-   evidence：世界模型条件化的动作条件潜在动力学用于操作
-3. [JEPA Policy: Diffusion-Free Imitation Learning via Paired Action and Future Representation Prediction](/202609/10/2609.09630v1-jepa-policy-diffusion-free-imitation-learning-via-paired-action-and-future-representation-prediction)  
-   标签：评分：8.0/10、query:world-models
-   evidence：在共享Transformer中联合预测动作块与未来表征
-4. [DUET-DINO: Simultaneous Cross-View World Modeling for Latent Planning in Robot Manipulation](/202609/10/2609.10506v1-duet-dino-simultaneous-cross-view-world-modeling-for-latent-planning-in-robot-manipulation)  
-   标签：评分：8.0/10、query:world-models
-   evidence：面向零样本操作规划的动作条件跨视角潜在世界模型
-5. [Show-Harness: Just a VLM Agent Can Play Robots](/202609/10/2609.10522v1-show-harness-just-a-vlm-agent-can-play-robots)  
-   标签：评分：8.0/10、query:vla-policy
-   evidence：将 VLM 智能迁移到真实机器人控制
-6. [R2S-Eval: Robot Evaluation with Real-to-Sim Calibration via Vision-Language Models](/202609/10/2609.03276v1-r2s-eval-robot-evaluation-with-real-to-sim-calibration-via-vision-language-models)  
-   标签：评分：7.0/10、query:vla-policy
-   evidence：基于实到仿校准的VLA策略评测
-7. [RefGuard: Identity-Aware Language-Guided Robot Manipulation via Joint Target-Anchor-Frame Grounding](/202609/10/2609.06221v1-refguard-identity-aware-language-guided-robot-manipulation-via-joint-target-anchor-frame-grounding)  
-   标签：评分：7.0/10、query:vla-policy
-   evidence：面向语言引导操作的身份感知接地，消解目标-锚点-参考系歧义
-8. [CST-WM: A Causally Structured World Model for Embodied Visual Tracking](/202609/10/2609.06302v1-cst-wm-a-causally-structured-world-model-for-embodied-visual-tracking)  
+1. [Identifying Habit, Physics, and Nuisance in Robot World Models](/202609/11/2609.09210v1-identifying-habit-physics-and-nuisance-in-robot-world-models)  
    标签：评分：7.0/10、query:world-models
-   evidence：面向具身视觉跟踪的因果结构动作条件世界模型
-9. [CLAMP: Constrained Decoding for Vision-Language Embodied Planning](/202609/10/2609.08602v1-clamp-constrained-decoding-for-vision-language-embodied-planning)  
+   evidence：用干预实验分离机器人世界模型中的习惯、物理与干扰因素
+2. [GTA-2: A Multi-VLM Framework for Synthesizing Robot Manipulation Skills via Grounded Task Axes](/202609/11/2609.09808v1-gta-2-a-multi-vlm-framework-for-synthesizing-robot-manipulation-skills-via-grounded-task-axes)  
    标签：评分：7.0/10、query:vla-policy
-   evidence：用解码约束把冻结VLM规划器变成可执行具身动作序列
-10. [Rethinking World Models for Safety-Critical Embodied Systems](/202609/10/2609.03774v1-rethinking-world-models-for-safety-critical-embodied-systems)  
-   标签：评分：6.0/10、query:world-models
-   evidence：面向具身系统的决策中心世界模型
-11. [Coupled Control and Wireless World Models for Resilient Remote Robotic Control](/202609/10/2609.04851v1-coupled-control-and-wireless-world-models-for-resilient-remote-robotic-control)  
-   标签：评分：6.0/10、query:world-models
-   evidence：无线JEPA世界模型与机器人控制结合
-12. [A Brain-inspired Hierarchical Framework for Zero-Shot Robot Task Reasoning and Execution](/202609/10/2609.05985v1-a-brain-inspired-hierarchical-framework-for-zero-shot-robot-task-reasoning-and-execution)  
+   evidence：合成语言条件操作技能的多VLM框架
+3. [RoboDrop: Curating VLA Post-Training Data via Local Gradient Compatibility](/202609/11/2609.10021v1-robodrop-curating-vla-post-training-data-via-local-gradient-compatibility)  
+   标签：评分：7.0/10、query:vla-policy
+   evidence：为任务适配筛选VLA后训练数据
+4. [2AM: Grounding Agent-Side Memory as Guidance for Steerable Action Models in Long-Horizon Manipulation](/202609/11/2609.11308v1-2am-grounding-agent-side-memory-as-guidance-for-steerable-action-models-in-long-horizon-manipulation)  
+   标签：评分：7.0/10、query:vla-policy
+   evidence：面向长时程操作、以智能体侧记忆引导的可控动作模型
+5. [SkillX: Unified Multi-Skill Policy Learning for Humanoid Soccer](/202609/11/2609.06718v1-skillx-unified-multi-skill-policy-learning-for-humanoid-soccer)  
+   标签：评分：6.0/10、query:robot-rl
+   evidence：面向多技能人形策略的统一强化学习框架
+6. [CASD: Chunk-Aligned Semantic Distillation for Multi-StageRobot Manipulation](/202609/11/2609.08638v1-casd-chunk-aligned-semantic-distillation-for-multi-stagerobot-manipulation)  
    标签：评分：6.0/10、query:vla-policy
-   evidence：提升 VLA 跨任务泛化的分层框架
-13. [ContextFlow: In-Context Flow Matching for Robot Manipulation](/202609/10/2609.06852v1-contextflow-in-context-flow-matching-for-robot-manipulation)  
+   evidence：结合语义蒸馏的语言条件多阶段操作
+7. [FOCI Policy: Focus on Object-Centric Interactions for Relational Manipulation Policies](/202609/11/2609.08743v1-foci-policy-focus-on-object-centric-interactions-for-relational-manipulation-policies)  
    标签：评分：6.0/10、query:vla-policy
-   evidence：面向跨配置操作泛化的上下文流匹配
+   evidence：通过交互建模提升物体中心操作策略的跨任务泛化
+8. [CAST: Alternating State-Value Targets and Expanded Policy Gradients for Model-Based Reinforcement Learning](/202609/11/2609.08853v1-cast-alternating-state-value-targets-and-expanded-policy-gradients-for-model-based-reinforcement-learning)  
+   标签：评分：6.0/10、query:robot-rl
+   evidence：面向机器人样本高效控制的基于模型强化学习
+9. [FolDeX: A Physical-World Benchmark for Long-Horizon Robotic Manipulation of Deformable Objects](/202609/11/2609.10243v1-foldex-a-physical-world-benchmark-for-long-horizon-robotic-manipulation-of-deformable-objects)  
+   标签：评分：6.0/10、query:vla-policy
+   evidence：评估VLA与世界动作模型的长时程真实机器人操作基准
+10. [ObstaDiff: Generalizable Diffusion Policy Learning via Obstacle-aware Representations](/202609/11/2609.10918v1-obstadiff-generalizable-diffusion-policy-learning-via-obstacle-aware-representations)  
+   标签：评分：6.0/10、query:vla-policy
+   evidence：通过障碍物感知结构化表征实现可泛化扩散策略
+11. [Safety-aware Skill Adaptation for Reinforcement Learning in Dynamic Environments](/202609/11/2609.11433v1-safety-aware-skill-adaptation-for-reinforcement-learning-in-dynamic-environments)  
+   标签：评分：6.0/10、query:robot-rl
+   evidence：面向机器人技能自适应的安全引导强化学习
 
 
 <div class="dpr-home-promo-card">
