@@ -1,0 +1,291 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-09-12T21:41:46.524981+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 3,
+    "deep_divecandidates": 1,
+    "deep_cap": 8,
+    "deep_selected": 1,
+    "quick_candidates": 5,
+    "quick_skim_target": 13,
+    "quick_selected": 5
+  },
+  "deep_dive": [
+    {
+      "id": "2609.08224v1",
+      "source": "arxiv",
+      "title": "3DWay: Generalizing Robot Manipulation via 3D Consistent Waypoints",
+      "abstract": "Intermediate representations are key to bridging the modality gap between generalizable manipulation policies and large-scale pretrained vision-language models (VLMs). Among these, trajectory-based representations compactly represent motion-relevant cues, yet most existing approaches predict trajectories in 2D image space, resulting in intrinsic 3D ambiguity. Moreover, using 2D trajectories with depth still leaves the free-space waypoints ambiguous, limiting reliable 3D reasoning. To address this, we propose predicting 3D consistent waypoints (3DWay) from multi-view images. By reformulating 3D waypoints prediction as generating multi-view consistent 2D waypoints followed by geometric triangulation, we enable explicit 3D motion specification while preserving the strong priors of pretrained VLMs. The predicted waypoints can guide existing VLA models for better generalization or be directly executed on simple tasks. Extensive experiments show that 3DWay substantially improves 3D spatial grounding and vision-language reasoning, demonstrating strong potential for generalizable robot manipulation. Codes will be released at https://github.com/ziqin-h/3DWay.",
+      "authors": [
+        "Ziqin Huang",
+        "Yingyue Li",
+        "Chenyangguang Zhang",
+        "Ruida Zhang",
+        "Yuxin Chen",
+        "Gu Wang",
+        "Xingyu Liu",
+        "Masayoshi Tomizuka",
+        "Xiangyang Ji"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI"
+      ],
+      "published": "2026-09-08T04:18:46+00:00",
+      "link": "https://arxiv.org/pdf/2609.08224v1",
+      "tags": [
+        "keyword:robot-rl",
+        "keyword:vla-policy",
+        "keyword:world-models",
+        "query:robot-rl",
+        "query:vla-policy",
+        "query:world-models"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "predicts 3D consistent waypoints to bridge VLMs and generalizable manipulation policies",
+      "llm_evidence_cn": "从多视角图像预测3D一致路点，桥接VLM与可泛化操作策略",
+      "llm_evidence": "从多视角图像预测3D一致路点，桥接VLM与可泛化操作策略",
+      "canonical_evidence": "从多视角图像预测3D一致路点，桥接VLM与可泛化操作策略",
+      "llm_tldr_en": "3DWay predicts 3D-consistent waypoints from multi-view images as an intermediate representation bridging pretrained VLMs and generalizable manipulation policies, reformulating 3D prediction as multi-view consistent 2D waypoints plus geometric triangulation.",
+      "llm_tldr_cn": "现有将大视觉语言模型迁移到机器人操作的中间表征多在二维图像空间预测轨迹，存在固有的三维歧义，且自由空间路点仍不确定，限制了可靠的三维推理。本文提出3DWay，从多视角图像预测三维一致路点，将三维路点预测重构为生成多视角一致的二维路点再做几何三角化，实现显式三维运动指定。该方法在保留VLM泛化能力的同时提升了三维推理的可靠性，增强了机器人操作的跨任务泛化性能。",
+      "llm_tldr": "现有将大视觉语言模型迁移到机器人操作的中间表征多在二维图像空间预测轨迹，存在固有的三维歧义，且自由空间路点仍不确定，限制了可靠的三维推理。本文提出3DWay，从多视角图像预测三维一致路点，将三维路点预测重构为生成多视角一致的二维路点再做几何三角化，实现显式三维运动指定。该方法在保留VLM泛化能力的同时提升了三维推理的可靠性，增强了机器人操作的跨任务泛化性能。",
+      "llm_tags": [
+        "query:vla-policy"
+      ],
+      "matched_query_tag": "query:vla-policy",
+      "matched_query_text": "How to transfer vision language models to real robot control",
+      "matched_requirement_id": "req-6",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2609.09418v1",
+      "source": "arxiv",
+      "title": "Valerant: An Automatic Navigable Game Map Generator via Action-Conditioned World Model Exploration",
+      "abstract": "World Action Models (WAMs) couple predictive world modeling with action generation, allowing anticipated future states to guide agent behavior. Although WAMs are rapidly advancing embodied AI, general-purpose counterparts remain largely unexplored in games. Existing game-oriented approaches often combine action-conditioned world models with external policies and reward functions to realize WAM-like decision-making, yet they operate mainly in 2D visual observation space and do not instantiate persistent 3D geometry. Extending this paradigm to 3D games introduces a distinct challenge. In autonomous driving and robotics, the physical environment exists independently of the model, providing a persistent 3D world in which selected actions can be executed. Games have no such external substrate; the virtual world itself must be instantiated. Most playable games require a persistent and navigable space, while 3D games additionally require explicit geometry that supports movement and interaction. Action-conditioned video rollouts provide visual observations but not this spatial representation. We present \\textsc{Valerant}, a training-free framework that transforms a pretrained action-conditioned world model into a WAM for exploring and constructing 3D game maps. By coupling predictive visual rollouts with SLAM-based spatial reconstruction and exploration-driven action selection, \\textsc{Valerant} progressively transforms a single image into a persistent 3D game map. This framework extends WAM-based interaction beyond 2D visual simulation and offers a new approach to reducing manual effort in 3D game-map creation.",
+      "authors": [
+        "Yiran Qiao",
+        "Feng Wang",
+        "Jing Ma"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-09-08T20:17:48+00:00",
+      "link": "https://arxiv.org/pdf/2609.09418v1",
+      "tags": [
+        "keyword:robot-rl",
+        "keyword:vla-policy",
+        "keyword:world-models",
+        "query:robot-rl",
+        "query:vla-policy",
+        "query:world-models"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "action-conditioned world model coupled with action generation",
+      "llm_evidence_cn": "动作条件世界模型与动作生成耦合",
+      "llm_evidence": "动作条件世界模型与动作生成耦合",
+      "canonical_evidence": "动作条件世界模型与动作生成耦合",
+      "llm_tldr_en": "World Action Models couple predictive world modeling with action generation but are underexplored for games. Valerant uses action-conditioned world model exploration to automatically generate navigable 3D game maps, extending the paradigm to persistent 3D geometry.",
+      "llm_tldr_cn": "世界动作模型将预测性世界建模与动作生成耦合，使预期未来状态引导智能体行为，但面向游戏的通用实现仍未被充分探索。现有游戏方法多在二维视觉观测空间工作，无法实例化持久的三维几何。作者提出Valerant，通过动作条件世界模型探索自动生成可导航的游戏地图，将范式扩展到三维游戏。结果表明其能生成连贯可导航的环境。",
+      "llm_tldr": "世界动作模型将预测性世界建模与动作生成耦合，使预期未来状态引导智能体行为，但面向游戏的通用实现仍未被充分探索。现有游戏方法多在二维视觉观测空间工作，无法实例化持久的三维几何。作者提出Valerant，通过动作条件世界模型探索自动生成可导航的游戏地图，将范式扩展到三维游戏。结果表明其能生成连贯可导航的环境。",
+      "llm_tags": [
+        "query:world-models"
+      ],
+      "matched_query_tag": "query:world-models",
+      "matched_query_text": "World Action Models for robot control",
+      "matched_requirement_id": "req-10",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2609.05401v1",
+      "source": "arxiv",
+      "title": "Same Trajectory, Contradictory Rewards (ROBORMBENCH): Paraphrase Fragility in Vision Language Reward Models",
+      "abstract": "Vision-language models are increasingly used as reward functions for robotic learning, but this role requires paraphrase invariance: the same trajectory should receive the same reward under semantically equivalent goal descriptions. We show that current VLM reward models often violate this property. Paraphrasing the instruction alone can substantially change predicted progress scores, and can even flip identical robot behavior between failure and success. To measure this failure mode, we introduce ROBORMBENCH, a benchmark with 2,390 real-robot trajectories, ground-truth progress labels, and 21,673 verified paraphrases spanning lexical, syntactic, and action-goal rewrites. Across proprietary and open-source VLMs, paraphrase-induced instability is widespread and severe, grows under more divergent rewrites, and is not reliably reduced by scale or explicit reasoning. Dedicated reward models trained with trajectory-grounded supervision are substantially more stable. These results show that paraphrase robustness is a core requirement for reliable VLM-based reward modeling in robotics.",
+      "authors": [
+        "Wonje Jeung",
+        "Sangyeon Yoon",
+        "Hyesoo Hong",
+        "Yoonjun Cho",
+        "Dongjae Jeon",
+        "Bumjun Kim",
+        "Jean Oh",
+        "Youngjae Yu",
+        "Albert No"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.CL"
+      ],
+      "published": "2026-09-04T17:47:58+00:00",
+      "link": "https://arxiv.org/pdf/2609.05401v1",
+      "tags": [
+        "keyword:robot-rl",
+        "keyword:vla-policy",
+        "keyword:world-models",
+        "query:robot-rl",
+        "query:vla-policy",
+        "query:world-models"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "vision-language reward models for robotic learning",
+      "llm_evidence_cn": "面向机器人学习的视觉语言奖励模型",
+      "llm_evidence": "面向机器人学习的视觉语言奖励模型",
+      "canonical_evidence": "面向机器人学习的视觉语言奖励模型",
+      "llm_tldr_en": "The paper shows that VLM reward models for robot learning are fragile to instruction paraphrasing, flipping identical trajectories between failure and success, and introduces ROBORMBENCH, a 2390-trajectory benchmark with verified paraphrases.",
+      "llm_tldr_cn": "视觉语言模型日益被用作机器人学习的奖励函数，但这一角色要求对语义等价的目标描述给出相同奖励。作者发现当前VLM奖励模型普遍违反该性质：仅对指令进行复述即可显著改变预测的进度分数，甚至把相同的机器人行为在失败与成功之间翻转。为此他们提出ROBORMBENCH基准，涵盖2390条真实机器人轨迹与21673条经校验的复述。该工作为评估机器人奖励模型的鲁棒性提供了诊断工具。",
+      "llm_tldr": "视觉语言模型日益被用作机器人学习的奖励函数，但这一角色要求对语义等价的目标描述给出相同奖励。作者发现当前VLM奖励模型普遍违反该性质：仅对指令进行复述即可显著改变预测的进度分数，甚至把相同的机器人行为在失败与成功之间翻转。为此他们提出ROBORMBENCH基准，涵盖2390条真实机器人轨迹与21673条经校验的复述。该工作为评估机器人奖励模型的鲁棒性提供了诊断工具。",
+      "llm_tags": [
+        "query:robot-rl"
+      ],
+      "matched_query_tag": "query:robot-rl",
+      "matched_query_text": "how is reinforcement learning used to improve vision language action policies for robotic manipulation",
+      "matched_requirement_id": "req-25",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2609.05927v1",
+      "source": "arxiv",
+      "title": "GIF: Agentic Generation of Interactive and Functional Object Compositions for Robot Learning",
+      "abstract": "Robot manipulation foundation models require scalable evaluation and data generation across diverse scenarios, with simulation providing an environment for both. Automated scene generation offers a promising path, yet prior work has largely emphasized coarse-grained scene layouts rather than fine-grained functional object compositions. Motivated by this gap, we present GIF, an agentic Generation framework for Interactive and Functional object compositions. In this framework, we recast this problem as disentangled reconstruction followed by relative pose recovery. CoGen produces instance-disentangled meshes with coarse initial poses leveraging complementary strengths of 2D and 3D generative models. GPRM refines the relative pose under joint geometric and physical guidance, and a VLM verifier selects the candidate that best matches the structured specification. We further construct a benchmark spanning eight representative contact-geometry classes and compare with state-of-the-art generators; GIF improves both asset quality and relation matching, while reducing collision rate to below 1%. Finally, we synthesize data for policy learning, revealing diversity scaling in both simulation and real-world deployment.",
+      "authors": [
+        "Long Xu",
+        "Zhiqi Zhang",
+        "Mi Yan",
+        "Shengliang Deng",
+        "Chong Xia",
+        "Mingyu Dong",
+        "Jiayi Chen",
+        "Jiangran Lyu",
+        "Fei Gao",
+        "Zhizheng Zhang",
+        "He Wang"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-09-05T06:36:20+00:00",
+      "link": "https://arxiv.org/pdf/2609.05927v1",
+      "tags": [
+        "keyword:robot-rl",
+        "keyword:vla-policy",
+        "keyword:world-models",
+        "query:robot-rl",
+        "query:vla-policy",
+        "query:world-models"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "Automated generation of functional object compositions for robot manipulation foundation models",
+      "llm_evidence_cn": "为机器人操作基础模型自动生成功能性物体组合场景",
+      "llm_evidence": "为机器人操作基础模型自动生成功能性物体组合场景",
+      "canonical_evidence": "为机器人操作基础模型自动生成功能性物体组合场景",
+      "llm_tldr_en": "GIF is an agentic framework that generates fine-grained interactive object compositions for robot manipulation, recasting scene generation as disentangled reconstruction plus relative pose recovery.",
+      "llm_tldr_cn": "机器人操作基础模型需要跨多样场景的可扩展评测与数据生成，但已有自动化场景生成多停留在粗粒度布局，缺乏细粒度功能性物体组合。本文提出GIF智能体生成框架，将问题重构为实例解耦重建与相对位姿恢复两步，利用2D与3D生成模型互补生成解耦网格并精化相对位姿。该框架可为操作基础模型提供交互式功能性场景与数据。其贡献在于面向机器人学习实现高保真可交互场景的自动化生成。",
+      "llm_tldr": "机器人操作基础模型需要跨多样场景的可扩展评测与数据生成，但已有自动化场景生成多停留在粗粒度布局，缺乏细粒度功能性物体组合。本文提出GIF智能体生成框架，将问题重构为实例解耦重建与相对位姿恢复两步，利用2D与3D生成模型互补生成解耦网格并精化相对位姿。该框架可为操作基础模型提供交互式功能性场景与数据。其贡献在于面向机器人学习实现高保真可交互场景的自动化生成。",
+      "llm_tags": [
+        "query:vla-policy"
+      ],
+      "matched_query_tag": "query:vla-policy",
+      "matched_query_text": "robot foundation model for manipulation",
+      "matched_requirement_id": "req-5",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2609.06882v1",
+      "source": "arxiv",
+      "title": "Noisy-Space Policy Gradient for Diffusion Policies in Offline Reinforcement Learning",
+      "abstract": "Diffusion policies offer a powerful and expressive parameterization for continuous control. Yet, their integration with reinforcement learning remains conceptually and algorithmically challenging. In this work, we address this gap by introducing a noisy-space action-value (Q-)function that assigns values to diffusion latents through the distribution of executed actions induced by the denoising process. We show that this construction admits a precise semantic interpretation and derive a noisy-space policy gradient (NSPG) that optimizes noisy latents using only clean action-space value estimates. Building on this result, we formulate a KL-regularized policy improvement over noisy latents and show that the resulting objective admits a diffusion-compatible regression form, avoiding backpropagation through the denoising process. Empirical results on state-based D4RL benchmarks and vision-based OGBench tasks demonstrate that the proposed noisy-space objective provides a principled and effective basis for training diffusion policies in offline reinforcement learning. Project webpage: https://mahmoud-selim.github.io/NSPG/",
+      "authors": [
+        "Mahmoud Selim",
+        "Cristina Cipriani",
+        "Karl H. Johansson"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.AI",
+        "cs.RO"
+      ],
+      "published": "2026-09-07T00:08:13+00:00",
+      "link": "https://arxiv.org/pdf/2609.06882v1",
+      "tags": [
+        "keyword:robot-rl",
+        "keyword:vla-policy",
+        "keyword:world-models",
+        "query:robot-rl",
+        "query:vla-policy",
+        "query:world-models"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "RL policy gradient for diffusion policies in continuous control",
+      "llm_evidence_cn": "面向连续控制扩散策略的强化学习策略梯度",
+      "llm_evidence": "面向连续控制扩散策略的强化学习策略梯度",
+      "canonical_evidence": "面向连续控制扩散策略的强化学习策略梯度",
+      "llm_tldr_en": "Diffusion policies are expressive for continuous control but hard to integrate with RL. This work defines a noisy-space action-value function over diffusion latents, derives a noisy-space policy gradient using clean action-space values, and gives a KL-regularized policy improvement objective.",
+      "llm_tldr_cn": "扩散策略为连续控制提供了强表达力的参数化方式，但其与强化学习的结合在概念和算法上仍存在挑战。该文引入噪声空间动作价值函数，通过去噪过程诱导的动作分布为扩散潜变量赋值，并推导出仅依赖干净动作空间价值估计的噪声空间策略梯度。在此基础上给出对噪声潜变量的KL正则化策略改进，使目标具有扩散形式。该工作为机器人连续控制中扩散策略的强化学习微调提供了有理论解释的算法基础。",
+      "llm_tldr": "扩散策略为连续控制提供了强表达力的参数化方式，但其与强化学习的结合在概念和算法上仍存在挑战。该文引入噪声空间动作价值函数，通过去噪过程诱导的动作分布为扩散潜变量赋值，并推导出仅依赖干净动作空间价值估计的噪声空间策略梯度。在此基础上给出对噪声潜变量的KL正则化策略改进，使目标具有扩散形式。该工作为机器人连续控制中扩散策略的强化学习微调提供了有理论解释的算法基础。",
+      "llm_tags": [
+        "query:robot-rl"
+      ],
+      "matched_query_tag": "query:robot-rl",
+      "matched_query_text": "reinforcement learning for robot manipulation",
+      "matched_requirement_id": "req-21",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2609.07096v1",
+      "source": "arxiv",
+      "title": "RoboDreamer: Anticipatory Humanoid Locomotion with Predictive State-Space Models",
+      "abstract": "Humanoid locomotion requires control policies that remain stable under imperfect sensing while exploiting temporal context for consistent motion. We present RoboDreamer, a two-stage teacher--student framework that combines next-observation consistency with randomized continuous temporal masking. A teacher is first trained on clean observations, and a student is then distilled under masked recent observations, encouraging the policy to infer missing current information from history. At inference, the same masking interface is reused for implicit closed-loop action refinement and optional multi-step action chunking. Mamba is used as the temporal backbone, while matched ablations show that masking/distillation provides a substantial part of the gain and Mamba contributes additional tracking improvements with real-time latency. Experiments in IsaacLab, MuJoCo, and on a Unitree G1 demonstrate robust motion tracking under observation masking and successful real-world deployment.",
+      "authors": [
+        "Zhe Li",
+        "Yangyang Wei",
+        "Xichen Yuan",
+        "Zhenzhe Zhang",
+        "Weihao Yuan",
+        "Shanghang Zhang",
+        "Jianfei Yang"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-09-07T06:35:35+00:00",
+      "link": "https://arxiv.org/pdf/2609.07096v1",
+      "tags": [
+        "keyword:robot-rl",
+        "keyword:vla-policy",
+        "keyword:world-models",
+        "query:robot-rl",
+        "query:vla-policy",
+        "query:world-models"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "predictive state-space model integrated with locomotion policy and action refinement",
+      "llm_evidence_cn": "预测状态空间模型与运动策略及动作精炼相结合",
+      "llm_evidence": "预测状态空间模型与运动策略及动作精炼相结合",
+      "canonical_evidence": "预测状态空间模型与运动策略及动作精炼相结合",
+      "llm_tldr_en": "RoboDreamer is a two-stage teacher-student framework with predictive state-space models and temporal masking that lets a humanoid locomotion policy infer missing observations from history and refine actions at inference.",
+      "llm_tldr_cn": "人形机器人运动需要在不完美感知下保持稳定并利用时序上下文。本文提出RoboDreamer，一种两阶段教师-学生框架，结合下一观测一致性与随机连续时间掩码：教师在干净观测上训练，学生在掩码近期观测下蒸馏，促使策略从历史推断缺失信息。推理时复用掩码接口进行隐式闭环动作精炼与动作分块，Mamba作为时序骨干。消融显示掩码蒸馏贡献显著。",
+      "llm_tldr": "人形机器人运动需要在不完美感知下保持稳定并利用时序上下文。本文提出RoboDreamer，一种两阶段教师-学生框架，结合下一观测一致性与随机连续时间掩码：教师在干净观测上训练，学生在掩码近期观测下蒸馏，促使策略从历史推断缺失信息。推理时复用掩码接口进行隐式闭环动作精炼与动作分块，Mamba作为时序骨干。消融显示掩码蒸馏贡献显著。",
+      "llm_tags": [
+        "query:world-models"
+      ],
+      "matched_query_tag": "query:world-models",
+      "matched_query_text": "How do world models integrate with policy and action representations in robotics?",
+      "matched_requirement_id": "req-16",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    }
+  ]
+}
