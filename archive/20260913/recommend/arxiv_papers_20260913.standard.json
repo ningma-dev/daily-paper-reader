@@ -1,0 +1,329 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-09-13T21:40:46.209586+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 3,
+    "deep_divecandidates": 2,
+    "deep_cap": 8,
+    "deep_selected": 2,
+    "quick_candidates": 5,
+    "quick_skim_target": 13,
+    "quick_selected": 5
+  },
+  "deep_dive": [
+    {
+      "id": "2609.09925v1",
+      "source": "arxiv",
+      "title": "Time-Frequency Geometric Cross-Attention for Chunked Vision-Language-Action Models",
+      "abstract": "Modern vision-language-action (VLA) policies predict a whole chunk of actions: one to two seconds of coordinated motion emitted in a single forward pass. Yet an action chunk is essentially a short multivariate trajectory, but inside these models it is a sequence of generic per-timestep hidden tokens decoded by a linear head. This under-serves two motion structures. First, frequency: a chunk superimposes a smooth global trend and fine corrective motion across time scales, and a single token entangles them. Second, cross-phase geometry: motions of different phases (reach, contact, grasp adjustment, settling) unfold along very different, near-orthogonal directions in representation space, yet are tightly related for the task and arise across the time axis. Dot-product attention scores alignment by an inner product, so it favors aligned tokens and is least sensitive near orthogonality, leaving such relationships for the network to recover through a detour.   We introduce Time-Frequency Geometric Cross-Attention (TFGCA), a drop-in module repairing both blind spots. TFGCA uses a per-dimension learnable stationary wavelet transform to decompose the action chunk into time-frequency tokens, and each time token retrieves information from them via a cross-attention that fuses the dot product (similarity) with the wedge-product magnitude (sensitive to near-orthogonality) through a learnable weight. A zero-initialized residual reproduces the base behavior at initialization, so it can be dropped onto a pretrained VLA and fine-tuned jointly. Relative to the same-source base, TFGCA improves in-distribution LIBERO by +1.5 on average, the OOD LIBERO-Plus by +6.3, the randomized average under RoboTwin domain randomization by +28.5, and the overall success rate on three real-robot AgiBot A2 tasks by +11.67 points, with larger gains out of distribution.",
+      "authors": [
+        "Shengye Dong",
+        "Haochen Niu",
+        "Hao Liu",
+        "Peiwen Lin",
+        "Chuang Wang",
+        "Shanmin Pang"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI",
+        "cs.RO"
+      ],
+      "published": "2026-09-09T09:16:49+00:00",
+      "link": "https://arxiv.org/pdf/2609.09925v1",
+      "tags": [
+        "keyword:robot-rl",
+        "keyword:vla-policy",
+        "keyword:world-models",
+        "query:robot-rl",
+        "query:vla-policy",
+        "query:world-models"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "vision-language-action policy architecture for action chunk modeling",
+      "llm_evidence_cn": "面向动作块建模的视觉-语言-动作策略架构",
+      "llm_evidence": "面向动作块建模的视觉-语言-动作策略架构",
+      "canonical_evidence": "面向动作块建模的视觉-语言-动作策略架构",
+      "llm_tldr_en": "Chunked vision-language-action policies emit an action chunk in one pass but represent it as generic per-timestep tokens, ignoring frequency and cross-phase geometry; the paper proposes time-frequency geometric cross-attention to better model motion structure.",
+      "llm_tldr_cn": "现代视觉-语言-动作策略一次前向即可预测整段动作块，但模型内部仅将其视为逐时间步的通用隐藏令牌并由线性头解码，忽视了动作块的频率结构（平滑全局趋势与细粒度修正叠加）以及不同阶段动作在表征空间中的近正交几何关系。本文提出时频几何交叉注意力，分别对动作块的时频结构与跨阶段几何关系建模。该设计改善了 VLA 策略对协调运动的表征与生成能力，为动作块解码提供了更贴合运动结构的归纳偏置。",
+      "llm_tldr": "现代视觉-语言-动作策略一次前向即可预测整段动作块，但模型内部仅将其视为逐时间步的通用隐藏令牌并由线性头解码，忽视了动作块的频率结构（平滑全局趋势与细粒度修正叠加）以及不同阶段动作在表征空间中的近正交几何关系。本文提出时频几何交叉注意力，分别对动作块的时频结构与跨阶段几何关系建模。该设计改善了 VLA 策略对协调运动的表征与生成能力，为动作块解码提供了更贴合运动结构的归纳偏置。",
+      "llm_tags": [
+        "query:vla-policy"
+      ],
+      "matched_query_tag": "query:vla-policy",
+      "matched_query_text": "vision-language-action model for robot control",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2609.09597v2",
+      "source": "arxiv",
+      "title": "Compact Visuotactile World Models for Lifting: Prediction, Reward Alignment, and Force Constraints",
+      "abstract": "Accurate tactile forecasts need not improve force-constrained control. We study a 652,157-parameter action-conditioned visuotactile world model with matched behavior cloning, policy learning in imagination, independent reactive implicit Q-learning, and model-assisted force feedback. A fixed protocol executes 34 policies on 120 fresh MuJoCo environments spanning geometry and physical-parameter shifts, plus 324 independently replayed action branches on 12 additional ID environments. Visuotactile dynamics reduce force action-effect MAE from 0.413 N for persistence to 0.338 N. Model-assisted feedback raises ID force-budgeted success from 73.3% to 93.3%, with paired difference +20.0 [+6.7,+33.4] percentage points (95% CI), with the difference occurring during scripted lowering. Its pooled difference is +3.9 [-4.5,+11.7] points. Imagined RL achieves 11.9% pooled joint success versus 25.0% for reactive IQL. An empirical tactile-residual stress test adds 330 executions. The evidence concerns rigid-box lifting after a common approach, without physical-robot transfer or a closed-loop safety guarantee.",
+      "authors": [
+        "Qinzhen Ma"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI"
+      ],
+      "published": "2026-09-09T01:50:54+00:00",
+      "link": "https://arxiv.org/pdf/2609.09597v2",
+      "tags": [
+        "keyword:robot-rl",
+        "keyword:vla-policy",
+        "keyword:world-models",
+        "query:robot-rl",
+        "query:vla-policy",
+        "query:world-models"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "action-conditioned world model integrated with policy learning and control",
+      "llm_evidence_cn": "以动作为条件的世界模型与策略学习及控制相集成",
+      "llm_evidence": "以动作为条件的世界模型与策略学习及控制相集成",
+      "canonical_evidence": "以动作为条件的世界模型与策略学习及控制相集成",
+      "llm_tldr_en": "This study asks whether accurate tactile forecasts improve force-constrained control. It builds a 652k-parameter action-conditioned visuotactile world model combined with behavior cloning, imagination-based policy learning, reactive implicit Q-learning and model-assisted force feedback, showing force-effect MAE drops and success rises from 73.3% to 93.3%.",
+      "llm_tldr_cn": "研究探讨精确的触觉预测是否能改善受约束力的控制。作者构建仅约65万参数的以动作为条件的视触觉世界模型，并结合行为克隆、想象中策略学习、反应式隐式Q学习与模型辅助力反馈。在120个MuJoCo环境与324条动作分支上的固定协议表明，视触觉动态降低了力作用效应误差，模型辅助反馈将成功预算成功率从73.3%提升至93.3%。",
+      "llm_tldr": "研究探讨精确的触觉预测是否能改善受约束力的控制。作者构建仅约65万参数的以动作为条件的视触觉世界模型，并结合行为克隆、想象中策略学习、反应式隐式Q学习与模型辅助力反馈。在120个MuJoCo环境与324条动作分支上的固定协议表明，视触觉动态降低了力作用效应误差，模型辅助反馈将成功预算成功率从73.3%提升至93.3%。",
+      "llm_tags": [
+        "query:world-models"
+      ],
+      "matched_query_tag": "query:world-models",
+      "matched_query_text": "How do world models integrate with policy and action representations in robotics?",
+      "matched_requirement_id": "req-16",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2609.07047v1",
+      "source": "arxiv",
+      "title": "MEMOBench: A Process Level Memory Benchmark for Robotic Manipulation",
+      "abstract": "Robotic manipulation often requires acting on information that is no longer visible, yet Vision-Language-Action policies are usually evaluated when the current observation largely determines the next action. Existing robotic memory benchmarks expose this gap, but they still rely mainly on final task success and therefore conflate forgetting with manipulation failure. We present \\textbf{MEMOBench}, a benchmark for process level memory evaluation in robotic manipulation. MEMOBench includes 30 history dependent tasks, 1{,}500 expert demonstrations, and 4{,}200 executable checkpoint instances from 84 templates. Each checkpoint pairs coarse to fine language with a simulator predicate and labels one memory operation: Storage, Update, or Compression. These annotations define Memory Storage Rate, Memory Update Rate, and Memory Compression Rate, which measure memory fidelity alongside task success. Across standard and memory augmented VLA policies, the strongest memory module baseline reaches only 31.9\\% average success rate, and high storage often coexists with weak update and compression. Checkpoint language also supervises semantic, contrastive, and framewise memory alignment objectives, yielding modest gains across different memory operations. MEMOBench provides a diagnostic evaluation suite and training supervision for memory grounded robotic policies. The project page is available at https://github.com/Collab-Gen/MEMOBench.",
+      "authors": [
+        "Haiyang Sun",
+        "Haoxiao Wang",
+        "Junming Chen",
+        "Weicheng Fang",
+        "Zihao Su",
+        "Jingkun Yi",
+        "Wenyou Yi",
+        "Hao Chen",
+        "Zhou Zhao"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI"
+      ],
+      "published": "2026-09-07T05:06:20+00:00",
+      "link": "https://arxiv.org/pdf/2609.07047v1",
+      "tags": [
+        "keyword:robot-rl",
+        "keyword:vla-policy",
+        "keyword:world-models",
+        "query:robot-rl",
+        "query:vla-policy",
+        "query:world-models"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "process level memory benchmark for Vision-Language-Action manipulation policies",
+      "llm_evidence_cn": "面向VLA操作策略的过程级记忆基准",
+      "llm_evidence": "面向VLA操作策略的过程级记忆基准",
+      "canonical_evidence": "面向VLA操作策略的过程级记忆基准",
+      "llm_tldr_en": "Introduces MEMOBench, a process-level memory benchmark for robotic manipulation with 30 history-dependent tasks, 1500 demonstrations and 4200 checkpoints labeled by memory operation.",
+      "llm_tldr_cn": "机器人操作常需依据已不可见的信息行动，但现有VLA策略评估多假设当前观测决定下一步动作，且记忆基准仅看最终成功率，混淆了遗忘与操作失败。本文提出MEMOBench过程级记忆基准，包含30个历史依赖任务、1500条专家演示和4200个可执行检查点，并为每个检查点标注存储、更新或压缩等记忆操作。该基准为VLA记忆能力提供了细粒度诊断工具，有助于刻画长时程操作中的信息保持能力。",
+      "llm_tldr": "机器人操作常需依据已不可见的信息行动，但现有VLA策略评估多假设当前观测决定下一步动作，且记忆基准仅看最终成功率，混淆了遗忘与操作失败。本文提出MEMOBench过程级记忆基准，包含30个历史依赖任务、1500条专家演示和4200个可执行检查点，并为每个检查点标注存储、更新或压缩等记忆操作。该基准为VLA记忆能力提供了细粒度诊断工具，有助于刻画长时程操作中的信息保持能力。",
+      "llm_tags": [
+        "query:vla-policy"
+      ],
+      "matched_query_tag": "query:vla-policy",
+      "matched_query_text": "What are the state of the art approaches for vision language action models in robotics",
+      "matched_requirement_id": "req-7",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2609.06279v1",
+      "source": "arxiv",
+      "title": "IM-ENGINE: Image Editing for Embodied Data Generation",
+      "abstract": "Learning-based manipulation requires supervision that is both semantically meaningful and physically executable, but current data pipelines often provide only one of these properties. Human demonstrations capture intent but are costly to collect and constrained by the human-robot embodiment gap, while simulation can scale data generation but often under-specifies functional behavior. We present IM-ENGINE, a simulator-grounded pipeline that uses image editing as an intermediate representation for embodied data generation. Given a rendered scene with known geometry, depth, segmentation, and camera parameters, IM-ENGINE edits the image to inject task-relevant semantics, recovers explicit 3D state using simulator priors and an unchanged anchor object, refines the state in physics, and converts it into robot-executable supervision. We instantiate the pipeline for dexterous grasp synthesis and goal-state generation. For grasping, IM-ENGINE generates a human grasp in image space, recovers the hand-object interaction, retargets it to a robot hand, and refines it into physically validated robot grasps. For goal generation, it edits a rendered scene into a desired outcome, recovers the target-object pose, and refines it into physically valid, semantically meaningful goals and trajectories. This combination of generative semantic priors and simulator grounding enables scalable task-relevant supervision for robot learning.",
+      "authors": [
+        "Yian Wang",
+        "Junyi Cao",
+        "Xiaowen Qiu",
+        "Chuang Gan"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.CV"
+      ],
+      "published": "2026-09-05T22:21:34+00:00",
+      "link": "https://arxiv.org/pdf/2609.06279v1",
+      "tags": [
+        "keyword:robot-rl",
+        "keyword:vla-policy",
+        "keyword:world-models",
+        "query:robot-rl",
+        "query:vla-policy",
+        "query:world-models"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "image editing as controllable generation for embodied manipulation data",
+      "llm_evidence_cn": "以图像编辑作为具身操作数据的可控生成手段",
+      "llm_evidence": "以图像编辑作为具身操作数据的可控生成手段",
+      "canonical_evidence": "以图像编辑作为具身操作数据的可控生成手段",
+      "llm_tldr_en": "Learning-based manipulation needs supervision that is both semantically meaningful and physically executable, yet current pipelines provide only one. IM-ENGINE is a simulator-grounded pipeline using image editing as an intermediate representation to inject task semantics and recover explicit 3D state for embodied data generation.",
+      "llm_tldr_cn": "基于学习的操作需要既语义有意义又可物理执行的数据监督，但现有流程往往只具备其中之一：人类演示昂贵且存在具身差异，仿真虽可扩展却难以刻画功能行为。本文提出IM-ENGINE，一条以图像编辑为中间表示的仿真接地数据生成流水线，借助已知几何、深度与相机参数注入任务语义并恢复三维状态。该流程为具身数据生成提供了兼顾语义与可执行性的方案。",
+      "llm_tldr": "基于学习的操作需要既语义有意义又可物理执行的数据监督，但现有流程往往只具备其中之一：人类演示昂贵且存在具身差异，仿真虽可扩展却难以刻画功能行为。本文提出IM-ENGINE，一条以图像编辑为中间表示的仿真接地数据生成流水线，借助已知几何、深度与相机参数注入任务语义并恢复三维状态。该流程为具身数据生成提供了兼顾语义与可执行性的方案。",
+      "llm_tags": [
+        "query:world-models"
+      ],
+      "matched_query_tag": "query:world-models",
+      "matched_query_text": "controllable generation for robotic manipulation",
+      "matched_requirement_id": "req-14",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2609.09250v1",
+      "source": "arxiv",
+      "title": "No Free Checker: A Survey of Verifiers for Robot Policies",
+      "abstract": "A verifier for robot policies reads a candidate behavior and returns a score for how well it did, used both to evaluate vision-language-action policies and to train them. Verifiers range from success detectors and reward models to runtime monitors, safety filters, and temporal-logic specifications. We survey roughly 150 verifiers and compare them along two properties. Availability is how much a verdict costs, how early in a rollout the verdict arrives, and how often a verdict can be asked for. Availability rises as verdicts get cheaper, earlier, and denser. Credibility is how much a high score tells us about the task. Credibility falls as the judgment becomes gameable and self-serving. We group the verifiers by who supplies the judgment: human verifiers, rule-based and formal verifiers, learned and pretrained verifiers, and model-intrinsic verifiers. Across the four families, we find that credibility falls as availability rises. Regardless of who supplies the judgment, there is no free checker. We then examine what validates a verifier itself, and how much a high score tells us. Three measures appear in the literature: agreement with human labels, the performance of the policy it trains, and behavior under reward hacking. We close with nine metrics that make a verifier claim checkable, and coordinates for the verifiers still to be built.",
+      "authors": [
+        "Yang Wan",
+        "Xihang Yue",
+        "Zhirui Liu",
+        "Ziyuan Chu",
+        "Shuxun Wang",
+        "Yuhan Chen",
+        "Xiaonan Jiang",
+        "Xukun Zhu",
+        "Yubo Dong",
+        "Linchao Zhu"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.AI",
+        "cs.CV",
+        "cs.LG",
+        "eess.SY"
+      ],
+      "published": "2026-09-08T13:52:59+00:00",
+      "link": "https://arxiv.org/pdf/2609.09250v1",
+      "tags": [
+        "keyword:robot-rl",
+        "keyword:vla-policy",
+        "keyword:world-models",
+        "query:robot-rl",
+        "query:vla-policy",
+        "query:world-models"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "survey of verifiers and reward models used to evaluate and train vision-language-action policies",
+      "llm_evidence_cn": "综述用于评估与训练视觉-语言-动作策略的验证器与奖励模型",
+      "llm_evidence": "综述用于评估与训练视觉-语言-动作策略的验证器与奖励模型",
+      "canonical_evidence": "综述用于评估与训练视觉-语言-动作策略的验证器与奖励模型",
+      "llm_tldr_en": "This survey organizes roughly 150 verifiers for robot policies, including success detectors and reward models used to both evaluate and train vision-language-action policies, along availability and credibility axes.",
+      "llm_tldr_cn": "机器人策略验证器既用于评估也用于训练视觉-语言-动作策略，但该领域缺乏统一梳理。本文综述约150种验证器，涵盖成功检测器、奖励模型、运行时监控器、安全过滤器与时序逻辑规范。作者从可用性（判定成本、时机与密度）与可信度（高分对任务成功的指示程度）两个维度进行比较，并按判定来源分类。该综述为VLA策略的评估与强化学习训练提供了系统化的验证器选择指南。",
+      "llm_tldr": "机器人策略验证器既用于评估也用于训练视觉-语言-动作策略，但该领域缺乏统一梳理。本文综述约150种验证器，涵盖成功检测器、奖励模型、运行时监控器、安全过滤器与时序逻辑规范。作者从可用性（判定成本、时机与密度）与可信度（高分对任务成功的指示程度）两个维度进行比较，并按判定来源分类。该综述为VLA策略的评估与强化学习训练提供了系统化的验证器选择指南。",
+      "llm_tags": [
+        "query:robot-rl"
+      ],
+      "matched_query_tag": "query:robot-rl",
+      "matched_query_text": "how is reinforcement learning used to improve vision language action policies for robotic manipulation",
+      "matched_requirement_id": "req-25",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    },
+    {
+      "id": "2609.06930v1",
+      "source": "arxiv",
+      "title": "Distributed Dexterous Manipulation with Spatially Conditioned Multi-Agent Transformers",
+      "abstract": "Distributed Dexterous Manipulation (DDM) is a novel paradigm that presents significant control challenges due to high action-space redundancy, inter-robot cooperation, and dynamic object-robot interactions. This paper introduces a framework based on spatially conditioned Multi-Agent Transformers (MATs) to efficiently learn robust control policies for a DDM system grounded in an array of 64 soft delta robots arranged in an 8x8 grid. Our three core contributions are: (i) an MAT with adaptive layer norm for compute efficiency, (ii) spatial contrastive embeddings to ground transformer embeddings in the spatial configuration of the robots, and (iii) an MAT-based behavior cloning method fine-tuned using Soft Actor Critic. We also propose an action selection formulation to analyze the trade-off between task performance and the number of robots utilized. Our experiments show that MATs iteratively refine their actions through the stacked attention blocks. This further informs the benefit of spatial conditioning in transformers to learn DDM policies. We demonstrate long-horizon planar manipulation tasks with objects of various geometries in simulation and real-world. Finally, we show how action selection mitigates robot maintenance by reducing wear and tear due to inter-robot collisions while maintaining the ability to manipulate objects along various trajectories in the real-world, achieving an average error of ~1.5 cm, while using ~65% fewer robots.",
+      "authors": [
+        "Sarvesh Patil"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO",
+        "cs.LG"
+      ],
+      "published": "2026-09-07T02:01:12+00:00",
+      "link": "https://arxiv.org/pdf/2609.06930v1",
+      "tags": [
+        "keyword:robot-rl",
+        "keyword:vla-policy",
+        "keyword:world-models",
+        "query:robot-rl",
+        "query:vla-policy",
+        "query:world-models"
+      ],
+      "llm_score": 6.0,
+      "llm_evidence_en": "multi-agent transformer policies fine-tuned with Soft Actor Critic for manipulation",
+      "llm_evidence_cn": "用SAC微调多智能体Transformer操作策略",
+      "llm_evidence": "用SAC微调多智能体Transformer操作策略",
+      "canonical_evidence": "用SAC微调多智能体Transformer操作策略",
+      "llm_tldr_en": "Proposes spatially conditioned multi-agent transformers with spatial contrastive embeddings and SAC-finetuned behavior cloning for distributed dexterous manipulation across 64 soft delta robots.",
+      "llm_tldr_cn": "针对分布式灵巧操作中动作空间冗余、多机器人协作与动态交互带来的控制难题，本文提出基于空间条件化多智能体Transformer的控制框架。方法包含自适应层归一化、空间对比嵌入，以及用Soft Actor Critic微调的行为克隆策略。实验在64个软体Delta机器人组成的8x8阵列上验证，学习到鲁棒控制策略。该工作为多机器人分布式操作提供了可扩展的Transformer控制范式。",
+      "llm_tldr": "针对分布式灵巧操作中动作空间冗余、多机器人协作与动态交互带来的控制难题，本文提出基于空间条件化多智能体Transformer的控制框架。方法包含自适应层归一化、空间对比嵌入，以及用Soft Actor Critic微调的行为克隆策略。实验在64个软体Delta机器人组成的8x8阵列上验证，学习到鲁棒控制策略。该工作为多机器人分布式操作提供了可扩展的Transformer控制范式。",
+      "llm_tags": [
+        "query:robot-rl"
+      ],
+      "matched_query_tag": "query:robot-rl",
+      "matched_query_text": "reinforcement learning for robot manipulation",
+      "matched_requirement_id": "req-21",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "6"
+    },
+    {
+      "id": "2609.11445v1",
+      "source": "arxiv",
+      "title": "FARM: Reading Failure Signals from the Internal Predictive States of a Frozen Robotic World Model",
+      "abstract": "Reliable robot deployment requires online failure monitoring, yet existing monitors mainly derive risk from proxy signals or train dedicated monitoring components. We ask whether the internal predictive states of a frozen pretrained robotic world model already contain directly decodable failure information. Failure-Aware Readout from World Models (FARM) trains only a 33,985-parameter supervised readout over frozen VLA-JEPA predictive states, producing step-wise failure scores and causal trajectory risk. Five-fold out-of-fold evaluation across seven source tasks reaches 85.68/88.59 pooled AUROC/AUPRC, and FARM gives the best Seen performance among 15 matched baselines on the 10-task benchmark. Across four real-robot populations on PIPER X, SO-101, and Franka, fixed-readout transfer and readout-only adaptation test deployment shifts without updating the predictive backbone. FARM also discriminates failures from partial causal histories and adds 0.2256 ms mean CUDA latency once the frozen state is available. These results support frozen predictive world-model states as reusable features for causal, transferable, and low-overhead execution monitoring.",
+      "authors": [
+        "Haoran Pei",
+        "Mingrui Luo",
+        "Senbao Wang",
+        "Haoran Lv",
+        "Jie Guo",
+        "Sheng Zhong",
+        "Ruixi Ci"
+      ],
+      "primary_category": "cs.RO",
+      "categories": [
+        "cs.RO"
+      ],
+      "published": "2026-09-10T12:14:37+00:00",
+      "link": "https://arxiv.org/pdf/2609.11445v1",
+      "tags": [
+        "keyword:robot-rl",
+        "keyword:vla-policy",
+        "keyword:world-models",
+        "query:robot-rl",
+        "query:vla-policy",
+        "query:world-models"
+      ],
+      "llm_score": 7.0,
+      "llm_evidence_en": "decoding failure signals from internal predictive states of a frozen robotic world model",
+      "llm_evidence_cn": "从冻结机器人世界模型的内部预测状态解码失败信号",
+      "llm_evidence": "从冻结机器人世界模型的内部预测状态解码失败信号",
+      "canonical_evidence": "从冻结机器人世界模型的内部预测状态解码失败信号",
+      "llm_tldr_en": "FARM trains a tiny supervised readout over frozen VLA-JEPA world model predictive states to produce step-wise failure scores, achieving 85.68 AUROC across seven tasks and revealing decodable risk in world-model internals.",
+      "llm_tldr_cn": "可靠部署需要在线故障监测，但现有监测器多依赖代理信号或专门训练监测组件，成本高且泛化有限。本文提出FARM，仅训练一个约3.4万参数的监督读出层，作用于冻结的VLA-JEPA机器人世界模型预测状态，输出逐步失败分数与因果轨迹风险。在七个源任务上五折评估达到85.68/88.59的AUROC/AUPRC，并在十任务基准上于15个基线中取得最佳表现。该工作表明世界模型内部预测状态已蕴含可直接解码的失败信息，为机器人世界模型与策略监测的结合提供了轻量途径。",
+      "llm_tldr": "可靠部署需要在线故障监测，但现有监测器多依赖代理信号或专门训练监测组件，成本高且泛化有限。本文提出FARM，仅训练一个约3.4万参数的监督读出层，作用于冻结的VLA-JEPA机器人世界模型预测状态，输出逐步失败分数与因果轨迹风险。在七个源任务上五折评估达到85.68/88.59的AUROC/AUPRC，并在十任务基准上于15个基线中取得最佳表现。该工作表明世界模型内部预测状态已蕴含可直接解码的失败信息，为机器人世界模型与策略监测的结合提供了轻量途径。",
+      "llm_tags": [
+        "query:world-models"
+      ],
+      "matched_query_tag": "query:world-models",
+      "matched_query_text": "How do world models integrate with policy and action representations in robotics?",
+      "matched_requirement_id": "req-16",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "7"
+    }
+  ]
+}

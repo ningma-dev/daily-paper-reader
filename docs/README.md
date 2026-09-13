@@ -6,38 +6,43 @@
 </div>
 
 ## 每次日报
-- 最新运行日期：2026-09-12
-- 运行时间：2026-09-12 21:51:16 UTC
+- 最新运行日期：2026-09-13
+- 运行时间：2026-09-13 21:47:02 UTC
 - 运行状态：成功
-- 本次总论文数：6
-- 精读区：1
+- 本次总论文数：7
+- 精读区：2
 - 速读区：5
 
 ### 今日简报（AI）
-2026-09-12 日报精选 6 篇机器人学习论文，其中《3DWay》以 8.0 分成为唯一精读，用 3D 一致路点提升机械臂操作泛化能力。最值得关注的方向是 3D 路点表示与游戏地图/交互物体自动生成等世界模型探索。普通读者可优先读《3DWay》摘要，再按兴趣扫读速读列表中的生成式应用。
-- 详情：[/202609/12/README](/202609/12/README)
+2026-09-13 日报：7篇机器人/具身智能论文完成筛选，含2篇精读、5篇速读。  
+最值得看的是9.0分的《Time-Frequency Geometric Cross-Attention for Chunked Vision-Language-Action Models》和8.0分的《Compact Visuotactile World Models for Lifting》，方向分别指向VLA的时序-频率几何注意力与视觉触觉世界模型。  
+普通读者可先读这两篇精读，再按兴趣用MEMOBench、机器人策略验证器综述和FARM补足评测、验证与失败信号视角。
+- 详情：[/202609/13/README](/202609/13/README)
 
 ### 精读区论文标签
-1. [3DWay: Generalizing Robot Manipulation via 3D Consistent Waypoints](/202609/12/2609.08224v1-3dway-generalizing-robot-manipulation-via-3d-consistent-waypoints)  
-   标签：评分：8.0/10、query:vla-policy
-   evidence：从多视角图像预测3D一致路点，桥接VLM与可泛化操作策略
+1. [Time-Frequency Geometric Cross-Attention for Chunked Vision-Language-Action Models](/202609/13/2609.09925v1-time-frequency-geometric-cross-attention-for-chunked-vision-language-action-models)  
+   标签：评分：9.0/10、query:vla-policy
+   evidence：面向动作块建模的视觉-语言-动作策略架构
+2. [Compact Visuotactile World Models for Lifting: Prediction, Reward Alignment, and Force Constraints](/202609/13/2609.09597v2-compact-visuotactile-world-models-for-lifting-prediction-reward-alignment-and-force-constraints)  
+   标签：评分：8.0/10、query:world-models
+   evidence：以动作为条件的世界模型与策略学习及控制相集成
 
 ### 速读区论文标签
-1. [Valerant: An Automatic Navigable Game Map Generator via Action-Conditioned World Model Exploration](/202609/12/2609.09418v1-valerant-an-automatic-navigable-game-map-generator-via-action-conditioned-world-model-exploration)  
+1. [MEMOBench: A Process Level Memory Benchmark for Robotic Manipulation](/202609/13/2609.07047v1-memobench-a-process-level-memory-benchmark-for-robotic-manipulation)  
+   标签：评分：7.0/10、query:vla-policy
+   evidence：面向VLA操作策略的过程级记忆基准
+2. [No Free Checker: A Survey of Verifiers for Robot Policies](/202609/13/2609.09250v1-no-free-checker-a-survey-of-verifiers-for-robot-policies)  
+   标签：评分：7.0/10、query:robot-rl
+   evidence：综述用于评估与训练视觉-语言-动作策略的验证器与奖励模型
+3. [FARM: Reading Failure Signals from the Internal Predictive States of a Frozen Robotic World Model](/202609/13/2609.11445v1-farm-reading-failure-signals-from-the-internal-predictive-states-of-a-frozen-robotic-world-model)  
    标签：评分：7.0/10、query:world-models
-   evidence：动作条件世界模型与动作生成耦合
-2. [Same Trajectory, Contradictory Rewards (ROBORMBENCH): Paraphrase Fragility in Vision Language Reward Models](/202609/12/2609.05401v1-same-trajectory-contradictory-rewards-robormbench-paraphrase-fragility-in-vision-language-reward-models)  
-   标签：评分：6.0/10、query:robot-rl
-   evidence：面向机器人学习的视觉语言奖励模型
-3. [GIF: Agentic Generation of Interactive and Functional Object Compositions for Robot Learning](/202609/12/2609.05927v1-gif-agentic-generation-of-interactive-and-functional-object-compositions-for-robot-learning)  
-   标签：评分：6.0/10、query:vla-policy
-   evidence：为机器人操作基础模型自动生成功能性物体组合场景
-4. [Noisy-Space Policy Gradient for Diffusion Policies in Offline Reinforcement Learning](/202609/12/2609.06882v1-noisy-space-policy-gradient-for-diffusion-policies-in-offline-reinforcement-learning)  
-   标签：评分：6.0/10、query:robot-rl
-   evidence：面向连续控制扩散策略的强化学习策略梯度
-5. [RoboDreamer: Anticipatory Humanoid Locomotion with Predictive State-Space Models](/202609/12/2609.07096v1-robodreamer-anticipatory-humanoid-locomotion-with-predictive-state-space-models)  
+   evidence：从冻结机器人世界模型的内部预测状态解码失败信号
+4. [IM-ENGINE: Image Editing for Embodied Data Generation](/202609/13/2609.06279v1-im-engine-image-editing-for-embodied-data-generation)  
    标签：评分：6.0/10、query:world-models
-   evidence：预测状态空间模型与运动策略及动作精炼相结合
+   evidence：以图像编辑作为具身操作数据的可控生成手段
+5. [Distributed Dexterous Manipulation with Spatially Conditioned Multi-Agent Transformers](/202609/13/2609.06930v1-distributed-dexterous-manipulation-with-spatially-conditioned-multi-agent-transformers)  
+   标签：评分：6.0/10、query:robot-rl
+   evidence：用SAC微调多智能体Transformer操作策略
 
 
 <div class="dpr-home-promo-card">
